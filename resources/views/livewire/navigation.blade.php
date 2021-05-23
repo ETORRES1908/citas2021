@@ -2,39 +2,39 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <div>
-    <nav class="bg-gray-800">
+
+    <nav class="bg-gray-800" x-data="{open:false}">
+
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center">
 
                     <!-- IMAGEN DE LA COMPAÑIA -->
-                    <div class="flex-shrink-0">
-                        <img class="relative h-14 w-14" src="{{ asset('images/Logo.png') }}" alt="LogoOasis">
+                    <div class="flex-shrink-0 relative h-14 w-14">
+                        <img src="/storage/images/Logo.png" alt="">
                     </div>
 
                     <!-- OPCIONES DE LA BARRA DE NEVEGACIÓN -->
                     <div class="hidden md:block">
                         <div class="ml-10 flex items-baseline space-x-4">
+
+                            {{-- Sin estar loguado --}}
                             <a href="/"
                                 class="text-gray-300 hover:bg-blue-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Inicio</a>
 
                             <a href="#"
-                                class="text-gray-300 hover:bg-red-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Areas
-                                medicas</a>
-
-                            <a href="#"
-                                class="text-gray-300 hover:bg-yellow-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sobre
-                                nosotros</a>
+                                class="text-gray-300 hover:bg-red-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Lista
+                                de horarios</a>
 
                             {{-- Solo si estas logueado --}}
                             @auth
                             <a href="#"
-                                class="text-gray-300 hover:bg-green-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Reserver
-                                Cita</a>
+                                class="text-gray-300 hover:bg-green-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Reservar
+                                citas</a>
 
                             <a href="#"
-                                class="text-gray-300 hover:bg-white hover:text-black px-3 py-2 rounded-md text-sm font-medium">Realizar
-                                queja</a>
+                                class="text-gray-300 hover:bg-white hover:text-black px-3 py-2 rounded-md text-sm font-medium">Ver
+                                citas</a>
                             @endauth
                         </div>
                     </div>
@@ -80,6 +80,7 @@
                                     id="user-menu-button" aria-expanded="false" aria-haspopup="true">
 
                                     <span class="sr-only">Open user menu</span>
+                                    {{-- FOTO DE PERFIL  --}}
                                     <img class="h-8 w-8 rounded-full object-cover"
                                         src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
                                 </button>
@@ -98,6 +99,12 @@
                                     {{ __('Profile') }}
                                 </x-jet-dropdown-link>
 
+                                <!-- DASHBOARD-->
+                                <x-jet-dropdown-link href="{{ route('dashboard') }}"
+                                    :active="request()->routeIs('dashboard')">
+                                    {{ __('Dashboard') }}
+                                </x-jet-dropdown-link>
+
                                 <!-- CERRAR SESION -->
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
@@ -111,9 +118,7 @@
                             </div>
                         </div>
 
-
                         <!-- SI NO ESTA LOGUADA -->
-
 
                         @else
                         <!-- OPCIONES DE CUENTA SIN SER LOGUEADA-->
@@ -129,40 +134,30 @@
                         @endif
                         @endauth
 
-
                     </div>
                 </div>
 
-
-
-
-
-
-                {{-- <!-- MODO CELULAR - BORRAR -->
+                <!-- MODO CELULAR -->
                 <div class="-mr-2 flex md:hidden">
 
-
-
-                    <!-- ENU DE CELULAR boton -->
-                    <button type="button"
+                    <!-- MENU DE CELULAR BOTON -->
+                    <button x-on:click="open=true" type="button"
                         class="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                         aria-controls="mobile-menu" aria-expanded="false">
-                        <span class="sr-only">Menú</span>
-                        <!--
-                    Heroicon name: outline/menu
 
-                    Menu open: "hidden", Menu closed: "block"
-                  -->
+                        <span class="sr-only">Menú</span>
+                        <!-- Heroicon name: outline/menu
+                        Menu open: "hidden", Menu closed: "block"-->
+
                         <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor" aria-hidden="true">
+
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                        <!--
-                    Heroicon name: outline/x
 
-                    Menu open: "block", Menu closed: "hidden"
-                  -->
+                        </svg>
+                        <!-- Heroicon name: outline/x
+                    Menu open: "block", Menu closed: "hidden"-->
                         <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -173,36 +168,40 @@
             </div>
         </div>
 
-        <!-- MENU DE CELULAR, show/hide based on menu state. -->
-        <div class="md:hidden" id="mobile-menu">
+        <!-- MENU DE CELULAR, MOSTRAR/ESCONDER based on menu state. -->
+        <div class="md:hidden" id="mobile-menu" x-show="open" x-on:click.away="open=false">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                <a href="#"
-                    class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium">Dashboard</a>
+                <a href="/" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium">Inicio</a>
 
                 <a href="#"
-                    class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Team</a>
+                    class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Lista
+                    de Horarios</a>
+                @auth
+                <a href="#"
+                    class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Reservar
+                    cita</a>
 
                 <a href="#"
-                    class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Projects</a>
-
-                <a href="#"
-                    class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Calendar</a>
-
-                <a href="#"
-                    class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Reports</a>
+                    class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Ver
+                    citas</a>
+                @endauth
             </div>
             <div class="pt-4 pb-3 border-t border-gray-700">
+                @auth{{-- Solo si estas logueado --}}
                 <div class="flex items-center px-5">
+
                     <div class="flex-shrink-0">
-                        <img class="h-10 w-10 rounded-full"
-                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                            alt="">
+                        {{-- FOTO DE PERFIL  --}}
+                        <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}"
+                            alt="{{ Auth::user()->name }}" />
+
                     </div>
                     <div class="ml-3">
-                        <div class="text-base font-medium leading-none text-white">Tom Cook</div>
-                        <div class="text-sm font-medium leading-none text-gray-400">tom@example.com</div>
+                        <div class="text-base font-medium leading-none text-white">{{ Auth::user()->name }}</div>
+                        <div class="text-sm font-medium leading-none text-gray-400">{{ Auth::user()->email }}</div>
                     </div>
+
                     <button
                         class="ml-auto bg-gray-800 flex-shrink-0 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                         <span class="sr-only">View notifications</span>
@@ -213,21 +212,46 @@
                                 d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                         </svg>
                     </button>
+
                 </div>
                 <div class="mt-3 px-2 space-y-1">
-                    <a href="#"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">Your
-                        Profile</a>
+                    <!-- OPCIONES DE CUENTA LOGUEADA-->
 
-                    <a href="#"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">Settings</a>
+                    <!-- PERFIL-->
+                    <x-jet-dropdown-link href="{{ route('profile.show') }}">
+                        {{ __('Profile') }}
+                    </x-jet-dropdown-link>
 
-                    <a href="#"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">Sign
-                        out</a>
+                    <!-- DASHBOARD-->
+                    <x-jet-dropdown-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                        {{ __('Dashboard') }}
+                    </x-jet-dropdown-link>
+
+                    <!-- CERRAR SESION -->
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <x-jet-dropdown-link href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); this.closest('form').submit();">
+                            {{ __('Desconectarse') }}
+                        </x-jet-dropdown-link>
+                    </form>
+
+                    @else
+                    <!-- OPCIONES DE CUENTA SIN SER LOGUEADA-->
+
+                    <!-- INICIAR SESION-->
+                    <a href="{{ route('login') }}"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">Loguearse</a>
+
+                    <!-- REGISTRARSE-->
+                    @if (Route::has('register'))
+                    <a href="{{ route('register') }}"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">Registrarse</a>
+                    @endif
                 </div>
+                @endauth
             </div>
-        </div> --}}
+        </div>
 
     </nav>
 </div>
