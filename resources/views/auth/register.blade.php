@@ -10,8 +10,13 @@
             @csrf
 
             <div>
-                <x-jet-label for="name" value="{{ __('Name') }}" />
+                <x-jet-label for="name" value="{{ __('Nombre') }}" />
                 <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            </div>
+
+            <div class="mt-4">
+                <x-jet-label for="apellido" value="{{ __('Apellido') }}" />
+                <x-jet-input id="apellido" class="block mt-1 w-full" type="text"   name="apellido" :value="old('apellido')" required />
             </div>
 
             <div class="mt-4">
@@ -20,14 +25,41 @@
             </div>
 
             <div class="mt-4">
-                <x-jet-label for="password" value="{{ __('Password') }}" />
+                <x-jet-label for="password" value="{{ __('Contraseña') }}" />
                 <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
             </div>
 
             <div class="mt-4">
-                <x-jet-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
+                <x-jet-label for="password_confirmation" value="{{ __('Confirme Contraseña') }}" />
                 <x-jet-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
             </div>
+
+            <div class="mt-4">
+                <x-jet-label for="dni" value="{{ __('DNI') }}" />
+                <x-jet-input id="dni" class="block mt-1 w-full" type="text" :value="old('dni')" name="dni" required />
+            </div>
+
+            <div class="mt-4">
+                <x-jet-label for="fecha_nac" value="{{ __('Fecha de Nacimiento') }}" />
+                <x-jet-input id="fecha_nac" name="fecha_nac" type="date" class="mt-1 block w-full" wire:model.defer="state.fecha_nac" />
+            </div>
+
+            <div class="mt-4">
+                <x-jet-label for="edad" value="{{ __('Edad') }}" />
+                <x-jet-input id="edad" class="block mt-1 w-full" :value="old('edad')"  type="number" name="edad" required autocomplete="edad"/>
+            </div>
+
+            <div class="col-span-6 sm:col-span-3">
+                <label for="sexo" class="block text-sm font-medium text-gray-700">Sexo</label>
+                <select id="sexo" name="sexo" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <option value="m">Hombre</option>
+                    <option value="f">Mujer</option>
+                </select>
+            </div>
+
+
+
+
 
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                 <div class="mt-4">

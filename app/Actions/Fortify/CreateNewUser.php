@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
+use App\Models\Profile;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -21,16 +22,33 @@ class CreateNewUser implements CreatesNewUsers
     public function create(array $input)
     {
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'name' => ['required', 'string', 'max:100'],
+            'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
+            'apellido' => ['required', 'string', 'max:100'],
+            'edad' => ['required', 'int', 'max:110', 'min:1'], 
+            'dni' => ['required','digits:8','numeric', 'unique:profiles'],
+            'fecha_nac' => ['required'],
+            'sexo' => ['required'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
         ])->validate();
 
-        return User::create([
+        $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
-        ]);
+        ]); 
+
+        Profile::create([
+            'nombre' => $user->name,
+            'apellido' => $input['apellido'],
+            'edad' => $input['edad'], 
+            'dni' => $input['dni'],
+            'fecha_nac' => $input['fecha_nac'],
+            'sexo' => $input['sexo'],
+            'user_id' => $user->id,
+        ]);  
+        
+        return $user;
     }
 }
