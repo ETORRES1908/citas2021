@@ -11,6 +11,7 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
 use App\Models\Profile;
+use App\Models\Doctor;
 
 class User extends Authenticatable
 {
@@ -66,4 +67,14 @@ class User extends Authenticatable
     {   
         return $this->hasOne(Profile::class);
     }
+
+    //UN USUARIO PUEDE PERTENECER A UN SOLO DOCTOR
+    public function doctor()
+    {   
+        return $this->hasOne(Doctor::class);
+    }
+
+
+
+
 }
