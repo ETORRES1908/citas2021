@@ -111,7 +111,10 @@
                             </div>
                         </div>
 
+
                         <!-- SI NO ESTA LOGUADA -->
+
+
                         @else
                         <!-- OPCIONES DE CUENTA SIN SER LOGUEADA-->
 
