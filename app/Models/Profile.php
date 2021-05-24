@@ -13,6 +13,7 @@ class Profile extends Model
 
     protected $guarded = [];
 
+    //UN PERFIL LE PERTENECE A UN SOLO USUARIO
     public function user()
     {   
         return $this->belongsTo(User::class);
