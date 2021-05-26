@@ -9,6 +9,11 @@ use App\Models\Doctor;
 class Speciality extends Model
 {
     use HasFactory;
+    
+    protected $paginationTheme = "bootstrap";
+
+    protected $guarded = [];
+
 
     //UNA DOCTOR PERTENECE  A MUCHOS DOCTORES
     public function doctors()
