@@ -92,8 +92,8 @@
                             </x-jet-dropdown-link>
 
                             <!-- DASHBOARD-->
-                            <x-jet-dropdown-link href="{{ route('dashboard') }}"
-                                :active="request()->routeIs('dashboard')">
+                            <x-jet-dropdown-link href="{{ route('admin.index') }}"
+                                :active="request()->routeIs('admin.index')">
                                 {{ __('Dashboard') }}
                             </x-jet-dropdown-link>
 
@@ -180,6 +180,7 @@
             @endauth
         </div>
         <div class="pt-4 pb-3 border-t border-gray-700">
+
             @auth{{-- Solo si estas logueado --}}
             <div class="flex items-center px-5">
 
@@ -190,7 +191,9 @@
 
                 </div>
                 <div class="ml-3">
+                    {{-- NOMBRE  --}}
                     <div class="text-base font-medium leading-none text-white">{{ Auth::user()->name }}</div>
+                    {{-- CORREO ELECTRONICO --}}
                     <div class="text-sm font-medium leading-none text-gray-400">{{ Auth::user()->email }}</div>
                 </div>
 
