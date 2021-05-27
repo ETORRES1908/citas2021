@@ -17,7 +17,7 @@ class CreateSchedulesTable extends Migration
 
             //El timemétodo crea una TIMEcolumna equivalente con una precisión opcional
             $table->id();
-            $table->date('fecha_atencion')->unique();
+            $table->date('fecha_atencion');
             $table->time('hora_inicio', $precision = 0);
             $table->time('hora_fin', $precision = 0);
             $table->integer('intervalo');

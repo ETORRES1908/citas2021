@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Doctor;
+use App\Models\Schedule;
 use App\Models\User;
-use App\Models\Specialities;
+use App\Models\Speciality;
 use Illuminate\Http\Request;
 
 class DoctorController extends Controller
@@ -25,11 +26,9 @@ class DoctorController extends Controller
                 ->join('doctor_speciality', 'doctor_speciality.doctor_id', '=', 'doctors.id')
                 ->join('specialities', 'doctor_speciality.speciality_id', '=', 'specialities.id')
                 ->get();
-               /*  echo '<pre>' , var_export($data,true) , '</pre>'; */
+        /*  echo '<pre>' , var_export($data,true) , '</pre>'; */
 
-
-     return view('admin.doctors.index', compact('doctors'));
-
+    return view('admin.doctors.index', compact('doctors'));
 
     }
 
@@ -69,9 +68,10 @@ class DoctorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Doctor $doctor)
+    public function show($id)
     {
-        /* Selec y inner join doctor, users, schedules*/
+        
+    /* Selec y inner join doctor, users, schedules
         $doctors = Doctor::select('users.name','schedules.id','specialities.nombre','schedules.fecha_atencion','schedules.hora_inicio','schedules.hora_fin','schedules.estado')
                 ->join('users', 'users.id', '=', 'doctors.id')
                 ->join('doctor_speciality', 'doctor_speciality.doctor_id', '=', 'doctors.id')
@@ -79,8 +79,14 @@ class DoctorController extends Controller
                 ->join('schedules', 'schedules.doctor_id', '=', 'doctors.id')
                 ->where('doctors.id', $doctor->id)
                 ->get();
-            /*echo '<pre>' , var_export($doctors,true) , '</pre>'; */
-    return view('admin.doctors.show', compact('doctors'));
+        echo '<pre>' , var_export($doctors,true) , '</pre>'; 
+    */
+        
+        $user = User::where('id','=',$id)->first();
+        $doctors = Doctor::where('id','=',$id)->get();
+        $speciality = Speciality::where('id','=',$id)->first();
+
+        return view('admin.doctors.show', compact('doctors', 'speciality', 'user'));
     }
 
     /**
@@ -104,10 +110,8 @@ class DoctorController extends Controller
     public function update(Request $request, Doctor $doctor)
     {
 
-         $leve = ['n_cmp' => 'required|digits:6|unique:doctors|integer'];
-
+        $leve = ['n_cmp' => 'required|digits:6|unique:doctors|integer'];
         $request->validate($leve);
-
 
         $doctor->update($request->all());
 
