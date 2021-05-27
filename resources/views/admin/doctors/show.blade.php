@@ -3,7 +3,12 @@
 @section('title', 'Blog 2021')
 
 @section('content_header')
-<h1>Menu de Especialidades </h1>
+<h1>Horario del Doc.
+    @foreach ($doctors as $doc)
+    {{$doc->name}}
+    @endforeach
+
+</h1>
 @stop
 
 @section('content')
@@ -15,41 +20,37 @@
             <strong>{{session('mensaje')}}</strong>
         </div>
         @endif
-
-        <a href="{{ route('admin.specialities.create')}}" class="btn btn-primary"> Crear Especialidad</a>
-
     </div>
 
 
     <div class="card-body">
-        <table id="especialidades" class="table table-striped table-bordered" style="width:100%">
+        <table id="doctores" class="table table-striped table-bordered" style="width:100%">
             <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Nombre</th>
-                    <th>Descripcion</th>
-                    <th style="width:20px;text-align:center">Acciones</th>
+                    <th>ID HORARIO</th>
+                    <th>Especialidad</th>
+                    <th>Fecha Programa</th>
+                    <th>Hora Inicio</th>
+                    <th>Hora Fin</th>
+                    <th>Estado</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($specialities as $speciality)
+                @foreach ($doctors as $doc)
                 <tr>
-                    <td>{{$speciality->id}}</td>
-                    <td>{{$speciality->nombre}}</td>
-                    <td>{{$speciality->descripcion}}</td>
-                    <td  style="display: flex">
-                        {{-- Editar --}}
-                        <a href="{{ route('admin.specialities.edit', $speciality) }}" class="btn btn-success">Editar</a>
-                        {{-- Eliminar --}}
-                        <form action="{{ route('admin.specialities.destroy', $speciality) }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <input type="submit" value="Eliminar" class="btn btn-danger" style="margin: 0px 0px 0px 5px;">
-                        </form>
+                    <td>{{$doc->id}}</td>
+                    <td>{{$doc->nombre}}</td>
+                    <td>{{$doc->fecha_atencion}}</td>
+                    <td>{{$doc->hora_inicio}}</td>
+                    <td>{{$doc->hora_fin}}</td>
+                    <td>@if ($doc->estado=0)
+                        Disponible
+                        @else
+                        No disponible
+                        @endif
                     </td>
                 </tr>
                 @endforeach
-
             </tbody>
         </table>
     </div>
@@ -70,7 +71,7 @@
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
 <script>
-    $('#especialidades').DataTable(
+    $('#doctores').DataTable(
         {
             "responsive":true,
             "auto-with":false,

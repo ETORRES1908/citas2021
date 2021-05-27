@@ -52,15 +52,15 @@ class DoctorController extends Controller
     public function store(Request $request)
     {
 
-        /* $request->validate([
-            'nombre' => 'required|unique:specialities|max:50|min:10|string',
-            'descripcion' => 'required|max:500|min:10|string'
-        ]); */
+        $request->validate([
+            'n_cmp' => 'required|unique:doctors|digits:6',
+            'user_id' => 'required|unique:doctors|min:1|max:4'
+        ]);
 
         $doctors = Doctor::create($request->all());
 
-        return redirect()->route('admin.doctors.edit', $doctors)
-        ->with('mensaje','La doctors se creó correctamente');
+        return redirect()->route('admin.doctors.index', $doctors)
+        ->with('mensaje','Se añadio correctamente');
     }
 
     /**
@@ -69,9 +69,18 @@ class DoctorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Doctor $doctors)
+    public function show(Doctor $doctor)
     {
-        //
+        /* Selec y inner join doctor, users, schedules*/
+        $doctors = Doctor::select('users.name','schedules.id','specialities.nombre','schedules.fecha_atencion','schedules.hora_inicio','schedules.hora_fin','schedules.estado')
+                ->join('users', 'users.id', '=', 'doctors.id')
+                ->join('doctor_speciality', 'doctor_speciality.doctor_id', '=', 'doctors.id')
+                ->join('specialities', 'doctor_speciality.speciality_id', '=', 'specialities.id')
+                ->join('schedules', 'schedules.doctor_id', '=', 'doctors.id')
+                ->where('doctors.id', $doctor->id)
+                ->get();
+            /*echo '<pre>' , var_export($doctors,true) , '</pre>'; */
+    return view('admin.doctors.show', compact('doctors'));
     }
 
     /**

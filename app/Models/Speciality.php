@@ -9,7 +9,7 @@ use App\Models\Doctor;
 class Speciality extends Model
 {
     use HasFactory;
-    
+
     protected $paginationTheme = "bootstrap";
 
     protected $guarded = [];
@@ -19,5 +19,5 @@ class Speciality extends Model
     public function doctors()
     {
         return $this->belongsToMany(Doctor::class);
-    }    
+    }
 }

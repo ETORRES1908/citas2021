@@ -22,14 +22,14 @@
 
 
         <div class="card-body">
-            <table class="table table-striped" style="width: 100%;">
+            <table id="doctores" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>N_CMP</th>
                         <th>Nombre</th>
                         <th>Especilidades</th>
-                        <th style="text-align:center" colspan="2">Acciones</th>
+                        <th style="width:20px;text-align:center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,14 +39,13 @@
                         <td>{{$doctor->n_cmp}}</td>
                         <td>{{$doctor->name}}</td>
                         <td>{{$doctor->nombre}}</td>
-                        <td></td>
-                        <td style="display: flex; justify-content: space-between">
-                            <a href="{{ route('admin.doctors.show', $doctor) }}" class="btn btn-warning" >Horario</a>
-                            <a href="{{ route('admin.doctors.edit', $doctor) }}" class="btn btn-success">Editar</a>
+                        <td style="display: flex;">
+                            <a href="{{ route('admin.doctors.show', $doctor->id) }}" class="btn btn-warning" >Horario</a>
+                            <a href="{{ route('admin.doctors.edit', $doctor) }}" class="btn btn-success" style="margin: 0px 0px 0px 5px;">Editar</a>
                             <form action="{{ route('admin.doctors.destroy', $doctor) }}" method="post">
                                 @csrf
                                 @method('DELETE')
-                                <input type="submit" value="Eliminar" class="btn btn-danger">
+                                <input type="submit" value="Eliminar" class="btn btn-danger" style="margin: 0px 0px 0px 5px;">
                             </form>
                         </td>
                     </tr>
@@ -60,9 +59,25 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+<link rel="stylesheet" href="/css/admin_custom.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
 @stop
 
 @section('js')
-    <script> console.log('Hola!'); </script>
+<script>
+    console.log('Hola!');
+</script>
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $('#doctores').DataTable(
+        {
+            "responsive":true,
+            "auto-with":false,
+            "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            }
+        });
+</script>
 @stop
