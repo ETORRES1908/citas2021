@@ -243,7 +243,7 @@ return [
         ['header' => 'AJUSTES DEL SISTEMA'],
         [
             'text' => 'Usuarios',
-            'url'  => 'admin.users.index',
+            'route'  => 'admin.users.index',
             'icon' => 'fas fa-hospital-user',
         ],
         [
@@ -253,7 +253,7 @@ return [
         ],
         [
             'text' => 'Doctores',
-            'url'  => 'admin.doctors.index',
+            'route'  => 'admin.doctors.index',
             'icon' => 'fas fa-user-md',
         ],
 

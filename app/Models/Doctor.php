@@ -12,15 +12,17 @@ class Doctor extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     //UN DOCTOR PERTENECE  A MUCHAS ESPECIALIDADES
     public function specialities()
     {
         return $this->belongsToMany(Speciality::class);
-    }     
+    }
 
     //UN DOCTOR PERTENECE  A UN SOLO USUARIO
     public function user()
-    {   
+    {
         return $this->belongsTo(User::class);
     }
 
@@ -30,5 +32,5 @@ class Doctor extends Model
     {
         return $this->hasMany(Schedule::class);
     }
-        
+
 }
