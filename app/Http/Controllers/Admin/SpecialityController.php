@@ -45,7 +45,7 @@ class SpecialityController extends Controller
         ]);
 
         $speciality = Speciality::create($request->all());
-        
+
         return redirect()->route('admin.specialities.edit', $speciality)
         ->with('mensaje','La Especialidad se creó correctamente');
     }
@@ -96,7 +96,7 @@ class SpecialityController extends Controller
         }
 
         $speciality->update($request->all());
-    
+
         return redirect()->route('admin.specialities.edit', $speciality)
         ->with('mensaje','La Especialidad se editó correctamente');
     }
@@ -110,7 +110,7 @@ class SpecialityController extends Controller
     public function destroy(Speciality $speciality)
     {
         $speciality->delete();
-        
+
         return redirect()->route('admin.specialities.index', $speciality)
         ->with('mensaje','La Especialidad se elimino correctamente');
     }
