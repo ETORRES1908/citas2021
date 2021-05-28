@@ -38,15 +38,25 @@
         </div>
         <div class="form-group">
             <div class="form-group">
-                {!! Form::label('name', 'Nombre') !!}
-                {!! Form::text('name', null, ['class' => 'form-control']) !!}
+                {!! Form::label('nombre', 'Nombre') !!}
+                {!! Form::text('nombre', $doctor->user->profile->nombre, ['class' => 'form-control']) !!}
             </div>
         </div>
+        
         <div class="form-group">
-            <div class="form-group">
-                {!! Form::label('nombre', 'Especialidad') !!}
-                {!! Form::text('nombre', null, ['class' => 'form-control']) !!}
-            </div>
+            
+            @foreach ($specialities as $speciality)
+                
+            
+            <label for="especialidad">
+            {!! Form::checkbox('specialities[]', $speciality->id, $doctor->specialities, ['class' => 'mr-1']) !!} {{$speciality->nombre}}
+            </label>    
+            @endforeach
+            {{-- 
+                1 => 1
+                2 => 2
+                3 => 3
+            --}}
         </div>
 
         <div class="form-group">

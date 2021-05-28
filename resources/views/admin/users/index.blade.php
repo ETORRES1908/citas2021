@@ -10,16 +10,15 @@
     <div class="card">
 
         <div class="card-header">
-            @if (session('mensaje'))
+            @if (session('msg'))
                 <div class="alert alert-danger">
-                    <strong>{{session('mensaje')}}</strong>
+                    <strong>{{session('msg')}}</strong>
                 </div>
             @endif
 
             {{-- <a href="{{ route('admin.doctors.create')}}" class="btn btn-primary"> Añadir Doctor</a> --}}
 
         </div>
-
 
         <div class="card-body">
             <table id="usuarios" class="table table-striped table-bordered" style="width:100%">
@@ -28,6 +27,8 @@
                     <tr>
                         <th>ID</th>
                         <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>DNI</th>
                         <th>Email</th>
                         
                         <th style="width:2px;text-align:center">Acciones</th>
@@ -37,12 +38,14 @@
                     @foreach ($users as $user)
                     <tr>
                         <td>{{$user->id}}</td>
-                        <td>{{$user->name}}</td>
+                        <td>{{$user->profile->nombre}}</td>
+                        <td>{{$user->profile->dni}}</td>
+                        <td>{{$user->profile->apellido}}</td>
                         <td>{{$user->email}}</td>
                         
                         <td style="display:flex ">
-                            <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-success">Editar</a>
-                            &nbsp<a href="#" class="btn btn-warning">Rol</a>
+                            <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-success">Editar</a>
+                    
                             <form action="{{ route('admin.users.destroy', $user) }}" method="post">
                                 @csrf
                                 @method('DELETE')
@@ -56,7 +59,6 @@
                 
             </table>
         </div>
-
     </div>
 @stop
 

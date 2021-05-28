@@ -3,66 +3,64 @@
 @section('title', 'Blog 2021')
 
 @section('content_header')
-    <h1>Editar Usuario ID: {{$user->id}}</h1>
-    {{$user}}
+    <h1>Editar a {{$user->profile->nombre}}</h1>
+
 @stop
 
 @section('content')
     <div class="card">
         <div class="card-header">
 
-            @if (session('mensaje'))
+            @if (session('msg'))
                 <div class="alert alert-success">
-                    <strong>{{session('mensaje')}}</strong>
+                    <strong>{{session('msg')}}</strong>
                 </div>
             @endif
 
             @if (count($errors) > 0)
             <div class="text-danger">
-
                     @foreach ($errors->all() as $message)
                         <li>{{ $message }}</li>
                     @endforeach
-
             </div>
             @endif
 
         </div>
         <div class="card-body">
             
-            {!! Form::open(array('route'=>array('admin.users.update',$user->id), 'method'=>'PUT')) !!}
+
+            {!! Form::model($user, ['route' => ['admin.users.update', $user], 'method' => 'PUT']) !!}
 
                 <div class="form-group">
                         
                         <div class="form-group">
-                            {!! Form::label('name', 'Nombre') !!}
-                            {!! Form::text('name', $user->name, ['class' => 'form-control']) !!}
+                            {!! Form::label('nombre', 'Nombre') !!}
+                            {!! Form::text('nombre', $user->profile->nombre, ['class' => 'form-control']) !!}
                         </div>
                         <div class="form-group">
                             {!! Form::label('apellido', 'Apellidos') !!}
-                            {!! Form::text('apellido', $user->apellido, ['class' => 'form-control']) !!}
+                            {!! Form::text('apellido', $user->profile->apellido, ['class' => 'form-control']) !!}
                         </div>
                         <div class="form-group">
                             {!! Form::label('email', 'Correo') !!}
                             {!! Form::text('email', $user->email, ['class' => 'form-control']) !!}
                         </div>
 
-
                         <div class="form-group">
                             {!! Form::label('dni', 'DNI') !!}
-                            {!! Form::text('dni', $user->dni, ['class' => 'form-control']) !!}
+                            {!! Form::text('dni', $user->profile->dni, ['class' => 'form-control']) !!}
                         </div>
                         <div class="form-group">
                             {!! Form::label('fecha_nac', 'Fecha de Nacimiento') !!}
-                            {!! Form::date('fecha_nac', $user->fecha_nac, ['class' => 'form-control']) !!}
+                            {!! Form::date('fecha_nac', $user->profile->fecha_nac, ['class' => 'form-control']) !!}
                         </div>
                         <div class="form-group">
                             {!! Form::label('edad', 'Edad') !!}
-                            {!! Form::text('edad', $user->edad, ['class' => 'form-control']) !!}
+                            {!! Form::text('edad', $user->profile->edad, ['class' => 'form-control']) !!}
                         </div>
                         <div class="form-group">
                             {!! Form::label('sexo', 'Sexo') !!}
-                            {!! Form::select('sexo',array('m'=>'Masculino','f'=>'Femenino'), $user->sexo, ['class' => 'form-control']) !!}
+                            {!! Form::select('sexo',array('m'=>'Masculino','f'=>'Femenino'), $user->profile->sexo, ['class' => 'form-control']) !!}
                         </div>
 
                 </div>

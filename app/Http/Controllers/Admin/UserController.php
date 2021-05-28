@@ -16,9 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::select('users.id','users.name','users.email','users.password')
-                ->get();
-
+        $users = User::all();        
         return view('admin.users.index', compact('users'));
     }
 
@@ -60,14 +58,17 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        // $user = User::select('users.id','users.name','profiles.apellido','users.email','users.password','profiles.dni','profiles.fecha_nac','profiles.edad','profiles.sexo')
-        //          ->join('profiles', 'users.id', '=', 'profiles.user_id')
-        //          ->get();
-        $user = User::with('Profile')->findOrFail($id);
-        
+
+
         return view('admin.users.edit', compact('user'));
+
+        //echo '<pre>' , var_export($user[0]["profile"]["nombre"],true) , '</pre>';
+        /*foreach ($user as $usu) {
+            echo $usu["profile"]->nombre;
+            echo $usu["email"];
+        }*/
     }
 
     /**
@@ -78,24 +79,48 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        $leve=['dni'=>'required|digits:8|integer'];
-        $request->validate($leve);
-        $datos = User::with('Profile')->findOrFail($id);
-        
-        var_dump($datos);
-        //return redirect()->route('admin.users.edit',$id);
-    }
+        $leve=['dni'=>'required|digits:8|integer',
+                'nombre'=>'required|string',
+                'apellido'=>'required|string',
+                'edad'=>'required|digits:2|integer',
+                'fecha_nac'=>'required',
+                'sexo'=>'required|string'];
 
+        $estricto=['dni'=>'required|digits:8|integer|unique:profiles',
+                'nombre'=>'required|string',
+                'apellido'=>'required|string',
+                'edad'=>'required|digits:2|integer',
+                'fecha_nac'=>'required',
+                'sexo'=>'required|string'];
+
+        if ($request->dni == $user->profile->dni ) {
+            $request->validate($leve);
+        } else {
+            $request->validate($estricto);
+        }
+
+        //actualiza solo el modelo user
+        $user->update($request->all());
+
+        //actualiza solo el modelo profile
+        $user->profile->update($request->only("nombre","apellido","edad","sexo","fecha_nac","dni"));
+
+        return redirect()->route('admin.users.edit',$user)->with('msg','El usuario ha sido modificado correctamente');
+
+    }
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+    
+        $user->delete();
+        return redirect()->route('admin.users.index',$user)->with('msg','El usuario ha sido eliminado correctamente');
+
     }
 }

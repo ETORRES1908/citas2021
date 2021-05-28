@@ -21,12 +21,13 @@ class DoctorController extends Controller
         /* $doctors = Doctor::with('user','specialities')->where('id', '=', $doctors)->get(); */
 
         /*  Select  con inners join  */
-        $doctors = Doctor::select('doctors.id','doctors.n_cmp','users.name','specialities.nombre')
+        /*$doctors = Doctor::select('doctors.id','doctors.n_cmp','users.name','specialities.nombre')
                 ->join('users', 'users.id', '=', 'doctors.id')
                 ->join('doctor_speciality', 'doctor_speciality.doctor_id', '=', 'doctors.id')
                 ->join('specialities', 'doctor_speciality.speciality_id', '=', 'specialities.id')
                 ->get();
         /*  echo '<pre>' , var_export($data,true) , '</pre>'; */
+        $doctors = Doctor::all();
 
     return view('admin.doctors.index', compact('doctors'));
 
@@ -96,8 +97,11 @@ class DoctorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Doctor $doctor)
+    
     {
-        return view('admin.doctors.edit', compact('doctor'));
+        $specialities = Speciality::all();
+
+        return view('admin.doctors.edit', compact('doctor', 'specialities'));
     }
 
     /**

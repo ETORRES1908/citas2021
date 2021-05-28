@@ -28,7 +28,10 @@
                         <th>ID</th>
                         <th>N_CMP</th>
                         <th>Nombre</th>
-                        <th>Especilidades</th>
+                        <th>Apellido</th>
+                        <th>DNI</th>
+
+
                         <th style="width:20px;text-align:center">Acciones</th>
                     </tr>
                 </thead>
@@ -37,8 +40,9 @@
                     <tr>
                         <td>{{$doctor->id}}</td>
                         <td>{{$doctor->n_cmp}}</td>
-                        <td>{{$doctor->name}}</td>
-                        <td>{{$doctor->nombre}}</td>
+                        <td>{{$doctor->user->profile->nombre}}</td>
+                        <td>{{$doctor->user->profile->apellido}}</td>
+                        <td>{{$doctor->user->profile->dni}}</td>
                         <td style="display: flex;">
                             <a href="{{ route('admin.doctors.show', $doctor->id) }}" class="btn btn-warning" >Horario</a>
                             <a href="{{ route('admin.doctors.edit', $doctor) }}" class="btn btn-success" style="margin: 0px 0px 0px 5px;">Editar</a>
