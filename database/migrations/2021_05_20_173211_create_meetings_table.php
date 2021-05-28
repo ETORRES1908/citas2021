@@ -27,9 +27,9 @@ class CreateMeetingsTable extends Migration
         });
 
         /* 
-            0 = PENDIENTE
-            1 = FINALIZADO
-            2 = CANCELADO
+            0 = PENDIENTE   // es cuando se asigna un usuario a una cita
+            1 = FINALIZADO // es cuando el doctro finaliza una cita
+            2 = CANCELADO // es cuando el doctor o el usuario cancela una cita
         */
 
 
