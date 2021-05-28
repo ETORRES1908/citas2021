@@ -15,7 +15,14 @@
             <strong>{{session('mensaje')}}</strong>
         </div>
         @endif
-        <h5>Especialidad : </h5> <span class="text-success">{{$speciality->nombre}}</span>
+        <h5>Especialidad : </h5>
+        <span class="text-success">
+            @foreach ($speciality as $specialities)
+                @foreach ($specialities as $sp)
+                {{$sp->nombre}}
+                @endforeach
+            @endforeach
+        </span>
     </div>
 
     <div class="card-body">
@@ -31,22 +38,22 @@
             </thead>
             <tbody>
                 @foreach ($doctors as $doctor)
-                    @foreach ($doctor["schedules"] as $schedule)
-                        
-                    <tr>
-                        <td>{{$schedule->id}}</td>
-                        <td>{{$schedule->fecha_atencion}}</td>
-                        <td>{{$schedule->hora_inicio}}</td>
-                        <td>{{$schedule->hora_fin}}</td>
-                        <td>
-                            @if ($schedule->estado=0)
-                            <span class="text-success">Disponible</span>
-                            @else
-                            <span class="text-danger">Ocupado</span>
-                            @endif
-                        </td>
-                    </tr>
-                    @endforeach
+                @foreach ($doctor["schedules"] as $schedule)
+
+                <tr>
+                    <td>{{$schedule->id}}</td>
+                    <td>{{$schedule->fecha_atencion}}</td>
+                    <td>{{$schedule->hora_inicio}}</td>
+                    <td>{{$schedule->hora_fin}}</td>
+                    <td>
+                        @if ($schedule->estado=0)
+                        <span class="text-success">Disponible</span>
+                        @else
+                        <span class="text-danger">Ocupado</span>
+                        @endif
+                    </td>
+                </tr>
+                @endforeach
                 @endforeach
             </tbody>
         </table>

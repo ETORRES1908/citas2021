@@ -3,7 +3,7 @@
 @section('title', 'Blog 2021')
 
 @section('content_header')
-<h1>Editar Doctor ID: {{$doctor->user->name}}</h1>
+<h1>Editar Doctor ID: {{$doctor->user->name}} {{$doctor->user->profile->apellido}}</h1>
 @stop
 
 @section('content')
@@ -42,21 +42,22 @@
                 {!! Form::text('nombre', $doctor->user->profile->nombre, ['class' => 'form-control']) !!}
             </div>
         </div>
-        
         <div class="form-group">
-            
+            <div class="form-group">
+                {!! Form::label('apellido', 'Apellidos') !!}
+                {!! Form::text('apellido', $doctor->user->profile->apellido, ['class' => 'form-control']) !!}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {!! Form::label('specialities', 'Añadir especialidades') !!}<br>
+
             @foreach ($specialities as $speciality)
-                
-            
             <label for="especialidad">
             {!! Form::checkbox('specialities[]', $speciality->id, $doctor->specialities, ['class' => 'mr-1']) !!} {{$speciality->nombre}}
-            </label>    
+            </label>
             @endforeach
-            {{-- 
-                1 => 1
-                2 => 2
-                3 => 3
-            --}}
+
         </div>
 
         <div class="form-group">
