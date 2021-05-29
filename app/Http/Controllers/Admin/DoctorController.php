@@ -54,25 +54,37 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
-        //Validate
+        //Validaciones --------------------------------------------------------
+
         $request->validate([
             'n_cmp' => 'required|unique:doctors|digits:6',
-            'dni' => 'required',
+            'dni' => 'required|digits:8|integer',
             'specialities'=>'required'
         ]);
 
+        //Buscamos el doctor segun el dni --------------------------------------------------------
         $perfil = Profile::where('dni',$request->dni)->first();
 
 
-        $doctor = Doctor::create(['n_cmp'=>$request->n_cmp,'user_id'=>$perfil->user_id]);
+        //Evaluamos si el DNI ya ha sido usado por otro doctor  --------------------------------------------------------
+        if(!is_null($perfil->user->doctor)){
+          
+            return redirect()->route('admin.doctors.create')
+            ->with('mensaje','El dni de: '.$perfil->nombre.' ya fue asignado como doctor'); 
+            die();
 
-        //Campo de especialidades
-        if($request->specialities){
+        } else { //En caso no se haya asignado el DNI -------------- creamos el doctor ------------------------------------------
+            $doctor = Doctor::create(
+            ['n_cmp'=>$request->n_cmp,
+            'user_id'=>$perfil->user_id]
+        );
+
+        //Sincronzamos las especialidades con el doctor --------------------------------------------------------
             $doctor->specialities()->sync($request->specialities);
-        }
-
+        
         return redirect()->route('admin.doctors.edit', $doctor)
-        ->with('mensaje','Se añadio correctamente');
+        ->with('mensaje','Se asignó el Rol de doctor al usuario correctamente'); 
+        } 
     }
 
     /**
@@ -81,13 +93,9 @@ class DoctorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Doctor $doctor)
     {
-        $user = User::where('id','=',$id)->first();
-        $doctors = Doctor::where('id','=',$id)->get();
-        $speciality = Speciality::where('id','=',$id)->get();
-
-        return view('admin.doctors.show', compact('doctors', 'speciality', 'user'));
+        return view('admin.doctors.show', compact('doctor'));
     }
 
     /**
@@ -97,10 +105,8 @@ class DoctorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Doctor $doctor)
-
     {
         $specialities = Speciality::all();
-
         return view('admin.doctors.edit', compact('doctor', 'specialities'));
     }
 
@@ -115,37 +121,32 @@ class DoctorController extends Controller
     {
 
         $leve = ['n_cmp' => 'required|digits:6|integer',
-        'nombre'=>'required|string',
-        'specialities'=>'required'
+                'nombre'=>'required|string|between:1,20',
+                'specialities'=>'required'
         ];
 
         $estricto= ['n_cmp' => 'required|digits:6|unique:doctors|integer',
-        'nombre'=>'required|string',
+        'nombre'=>'required|string|between:1,20',
         'specialities'=>'required'
-     ];
+        ];
 
-        if ($request->n_cmp == $doctor->n_cmp) {
+        if ($request->n_cmp == $doctor->n_cmp) { //si el n_cmp son iguales a los que se enviaron
             $request->validate($leve);
         } else {
             $request->validate($estricto);
         }
 
+
         //actualiza solo el modelo doctor
         $doctor->update($request->only("n_cmp"));
-
-        //Campo de especialidades
-        if($request->specialities){
-            $doctor->specialities()->sync($request->specialities);
-        }
-
-        //actualiza solo el modelo user
-        $user = User::findOrFail($doctor->user_id);
-        $user->name = $request->get('nombre');
-        $user->save();
-
-        //actualiza solo el modelo profile
+        $doctor->user->update($request->only("name"));
         $doctor->user->profile->update($request->only("nombre","apellido"));
 
+        //Campo de especialidades
+        $doctor->specialities()->sync($request->specialities);
+        
+
+       //actualiza solo el modelo user
         return redirect()->route('admin.doctors.edit', $doctor)
         ->with('mensaje','Doctor(a) '.$doctor->user->profile->nombre.' se editó correctamente');
     }

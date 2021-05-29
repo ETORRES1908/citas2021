@@ -39,8 +39,8 @@
                     <tr>
                         <td>{{$user->id}}</td>
                         <td>{{$user->profile->nombre}}</td>
-                        <td>{{$user->profile->dni}}</td>
                         <td>{{$user->profile->apellido}}</td>
+                        <td>{{$user->profile->dni}}</td>
                         <td>{{$user->email}}</td>
                         
                         <td style="display:flex ">

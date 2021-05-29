@@ -20,6 +20,12 @@
         </div>
         @endif
 
+        @if (session('mensaje'))
+                <div class="alert alert-warning">
+                    <strong>{{session('mensaje')}}</strong>
+                </div>
+        @endif
+
     </div>
     <div class="card-body">
 
@@ -44,7 +50,7 @@
                 {!! Form::label('specialities', 'Especialidades') !!}<br>
                 @foreach ($specialities as $speciality)
                 <label for="especialidad">
-                    {!! Form::checkbox('specialities[]', $speciality->id, ['class' => 'mr-1']) !!}
+                    {!! Form::checkbox('specialities[]', $speciality->id, null, ['class' => 'mr-1']) !!}
                     {{$speciality->nombre}}
                 </label><br>
                 @endforeach

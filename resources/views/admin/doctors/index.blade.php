@@ -42,7 +42,7 @@
                         <td>{{$doctor->user->profile->apellido}}</td>
                         <td>{{$doctor->user->profile->dni}}</td>
                         <td style="display: flex;">
-                            <a href="{{ route('admin.doctors.show', $doctor->id) }}" class="btn btn-warning" >Horario</a>
+                            <a href="{{ route('admin.doctors.show', $doctor) }}" class="btn btn-warning" >Horario</a>
                             <a href="{{ route('admin.doctors.edit', $doctor) }}" class="btn btn-success" style="margin: 0px 0px 0px 5px;">Editar</a>
                             <form action="{{ route('admin.doctors.destroy', $doctor) }}" method="post">
                                 @csrf

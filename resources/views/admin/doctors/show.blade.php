@@ -3,7 +3,7 @@
 @section('title', 'Blog 2021')
 
 @section('content_header')
-<h1>Horario del Doc. {{$user->name}}</h1>
+<h1>Horario del Doc. {{$doctor->user->name}}</h1>
 @stop
 
 @section('content')
@@ -15,13 +15,12 @@
             <strong>{{session('mensaje')}}</strong>
         </div>
         @endif
-        <h5>Especialidad : </h5>
-        <span class="text-success">
-            @foreach ($speciality as $specialities)
-                @foreach ($specialities as $sp)
-                {{$sp->nombre}}
-                @endforeach
-            @endforeach
+        <h5>Especialidad(es) : </h5>
+        <span class="text-secondary">
+
+        @foreach ($doctor->specialities as $esp)
+                <li>{{$esp->nombre}} </li>
+        @endforeach 
         </span>
     </div>
 
@@ -37,23 +36,22 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($doctors as $doctor)
-                @foreach ($doctor["schedules"] as $schedule)
+                @foreach ($doctor->schedules as $sc)
 
                 <tr>
-                    <td>{{$schedule->id}}</td>
-                    <td>{{$schedule->fecha_atencion}}</td>
-                    <td>{{$schedule->hora_inicio}}</td>
-                    <td>{{$schedule->hora_fin}}</td>
+                    <td>{{$sc->id}}</td>
+                    <td>{{$sc->fecha_atencion}}</td>
+                    <td>{{$sc->hora_inicio}}</td>
+                    <td>{{$sc->hora_fin}}</td>
                     <td>
-                        @if ($schedule->estado=0)
+                        @if ($sc->estado=0)
                         <span class="text-success">Disponible</span>
                         @else
                         <span class="text-danger">Ocupado</span>
                         @endif
                     </td>
                 </tr>
-                @endforeach
+                
                 @endforeach
             </tbody>
         </table>
