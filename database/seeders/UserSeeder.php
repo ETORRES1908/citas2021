@@ -23,48 +23,54 @@ class UserSeeder extends Seeder
 
         foreach ($users as $user) {
 
-            //Crear 8 doctores
+            //Crear 8 doctores----------------------------------------------------------
             $doctor = Doctor::factory()->create([
                 //Utiliza los las ID de los usuarios ya creados para $doctor->user_id
                 "user_id" => $user->id
             ]);
 
-            //Por cada Doctor crea 4 horarios
-            foreach ($doctor as $doctorID) {
                 //Crear Horarios
-                $horario = Schedule::factory()->create([
-                    //Utiliza los las ID de los dcotores ya creados para $horario->doctor_id
+                for ($i=0; $i < 10; $i++) { 
+                    $horarios = Schedule::factory()->create([
+                    //Utiliza los las ID de los doctores ya creados para $horario->doctor_id
                     "doctor_id" => $doctor->id
                 ]);
-            }
+                }
+                
+            
 
-            //Crear reuniones
+            //Crear reuniones----------------------------------------------------------
             $meet = Meeting::factory()->create([
                 //Utiliza los las ID de los usuarios ya creados para $meet->user_id
                 "user_id" => $user->id,
                 //Utiliza los las ID de los usuarios ya creados para $meet->schedule_id
-                "schedule_id" => $horario->id
+                "schedule_id" => $horarios->id
             ]);
 
             //Sincroniza id_especialidad , id_doctor
             $doctor->specialities()->sync(rand(1,10),$doctor->id);
         }
 
-        //Crear 8 usuarios más
+
+
+
+
+        //Crear 8 usuarios más-  NORMALES ---------------------------------------------------------
         User::factory(8)->create();
 
         //Selecciona a todos los usuarios asignando a la variable todos
-        $todos = User::all();
+        $users = User::all();
 
-        foreach ($todos as $todo) {
-            //Crear Perfiles igual a la cantidad de usuarios existentes, 8+8=16
+        foreach ($users as $user) {
+
+            //Crear Perfiles igual a la cantidad de usuarios existentes, 8+8=16----------------------------------------------------------
             Profile::factory()->create([
 
                 //Iguala el name de los usuarios a nombre de los prefiles
-                "nombre" => $todo->name,
+                "nombre" => $user->name,
 
                 //Iguala el id de los usuarios a user_id de los prefiles
-                "user_id" => $todo->id
+                "user_id" => $user->id
             ]);
         }
 
