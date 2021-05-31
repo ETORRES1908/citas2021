@@ -44,9 +44,9 @@
                     <td>{{$sc->hora_inicio}}</td>
                     <td>{{$sc->hora_fin}}</td>
                     <td>
-                        @if ($sc->estado=0)
+                        @if ($sc->estado==0)
                         <span class="text-success"> Disponible </span>
-                        @elseif ($sc->estado=1)
+                        @elseif ($sc->estado==1)
                         <span class="text-warning"> Ocupado </span>
                         @else
                         <span class="text-danger"> Terminado </span>

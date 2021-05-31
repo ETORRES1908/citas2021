@@ -23,7 +23,6 @@ class MeetingFactory extends Factory
      */
     public function definition()
     {
-        $user=User::all();
         return [
             "descripcion"=>$this->faker->realText(100),
             "observacion_med"=>$this->faker->realText(100),
