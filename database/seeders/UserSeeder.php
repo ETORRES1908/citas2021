@@ -24,19 +24,20 @@ class UserSeeder extends Seeder
         foreach ($users as $user) {
 
             //Crear 8 doctores----------------------------------------------------------
-            $doctors = Doctor::factory()->create([
+            $doctor = Doctor::factory()->create([
                 //Utiliza los las ID de los usuarios ya creados para $doctor->user_id
                 "user_id" => $user->id
             ]);
 
-            //Por cada Doctor crea 4 horarios
-            foreach ($doctors as $doctor) {
                 //Crear Horarios
-                $horarios = Schedule::factory()->create([
+                for ($i=0; $i < 10; $i++) { 
+                    $horarios = Schedule::factory()->create([
                     //Utiliza los las ID de los doctores ya creados para $horario->doctor_id
                     "doctor_id" => $doctor->id
                 ]);
-            }
+                }
+                
+            
 
             //Crear reuniones----------------------------------------------------------
             $meet = Meeting::factory()->create([
@@ -50,7 +51,11 @@ class UserSeeder extends Seeder
             $doctor->specialities()->sync(rand(1,10),$doctor->id);
         }
 
-        //Crear 8 usuarios más----------------------------------------------------------
+
+
+
+
+        //Crear 8 usuarios más-  NORMALES ---------------------------------------------------------
         User::factory(8)->create();
 
         //Selecciona a todos los usuarios asignando a la variable todos
