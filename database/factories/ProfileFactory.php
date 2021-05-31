@@ -22,7 +22,7 @@ class ProfileFactory extends Factory
     public function definition()
     {
 
-        $dt = $this->faker->dateTimeBetween($startDate = '-20 years', $endDate = 'now');
+        $dt = $this->faker->dateTimeBetween($startDate = '-60 years', $endDate = '-18 years');
         $date = $dt->format("Y-m-d"); // 1994-09-24
 
         return [

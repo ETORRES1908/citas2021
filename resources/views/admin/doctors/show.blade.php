@@ -18,9 +18,9 @@
         <h5>Especialidad(es) : </h5>
         <span class="text-secondary">
 
-        @foreach ($doctor->specialities as $esp)
-                <li>{{$esp->nombre}} </li>
-        @endforeach 
+            @foreach ($doctor->specialities as $esp)
+            <li>{{$esp->nombre}} </li>
+            @endforeach
         </span>
     </div>
 
@@ -36,8 +36,8 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($doctor->schedules as $sc)
 
+                @foreach ($doctor->schedules as $sc)
                 <tr>
                     <td>{{$sc->id}}</td>
                     <td>{{$sc->fecha_atencion}}</td>
@@ -45,14 +45,16 @@
                     <td>{{$sc->hora_fin}}</td>
                     <td>
                         @if ($sc->estado=0)
-                        <span class="text-success">Disponible</span>
+                        <span class="text-success"> Disponible </span>
+                        @elseif ($sc->estado=1)
+                        <span class="text-warning"> Ocupado </span>
                         @else
-                        <span class="text-danger">Ocupado</span>
+                        <span class="text-danger"> Terminado </span>
                         @endif
                     </td>
                 </tr>
-                
                 @endforeach
+
             </tbody>
         </table>
     </div>

@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Meeting;
+use App\Models\User;
+use App\Models\Schedule;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class MeetingFactory extends Factory
@@ -21,8 +23,11 @@ class MeetingFactory extends Factory
      */
     public function definition()
     {
+        $user=User::all();
         return [
-            //
+            "descripcion"=>$this->faker->realText(100),
+            "observacion_med"=>$this->faker->realText(100),
+            "estado"=>$this->faker->randomElement(["0","1","2"])
         ];
     }
 }
