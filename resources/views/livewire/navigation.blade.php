@@ -22,7 +22,7 @@
 
                         {{-- Solo si estas logueado --}}
                         @auth
-                        <a href="#"
+                        <a href="{{ route('cita.reserva.index')}}"
                             class="text-gray-300 hover:bg-green-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Reservar
                             citas</a>
 
