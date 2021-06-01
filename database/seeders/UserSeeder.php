@@ -29,15 +29,13 @@ class UserSeeder extends Seeder
                 "user_id" => $user->id
             ]);
 
-                //Crear Horarios
-                for ($i=0; $i < 10; $i++) { 
-                    $horarios = Schedule::factory()->create([
+            //Crear 10 Horarios usando al doctor recien creado
+            for ($i=0; $i < 10; $i++) {
+                $horarios = Schedule::factory()->create([
                     //Utiliza los las ID de los doctores ya creados para $horario->doctor_id
                     "doctor_id" => $doctor->id
                 ]);
-                }
-                
-            
+            }
 
             //Crear reuniones----------------------------------------------------------
             $meet = Meeting::factory()->create([
@@ -50,10 +48,6 @@ class UserSeeder extends Seeder
             //Sincroniza id_especialidad , id_doctor
             $doctor->specialities()->sync(rand(1,10),$doctor->id);
         }
-
-
-
-
 
         //Crear 8 usuarios más-  NORMALES ---------------------------------------------------------
         User::factory(8)->create();

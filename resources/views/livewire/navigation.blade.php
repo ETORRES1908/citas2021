@@ -77,6 +77,7 @@
 
                         <!-- SI LA CUENTA ESTA LOGUEADA -->
                         @auth
+<<<<<<< HEAD
                         <!-- BOTON DE NOTIFICACIÓN-->
                         <div class="ml-3 relative" x-data="{open:false}">
                             <button x-on:click="open=true"
@@ -151,6 +152,11 @@
 
                         @else
                         <!-- OPCIONES DE CUENTA SIN SER LOGUEADA-->
+=======
+                        <a href="{{ route('cita.reserva.index')}}"
+                            class="text-gray-300 hover:bg-green-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Reservar
+                            citas</a>
+>>>>>>> origin/citas-elmer
 
                         <!-- INICIAR SESION-->
                         <a href="{{ route('login') }}" class="block px-4 py-2 text-sm text-gray-300" role="menuitem"
