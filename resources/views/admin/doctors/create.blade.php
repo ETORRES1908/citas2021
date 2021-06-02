@@ -39,6 +39,7 @@
                 {!! Form::text('n_cmp', null, ['class' => 'form-control','placeholder'=>'Número de CMP']) !!}
             </div>
 
+
             {{-- Seleccionar Usuario --}}
             <div class="form-group">
                 {!! Form::label('dni', 'DNI del usuario') !!}<br>
