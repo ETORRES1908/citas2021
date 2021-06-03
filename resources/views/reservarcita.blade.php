@@ -6,6 +6,7 @@
                 @foreach ($specialities as $speciality)
                 <article class="w-full h-80 bg-cover bg-center " {{-- @if($loop->first)
                         md:col-span-2
+<<<<<<< HEAD
                         @endif" --}} style="background-color: lightblue">
 
                     <div class="w-full h-full px-8 flex flex-col justify-center" style="padding: 100px 10px 10px 10px">
@@ -13,6 +14,16 @@
                             <a href="#" class="inline-block px-3 h-6 bg-lightblue-600 text-gray rounded-full"></a>
                         </div>
                         <h1 class="text-2xl text-black leading-0 font-bold">
+=======
+                        @endif" --}} style="background-color: lightblue" >
+                         
+                <div class="w-full h-full px-8 flex flex-col justify-center" style="padding: 100px 10px 10px 10px">
+                    
+                    <div>
+                        <a href="#" class="inline-block px-3 h-6 bg-lightblue-600 text-gray rounded-full"></a>
+                    </div>
+                    <h1 class="text-2xl text-black leading-0 font-bold">
+>>>>>>> origin/citas-elmer
 
                             <a href="{{route('cita.reserva.show',$speciality)}}" class="underline">
                                 {{$speciality->nombre}}

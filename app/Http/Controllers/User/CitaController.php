@@ -57,13 +57,17 @@ class CitaController extends Controller
 
         //Crear Cita medica CANCELADO
         Meeting::create(
-            ['descripcion'=>'Hola Descripción',
-            'observacion_med'=>'Hola Observación',
+            ['descripcion'=>$request->descripcion,
+            //'observacion_med'=>'Hola Observación',
             'estado'=>'0',
             'user_id'=>$request->user_id,
             'schedule_id'=>$request->schedule_id]);
 
+<<<<<<< HEAD
         return redirect()->route('cita.ver.index');
+=======
+        return redirect()->route('profile.show')->with('mensaje','Se hizo la reservación correctamente');
+>>>>>>> origin/citas-elmer
     }
 
     /**
@@ -101,8 +105,20 @@ class CitaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'estado'=>'required',
+            //'schedule_id' => 'required',
+            'user_id' => 'required'
+        ]);
+        
 
+        $datos =  $request;
+        
+        return view('completar-cita', compact('datos','id'));
     }
+
+    
+
 
     /**
      * Remove the specified resource from storage.
