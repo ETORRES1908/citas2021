@@ -26,11 +26,5 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-<<<<<<< HEAD
 Route::resource('reservar', CitaController::class)->names('cita.reserva'); //
 Route::resource('citas', VerCitaController::class)->names('cita.ver');
-=======
-Route::resource('reservar', CitaController::class)->names('cita.reserva');
-
-
->>>>>>> origin/citas-elmer
