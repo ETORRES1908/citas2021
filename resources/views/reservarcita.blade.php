@@ -5,9 +5,11 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" style="padding:10px 50px 0px 75px">
             @foreach ($specialities as $speciality)
-            <article class="w-full h-80 bg-cover bg-center " {{-- @if($loop->first)
+            <article class="w-full h-80 bg-cover bg-center  
+                    @if($loop->first)
+                    {{-- @if($speciality->nombre=='Medicina General') --}}
                         md:col-span-2
-                        @endif" --}} style="background-color: lightblue" >
+                        @endif"  style="background-color: lightblue" >
                          
                 <div class="w-full h-full px-8 flex flex-col justify-center" style="padding: 100px 10px 10px 10px">
                     
