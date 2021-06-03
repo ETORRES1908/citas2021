@@ -55,7 +55,7 @@ class CitaController extends Controller
         $horario->estado = $request->estado;
         $horario->save();
 
-        //Crear Cita medica
+        //Crear Cita medica CANCELADO
         Meeting::create(
             ['descripcion'=>'Hola Descripción',
             'observacion_med'=>'Hola Observación',
@@ -63,7 +63,7 @@ class CitaController extends Controller
             'user_id'=>$request->user_id,
             'schedule_id'=>$request->schedule_id]);
 
-        return redirect()->route('admin.doctors.index');
+        return redirect()->route('cita.ver.index');
     }
 
     /**

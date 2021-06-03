@@ -40,33 +40,20 @@
 
                             {{-- Lista de horarios --}}
                             <a href="#"
-                                class="text-gray-300 hover:bg-red-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                                <!-- Button trigger modal -->
-                                <button type="button" data-bs-toggle="modal" data-bs-target="#modal0">
-                                    Lista de Horarios
-                                </button>
+                                class="text-gray-300 hover:bg-green-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                                Lista de horarios
                             </a>
 
                             {{-- Solo si estas logueado --}}
                             @auth
-                            <a href="#"
-                                class="text-gray-300 hover:bg-green-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                                <!-- Button trigger modal -->
-                                <button type="button" data-bs-toggle="modal" data-bs-target="#modal1">
-                                    Reservar citas
-                                </button>
-                            </a>
 
-                            <a href="#"
-                                class="text-gray-300 hover:bg-white hover:text-black px-3 py-2 rounded-md text-sm font-medium">
-                                <!-- Button trigger modal -->
-                                <button type="button" data-bs-toggle="modal" data-bs-target="#modal2">
-                                    Ver Citas
-                                </button>
-                            </a>
                             <a href="{{ route('cita.reserva.index')}}"
                                 class="text-gray-300 hover:bg-green-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                                 Reservar citas
+                            </a>
+                            <a href="{{ route('cita.ver.show',Auth::user()->id)}}"
+                                class="text-gray-300 hover:bg-green-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                                Ver citas
                             </a>
                             @endauth
                         </div>
@@ -291,114 +278,6 @@
 
     </nav>
 
-    <!-- Modal 0 -->
-    <div class="modal fade" id="modal0" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Lista de horarios</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Listar horarios
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal 1 -->
-    <div class="modal fade" id="modal1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Reservar Cita</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Reservar Cita
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal 2 -->
-    <div class="modal fade" id="modal2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Citas medicas</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <table id="tcitas" class="table table-striped table-bordered" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>N°</th>
-                                <th>Descripcion</th>
-                                <th>Observacion medica</th>
-                                <th>Estado</th>
-                                <th>Doctor</th>
-                                <th style="width:20px;text-align:center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($citas as $cita)
-                            <tr>
-                                <td>{{$cita->id}}</td>
-                                <td>{{$cita->descripcion}}</td>
-                                <td>{{$cita->observacion_med}}</td>
-                                <td>{{$cita->estado}}</td>
-                                <td>/td>
-                                <td style="display: flex;">
-                                    {{-- Eliminar Cita --}}
-                                    <form action="{{ route('admin.doctors.destroy', $cita) }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <input type="submit" value="Cancelar" class="btn btn-danger"
-                                            style="margin: 0px 0px 0px 5px;">
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
-
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
-    </script>
-    {{-- Sccripts para Datatable --}}
-    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
-    <script>
-        $('#tcitas').DataTable(
-    {
-        "responsive":true,
-        "auto-with":false,
-        "language": {
-        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-        }
-    });
-    </script>
 </body>
 
 </html>
