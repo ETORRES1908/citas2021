@@ -1,9 +1,9 @@
 <x-app-layout>
 
-    <div class="card-body">
+    <div class="card-body" style="background: white">>
         <div class="container py-8">
             <p class="text text-3xl" style="padding: 0px 10px 10px 75px">Seleccionar Horario</p>
-            <table id="doctores" class="table table-striped table-bordered" style="width:100%">
+            <table id="horarios" class="table table-hover table-bordered" style="width:100%">
                 <thead>
                     <tr>
                         {{-- <th>ID HORARIO</th> --}}
@@ -38,7 +38,9 @@
                             'form-control','placeholder'=>'Número
                             de CMP']) !!}
                             {!! Form::text('user_id', Auth::user()->id, ['hidden','class' => 'form-control']) !!}
+                            @if ($sc->estado==0)
                             {!! Form::submit('Elegir', ['class' => 'btn btn-success']) !!}
+                            @endif
                         </td>
                     </tr>
                     {!! Form::close() !!}
@@ -48,5 +50,15 @@
             </table>
         </div>
     </div>
-
+    <script>
+        $(document).ready(function () {
+          $('#horarios').DataTable({
+                "responsive":true,
+                "auto-with":false,
+                "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                }
+            });
+        });
+    </script>
 </x-app-layout>

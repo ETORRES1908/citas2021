@@ -198,11 +198,11 @@
                     class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Lista
                     de Horarios</a>
                 @auth
-                <a href="#"
+                <a href="{{ route('cita.reserva.index')}}"
                     class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Reservar
                     cita</a>
 
-                <a href="#"
+                <a href="{{ route('cita.ver.show',Auth::user()->id)}}"
                     class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Ver
                     citas</a>
                 @endauth
