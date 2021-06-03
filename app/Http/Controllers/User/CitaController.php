@@ -51,7 +51,9 @@ class CitaController extends Controller
         ]);
 
         //Modificar estado del horario
-        $horario->update($request->only("estado"));
+        $horario = Schedule::find($request->schedule_id);
+        $horario->estado = $request->estado;
+        $horario->save();
 
         //Crear Cita medica
         Meeting::create(
@@ -59,7 +61,7 @@ class CitaController extends Controller
             'observacion_med'=>'Hola Observación',
             'estado'=>'0',
             'user_id'=>$request->user_id,
-            'schedule_id'=>$request->schedule_id ]);
+            'schedule_id'=>$request->schedule_id]);
 
         return redirect()->route('admin.doctors.index');
     }
