@@ -10,7 +10,7 @@ use App\Models\Schedule;
 class Meeting extends Model
 {
     use HasFactory;
-
+    protected $guarded = [];
     //UNA CITA PERTENECE A UN SOLO HORARIO
     public function schedule()
     {

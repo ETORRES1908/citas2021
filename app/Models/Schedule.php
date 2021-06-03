@@ -11,7 +11,7 @@ use App\Models\Meeting;
 class Schedule extends Model
 {
     use HasFactory;
-
+    protected $guarded = [];
     //UN HORARIO LE PERTENECE A UN SOLO DOCTOR
     public function doctor()
     {

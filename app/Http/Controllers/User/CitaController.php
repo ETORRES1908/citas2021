@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Speciality;
 use App\Models\Doctor;
 use App\Models\Schedule;
+use App\Models\Profile;
+use App\Models\User;
+use App\Models\Meeting;
 
 class CitaController extends Controller
 {
@@ -26,11 +29,10 @@ class CitaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Speciality $speciality)
+    public function create()
     {
         //var_dump($speciality);
 
-        return view('horario-especialidad');
     }
 
     /**
@@ -39,9 +41,27 @@ class CitaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,Schedule $horario)
     {
-        //
+        //Validar
+        $request->validate([
+            'estado'=>'required',
+            'schedule_id' => 'required',
+            'user_id' => 'required'
+        ]);
+
+        //Modificar estado del horario
+        $horario->update($request->only("estado"));
+
+        //Crear Cita medica
+        Meeting::create(
+            ['descripcion'=>'Hola Descripción',
+            'observacion_med'=>'Hola Observación',
+            'estado'=>'0',
+            'user_id'=>$request->user_id,
+            'schedule_id'=>$request->schedule_id ]);
+
+        return redirect()->route('admin.doctors.index');
     }
 
     /**
@@ -52,18 +72,22 @@ class CitaController extends Controller
      */
     public function show($id)
     {
-        //
+        $speciality = Speciality::find($id);
+        return view('doctor-especialidad',compact('speciality'));
     }
-
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($dc)
     {
         //
+        $doctor = Doctor::find($dc);
+        /* echo '<pre>' , var_export($doctor,true) , '</pre>'; */
+        return view('horario-especialidad',compact('doctor'));
+
     }
 
     /**
@@ -75,7 +99,7 @@ class CitaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**
