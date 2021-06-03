@@ -7,9 +7,10 @@
             @foreach ($specialities as $speciality)
             <article class="w-full h-80 bg-cover bg-center " {{-- @if($loop->first)
                         md:col-span-2
-                        @endif" --}} style="background-color: lightblue">
-
+                        @endif" --}} style="background-color: lightblue" >
+                         
                 <div class="w-full h-full px-8 flex flex-col justify-center" style="padding: 100px 10px 10px 10px">
+                    
                     <div>
                         <a href="#" class="inline-block px-3 h-6 bg-lightblue-600 text-gray rounded-full"></a>
                     </div>
