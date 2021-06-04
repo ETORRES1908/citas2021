@@ -11,7 +11,7 @@
     {{-- CSS para Datatable --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
-    
+
     <title>Hello, world!</title>
 </head>
 
@@ -39,14 +39,18 @@
                             </a>
 
                             {{-- Lista de horarios --}}
-                            
+
 
                             {{-- Solo si estas logueado --}}
                             @auth
-                            
+
                             <a href="{{ route('cita.reserva.index')}}"
                                 class="text-gray-300 hover:bg-green-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                                 Reservar citas
+                            </a>
+                            <a href="{{ route('cita.ver.show',Auth::user()->id)}}"
+                                class="text-gray-300 hover:bg-green-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                                Ver citas
                             </a>
                             @endauth
                         </div>
@@ -191,11 +195,11 @@
                     class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Lista
                     de Horarios</a>
                 @auth
-                <a href="#"
+                <a href="{{ route('cita.reserva.index')}}"
                     class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Reservar
                     cita</a>
 
-                <a href="#"
+                <a href="{{ route('cita.ver.show',Auth::user()->id)}}"
                     class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Ver
                     citas</a>
                 @endauth
@@ -271,15 +275,6 @@
 
     </nav>
 
-    
-
-    <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
-    </script>
-    {{-- Sccripts para Datatable --}}
-    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
-    
+</body>
 
 </html>
