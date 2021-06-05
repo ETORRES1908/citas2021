@@ -3,7 +3,7 @@
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Livewire\Navigation;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\User\CitaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,3 +24,5 @@ Route::get('/a',[Navigation::class,'render']);
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+Route::resource('reservar', CitaController::class)->names('cita.reserva'); // 
