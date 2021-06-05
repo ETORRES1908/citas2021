@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\Profile;
+use App\Models\User;
 
-class UserController extends Controller
+class UsuController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();        
-        return view('admin.users.index', compact('users'));
+        //
     }
 
     /**
@@ -58,17 +57,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
-    {
-
-
-        return view('admin.users.edit', compact('user'));
-
-        //echo '<pre>' , var_export($user[0]["profile"]["nombre"],true) , '</pre>';
-        /*foreach ($user as $usu) {
-            echo $usu["profile"]->nombre;
-            echo $usu["email"];
-        }*/
+    public function edit($id)
+    {   
+        
+        $user = User::findOrFail($id);
+        return view('profile.edit-profile', compact('user'));
     }
 
     /**
@@ -78,9 +71,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
+        $usuario = User::findOrFail($id);
+
         $leve=['dni'=>'required|digits:8|integer',
                 'nombre'=>'required|string',
                 'apellido'=>'required|string',
@@ -95,34 +89,33 @@ class UserController extends Controller
                 'fecha_nac'=>'required',
                 'sexo'=>'required|string'];
 
-        if ($request->dni == $user->profile->dni ) {
-            $request->validate($leve);
-        } else {
-            $request->validate($estricto);
-        }
+        
 
-        //actualiza solo el modelo user
-        $user->name=$request->nombre;
-        $user->email=$request->email;
-        $user->save();
+            if ($request->dni == $usuario->profile->dni ) {
+                $request->validate($leve);
+            } else {
+                $request->validate($estricto);
+            }
+            //actualiza solo el modelo user
+            
+            $usuario->name=$request->nombre;
+            $usuario->email=$request->email;
+            $usuario->save();
 
-        //actualiza solo el modelo profile
-        $user->profile->update($request->only("nombre","apellido","edad","sexo","fecha_nac","dni"));
-
-        return redirect()->route('admin.users.edit',$user)->with('msg','El usuario ha sido modificado correctamente');
-
+            //actualiza solo el modelo profile
+            $usuario->profile->update($request->only("nombre","apellido","edad","sexo","fecha_nac","dni"));
+            
+        return redirect()->route('usuario.perfil.edit',$usuario->id)->with('msg','El usuario ha sido modificado correctamente');
     }
+
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-    
-        $user->delete();
-        return redirect()->route('admin.users.index',$user)->with('msg','El usuario ha sido eliminado correctamente');
-
+        //
     }
 }

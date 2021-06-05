@@ -68,12 +68,14 @@
     </x-slot>
 
     <x-slot name="actions">
-        <x-jet-action-message class="mr-3" on="saved">
+        {{-- <x-jet-action-message class="mr-3" on="saved">
             {{ __('Guardado.') }}
-        </x-jet-action-message>
+        </x-jet-action-message> --}}
 
-        <x-jet-button wire:loading.attr="disabled" wire:target="photo">
+        <a href="{{route('usuario.perfil.edit',$this->user->id)}}">Modificar Datos</a>
+
+        {{-- <x-jet-button wire:loading.attr="disabled" wire:target="photo">
             {{ __('Guardar') }}
-        </x-jet-button>
+        </x-jet-button> --}}
     </x-slot>
 </x-jet-form-section>

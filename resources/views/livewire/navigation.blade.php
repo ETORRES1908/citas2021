@@ -234,11 +234,11 @@
                     </button>
 
                 </div>
-                <div class="mt-3 px-2 space-y-1">
+                <div class="mt-3 px-2 space-y-1" style="position: absolute">
                     <!-- OPCIONES DE CUENTA LOGUEADA-->
 
                     <!-- PERFIL-->
-                    <x-jet-dropdown-link href="{{ route('profile.show') }}">
+                    <x-jet-dropdown-link  href="{{ route('profile.show') }}">
                         {{ __('Mi perfil') }}
                     </x-jet-dropdown-link>
 
