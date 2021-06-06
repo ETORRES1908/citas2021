@@ -22,7 +22,7 @@ class ScheduleFactory extends Factory
      */
     public function definition()
     {
-        $dt = $this->faker->dateTimeBetween($startDate = '+2 dayss', $endDate = '+1 week');
+        $dt = $this->faker->dateTimeBetween($startDate = '+2 days', $endDate = '+1 week');
         $date = $dt->format("Y-m-d"); // 1994-09-24
 
         return [

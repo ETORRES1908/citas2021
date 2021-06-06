@@ -3,11 +3,12 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use App\Models\Meeting;
 
 class Navigation extends Component
 {
     public function render()
-    {
-        return view('livewire.navigation');
+    {    $citas = Meeting::all();
+        return view('livewire.navigation', compact('citas'));
     }
 }

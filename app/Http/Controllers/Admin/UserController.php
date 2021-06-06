@@ -102,7 +102,9 @@ class UserController extends Controller
         }
 
         //actualiza solo el modelo user
-        $user->update($request->all());
+        $user->name=$request->nombre;
+        $user->email=$request->email;
+        $user->save();
 
         //actualiza solo el modelo profile
         $user->profile->update($request->only("nombre","apellido","edad","sexo","fecha_nac","dni"));
