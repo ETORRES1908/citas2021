@@ -52,11 +52,9 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">{{$sc->hora_inicio}}</div>
-                                            <div class="text-sm text-gray-500">Optimization</div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">{{$sc->hora_fin}}</div>
-                                            <div class="text-sm text-gray-500">Optimization</div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             @if ($sc->estado==0)

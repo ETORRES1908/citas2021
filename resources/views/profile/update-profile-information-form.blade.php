@@ -72,7 +72,12 @@
             {{ __('Guardado.') }}
         </x-jet-action-message> --}}
 
-        <a href="{{route('usuario.perfil.edit',$this->user->id)}}">Modificar Datos</a>
+
+        <p>
+            <a style="display: block" class="bg-white hover:bg-gray-100
+            text-indigo-600 font-semibold py-2 px-4 border border-gray-400 rounded
+            shadow" href="{{route('usuario.perfil.edit',$this->user->id)}}">Modificar Perfil</a>
+        </p>
 
         {{-- <x-jet-button wire:loading.attr="disabled" wire:target="photo">
             {{ __('Guardar') }}

@@ -10,6 +10,7 @@ use App\Models\Schedule;
 use App\Models\Profile;
 use App\Models\User;
 use App\Models\Meeting;
+use Illuminate\Support\Facades\Auth;
 
 class VerCitaController extends Controller
 {
@@ -53,6 +54,7 @@ class VerCitaController extends Controller
     public function show($id)
     {
         $citas = Meeting::all()->where('user_id',$id);
+
         return view('user.vercitas', compact('citas'));
     }
 
@@ -79,16 +81,15 @@ class VerCitaController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Meeting  $meeting
-     * @return \Illuminate\Http\Response
-     */
-     public function destroy($meeting)
-    {
-        $delete = Meeting::findOrFail($meeting)->delete();
-        return redirect()->route('cita.ver.index')
-        ->with('mensaje','Se elimino la cita correctamente');
-    }
+/**
+    * Remove the specified resource from storage.
+    *
+    * @param  \App\Models\Meeting  $meeting
+    * @return \Illuminate\Http\Response
+*/
+    public function destroy($meeting)
+        {
+            Meeting::findOrFail($meeting)->delete();
+            return redirect()->route('cita.ver.show', Auth::user()->id)->with('mensaje','Se canceló la cita correctamente',);
+        }
 }

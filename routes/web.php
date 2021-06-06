@@ -17,15 +17,15 @@ use App\Http\Controllers\User\UsuController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+    Route::get('/', function () {
+        return view('dashboard');
+    })->name('wellcome.index');
 
-Route::get('/a',[Navigation::class,'render']);
+    Route::get('/a',[Navigation::class,'render']);
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+    Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 
 Route::resource('reservar', CitaController::class)->names('cita.reserva'); //
 Route::resource('citas', VerCitaController::class)->names('cita.ver');

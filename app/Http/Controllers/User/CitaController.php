@@ -10,6 +10,7 @@ use App\Models\Schedule;
 use App\Models\Profile;
 use App\Models\User;
 use App\Models\Meeting;
+use Illuminate\Support\Facades\Auth;
 
 class CitaController extends Controller
 {
@@ -53,8 +54,13 @@ class CitaController extends Controller
 
         //Modificar estado del horario
         $horario = Schedule::find($request->schedule_id);
-        $horario->estado = $request->estado;
-        $horario->save();
+        if($horario->estado == 0){
+            $horario->estado = $request->estado;
+            $horario->save();
+        } else{
+            return redirect()->route('cita.ver.show', Auth::user()->id)->with('mensaje','No se puede reservar el horario en este momento');
+        }
+
 
         //Crear Cita medica CANCELADO
         Meeting::create(
@@ -63,7 +69,7 @@ class CitaController extends Controller
             'user_id'=>$request->user_id,
             'schedule_id'=>$request->schedule_id]);
 
-        return redirect()->route('profile.show')->with('mensaje','Se hizo la reservación correctamente');
+        return redirect()->route('cita.ver.show', Auth::user()->id)->with('mensaje','Se hizo la reservación correctamente');
     }
 
     /**

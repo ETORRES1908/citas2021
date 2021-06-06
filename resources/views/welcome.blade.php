@@ -6,7 +6,7 @@
             $("#alert").fadeOut();
         },1000);
     </script>
-    <div id="alert" class="alert alert-danger" style="width: 100%">
+    <div id="alert" class="alert alert-success" style="width: 100%">
         <strong>{{session('mensaje')}}</strong>
     </div>
     @endif
