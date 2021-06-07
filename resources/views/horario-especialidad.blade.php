@@ -75,7 +75,7 @@
                                             </span>
                                             @endif
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
+                                        <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                                             @if ($sc->estado==0)
                                             {{-- Recogemos el user_id del Auth::user() --}}
                                             {!! Form::text('user_id', Auth::user()->id, ['hidden','class' =>

@@ -1,7 +1,7 @@
 <x-app-layout>
     
         <div class="container py-2" >
-                <h1>Editar Usuario</h1> 
+                <h1  style="padding-top:50px">Editar Usuario</h1> 
             <div class="card">
                 
                 <div class="card-header">
@@ -22,7 +22,7 @@
 
                 </div>
 
-
+                
                 <div class="card-body">
                     
                     {!! Form::model($user, ['route' => ['usuario.perfil.update', $user->id], 'method' => 'PUT']) !!}
@@ -62,7 +62,9 @@
                         </div>
                        
                         <div class="form-group">
-                            <a class="text-indigo-600 hover:text-indigo-900 float-left" href="{{route('profile.show')}}">Regresar</a>
+                            <a class="bg-white hover:bg-gray-100
+                            text-indigo-600 font-semibold py-2 px-4 border border-gray-400 rounded
+                            shadow float-left" href="{{route('profile.show')}}">Regresar</a>
                             {!! Form::submit("Actualizar", ['class' => 'btn btn-primary float-right']) !!}
                         </div>
                        

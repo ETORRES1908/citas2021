@@ -51,9 +51,11 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             <div class="text-sm text-gray-900"> {{$dc->n_cmp}}</div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
+                                        <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                                             <a href="{{ route('cita.reserva.edit', $dc) }}"
-                                                class="text-indigo-600 hover:text-indigo-900">Elegir</a>
+                                                class="bg-white hover:bg-gray-100
+                                                text-indigo-600 font-semibold py-2 px-4 border border-gray-400 rounded
+                                                shadow">Elegir</a>
                                         </td>
                                     </tr>
                                     @endforeach

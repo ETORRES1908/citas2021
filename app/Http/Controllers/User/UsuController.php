@@ -75,20 +75,51 @@ class UsuController extends Controller
     {
         $usuario = User::findOrFail($id);
 
-        $leve=['dni'=>'required|digits:8|integer',
+        // $leve=['dni'=>'required|digits:8|integer',
+        //         'nombre'=>'required|string',
+        //         'apellido'=>'required|string',
+        //         'edad'=>'required|digits:2|integer',
+        //         'fecha_nac'=>'required',
+        //         'sexo'=>'required|string'];
+
+        // $estricto=['dni'=>'required|digits:8|integer|unique:profiles',
+        //         'nombre'=>'required|string',
+        //         'apellido'=>'required|string',
+        //         'edad'=>'required|digits:2|integer',
+        //         'fecha_nac'=>'required',
+        //         'sexo'=>'required|string'];
+        if ($request->email == $usuario->email) {
+            $leve=['dni'=>'required|digits:8|integer',
                 'nombre'=>'required|string',
+                'email' => ['required', 'string', 'email', 'max:100'],
                 'apellido'=>'required|string',
                 'edad'=>'required|digits:2|integer',
                 'fecha_nac'=>'required',
                 'sexo'=>'required|string'];
 
-        $estricto=['dni'=>'required|digits:8|integer|unique:profiles',
+            $estricto=['dni'=>'required|digits:8|integer|unique:profiles',
                 'nombre'=>'required|string',
+                'email' => ['required', 'string', 'email', 'max:100'],
+                'apellido'=>'required|string',
+                'edad'=>'required|digits:2|integer',
+                'fecha_nac'=>'required',
+                'sexo'=>'required|string'];    
+        } else{
+            $leve=['dni'=>'required|digits:8|integer',
+                'nombre'=>'required|string',
+                'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
                 'apellido'=>'required|string',
                 'edad'=>'required|digits:2|integer',
                 'fecha_nac'=>'required',
                 'sexo'=>'required|string'];
-
+            $estricto=['dni'=>'required|digits:8|integer|unique:profiles',
+                'nombre'=>'required|string',
+                'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
+                'apellido'=>'required|string',
+                'edad'=>'required|digits:2|integer',
+                'fecha_nac'=>'required',
+                'sexo'=>'required|string'];    
+        }
         
 
             if ($request->dni == $usuario->profile->dni ) {

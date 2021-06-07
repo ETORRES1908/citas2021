@@ -29,9 +29,12 @@ class VerCitaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    /** Ver historial de citas */
     public function create()
     {
-        //
+        $citas = Meeting::all()->where('user_id',Auth::user()->id);
+        return view('user.historial', compact('citas'));
     }
 
     /**
@@ -42,7 +45,8 @@ class VerCitaController extends Controller
      */
     public function store(Request $request)
     {
-
+        // $meeting = Meeting::findOrFail($request);
+        // return view('user.detalle', compact('meeting'));
     }
 
     /**
@@ -64,10 +68,19 @@ class VerCitaController extends Controller
      * @param  \App\Models\Meeting  $meeting
      * @return \Illuminate\Http\Response
      */
-    public function edit(Meeting $meeting)
+
+
+    
+
+    /**Ver detalle de Cita */
+    public function edit($meeting)
     {
-        //
+        $detalle = Meeting::findOrFail($meeting);
+        return view('user.detalle', compact('detalle'));
     }
+
+
+
 
     /**
      * Update the specified resource in storage.
@@ -76,9 +89,9 @@ class VerCitaController extends Controller
      * @param  \App\Models\Meeting  $meeting
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Meeting $meeting)
+    public function update($meeting)
     {
-        //
+        
     }
 
 /**
