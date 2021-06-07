@@ -2,8 +2,10 @@
     <!-- This example requires Tailwind CSS v2.0+ -->
     <div class="card-body" style="background: white">
         <div class="container py-8">
-            <div style="padding: 10px">
-                <a class="text-indigo-600 hover:text-indigo-900" href="{{ URL::previous() }}">Regresar</a>
+            <div style="padding-bottom: 30px">
+                <a class="bg-white hover:bg-gray-100
+                text-indigo-600 font-semibold py-2 px-4 border border-gray-400 rounded
+                shadow" href="{{URL::previous()}}">Regresar</a>
             </div>
             <div class="flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

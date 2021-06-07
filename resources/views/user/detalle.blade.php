@@ -19,29 +19,29 @@
                         <label for="doctor" class="block text-sm font-medium text-gray-700">Doctor</label>
                         <input type="text" value="{{$detalle->schedule->doctor->user->name . ' ' . $detalle->schedule->doctor->user->profile->apellido}}" name="doctor" id="doctor" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" disabled>
                         </div>
-        
+
                         <div class="col-span-6 sm:col-span-3">
                         <label for="especialidad" class="block text-sm font-medium text-gray-700">Especialidad</label>
                         <input type="text" value="{{$detalle->schedule->doctor->specialities[0]->nombre}}" name="especialidad" id="especialidad" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" disabled>
                         </div>
-        
+
                         <div class="col-span-6 sm:col-span-4">
                         <label for="hora" class="block text-sm font-medium text-gray-700">Hora de atención</label>
                         <input type="text" value="{{$detalle->schedule->hora_inicio . ' hasta ' . $detalle->schedule->hora_fin}}" name="hora" id="hora"  class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" disabled>
                         </div>
-        
+
                         <div class="col-span-6 sm:col-span-3">
                             <label for="sintomas" class="block text-sm font-medium text-gray-700">Descripcion de sintomas</label>
-                            
+
                             <textarea type="text"  name="sintomas" id="sintomas"  class="resize-none mt-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" cols="10" rows="5" disabled>{{$detalle->descripcion}}</textarea>
                             </div>
-        
+
                         <div class="col-span-6 sm:col-span-3">
                         <label for="observacion" class="block text-sm font-medium text-gray-700">Observacion del doctor</label>
-                        
+
                         <textarea type="text"  name="observacion" id="observacion"  class="resize-none mt-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" cols="10" rows="5" disabled>{{$detalle->observacion_med}}</textarea>
                         </div>
-        
+
                     </div>
                     </div>
                     <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
@@ -50,9 +50,9 @@
                         shadow">Volver</a>
                     </div>
                 </div>
-                
+
             </div>
             </div>
         </div>
-    </div>    
+    </div>
 </x-app-layout>

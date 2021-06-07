@@ -57,6 +57,7 @@ class VerCitaController extends Controller
      */
     public function show($id)
     {
+        //en esta enviando un id de usuario y me esta devolviendo una coleccion de citas (no es un modelo)
         $citas = Meeting::all()->where('user_id',$id);
 
         return view('user.vercitas', compact('citas'));
@@ -70,7 +71,7 @@ class VerCitaController extends Controller
      */
 
 
-    
+
 
     /**Ver detalle de Cita */
     public function edit($meeting)
@@ -91,7 +92,7 @@ class VerCitaController extends Controller
      */
     public function update($meeting)
     {
-        
+
     }
 
 /**
@@ -100,9 +101,17 @@ class VerCitaController extends Controller
     * @param  \App\Models\Meeting  $meeting
     * @return \Illuminate\Http\Response
 */
-    public function destroy($meeting)
-        {
-            Meeting::findOrFail($meeting)->delete();
-            return redirect()->route('cita.ver.show', Auth::user()->id)->with('mensaje','Se canceló la cita correctamente',);
+    public function destroy($id){ // id del meeting
+
+            $meeting = Meeting::findOrFail($id);
+
+            //ACTUALIZAMOS EL HORARIO DEL DOCTOR
+            $meeting->schedule->update(["estado"=>"0"]);
+
+            //BORRAMOS LA CITA CREADA
+            $meeting->delete();
+
+            return redirect()->route('cita.ver.show', Auth::user()->id)
+            ->with('mensaje','Se canceló la cita correctamente',);
         }
 }
