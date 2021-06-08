@@ -24,7 +24,7 @@
                                         </th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Especialidad
+                                            Datos Extra
                                         </th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -51,7 +51,10 @@
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">{{$dc->specialities[0]->nombre}}</div>
+                                            <div class="text-sm text-gray-900"> Correo : {{$dc->user->email}}</div>
+                                            <div class="text-sm text-gray-500">
+                                                DNI N° : {{$dc->user->profile->dni}}
+                                            </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             <div class="text-sm text-gray-900"> {{$dc->n_cmp}}</div>

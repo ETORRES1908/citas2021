@@ -4,7 +4,7 @@
             {{ __('Mi Perfil') }}
         </h2>
     </x-slot>
-    
+
     <div>
         @if (session('mensaje'))
         <div class="alert alert-success">
@@ -26,13 +26,13 @@
                 <x-jet-section-border />
             @endif
 
-            @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication())
+            {{-- @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication())
                 <div class="mt-10 sm:mt-0">
                     @livewire('profile.two-factor-authentication-form')
                 </div>
 
                 <x-jet-section-border />
-            @endif
+            @endif --}}
 
             <div class="mt-10 sm:mt-0">
                 @livewire('profile.logout-other-browser-sessions-form')

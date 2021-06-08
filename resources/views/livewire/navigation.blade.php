@@ -51,7 +51,7 @@
                                     Ver citas
                                 </a>
 
-                                <a href="{{ route('cita.reserva.index')}}"
+                                <a href="{{ route('horarios.index')}}"
                                     class="text-gray-300 hover:bg-red-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                                     Gestionar Horarios (Doctor)
                                 </a>

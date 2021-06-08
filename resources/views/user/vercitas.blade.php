@@ -100,9 +100,9 @@
                                             text-indigo-600 font-semibold py-2 px-4 border border-gray-400 rounded
                                             shadow">Ver</a>
                                         </td>
-                                    </tr>  
+                                    </tr>
                                         @endif
-                                    
+
                                     @endforeach
                                 </tbody>
 

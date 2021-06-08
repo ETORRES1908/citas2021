@@ -58,8 +58,8 @@ class UsuController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {   
-        
+    {
+
         $user = User::findOrFail($id);
         return view('profile.edit-profile', compact('user'));
     }
@@ -75,27 +75,15 @@ class UsuController extends Controller
     {
         $usuario = User::findOrFail($id);
 
-        // $leve=['dni'=>'required|digits:8|integer',
-        //         'nombre'=>'required|string',
-        //         'apellido'=>'required|string',
-        //         'edad'=>'required|digits:2|integer',
-        //         'fecha_nac'=>'required',
-        //         'sexo'=>'required|string'];
-
-        // $estricto=['dni'=>'required|digits:8|integer|unique:profiles',
-        //         'nombre'=>'required|string',
-        //         'apellido'=>'required|string',
-        //         'edad'=>'required|digits:2|integer',
-        //         'fecha_nac'=>'required',
-        //         'sexo'=>'required|string'];
         if ($request->email == $usuario->email) {
+
             $leve=['dni'=>'required|digits:8|integer',
-                'nombre'=>'required|string',
-                'email' => ['required', 'string', 'email', 'max:100'],
-                'apellido'=>'required|string',
-                'edad'=>'required|digits:2|integer',
-                'fecha_nac'=>'required',
-                'sexo'=>'required|string'];
+                    'nombre'=>'required|string',
+                    'email' => ['required', 'string', 'email', 'max:100'],
+                    'apellido'=>'required|string',
+                    'edad'=>'required|digits:2|integer',
+                    'fecha_nac'=>'required',
+                    'sexo'=>'required|string'];
 
             $estricto=['dni'=>'required|digits:8|integer|unique:profiles',
                 'nombre'=>'required|string',
@@ -103,8 +91,9 @@ class UsuController extends Controller
                 'apellido'=>'required|string',
                 'edad'=>'required|digits:2|integer',
                 'fecha_nac'=>'required',
-                'sexo'=>'required|string'];    
+                'sexo'=>'required|string'];
         } else{
+
             $leve=['dni'=>'required|digits:8|integer',
                 'nombre'=>'required|string',
                 'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
@@ -112,15 +101,16 @@ class UsuController extends Controller
                 'edad'=>'required|digits:2|integer',
                 'fecha_nac'=>'required',
                 'sexo'=>'required|string'];
+
             $estricto=['dni'=>'required|digits:8|integer|unique:profiles',
                 'nombre'=>'required|string',
                 'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
                 'apellido'=>'required|string',
                 'edad'=>'required|digits:2|integer',
                 'fecha_nac'=>'required',
-                'sexo'=>'required|string'];    
+                'sexo'=>'required|string'];
         }
-        
+
 
             if ($request->dni == $usuario->profile->dni ) {
                 $request->validate($leve);
@@ -128,14 +118,14 @@ class UsuController extends Controller
                 $request->validate($estricto);
             }
             //actualiza solo el modelo user
-            
+
             $usuario->name=$request->nombre;
             $usuario->email=$request->email;
             $usuario->save();
 
             //actualiza solo el modelo profile
             $usuario->profile->update($request->only("nombre","apellido","edad","sexo","fecha_nac","dni"));
-            
+
         return redirect()->route('usuario.perfil.edit',$usuario->id)->with('msg','El usuario ha sido modificado correctamente');
     }
 

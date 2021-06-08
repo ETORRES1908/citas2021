@@ -1,5 +1,5 @@
 <x-app-layout>
-    
+
     <!-- This example requires Tailwind CSS v2.0+ -->
     <div class="card-body" style="background: white">
         <div class="container py-8">
@@ -41,7 +41,7 @@
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     @foreach ($citas as $meeting)
-                                    @if ($meeting->estado ==1 || $meeting->estado==2)
+                                    @if ($meeting->estado == 1)
                                        <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">
@@ -71,20 +71,16 @@
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            @if ($meeting->estado==1)
-                                            <span class="text-warning text-sm text-gray-900">FINALIZADO</span>
-                                            @else
-                                            <span class="text-danger text-sm text-gray-900">CANCELADO</span>
-                                            @endif
+                                                <span class="text-secondary text-sm text-gray-900">FINALIZADO</span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
                                             <a href="{{ route('cita.ver.edit', $meeting)}}" class="bg-white hover:bg-gray-100
                                             text-indigo-600 font-semibold py-2 px-4 border border-gray-400 rounded
                                             shadow">Ver detalle</a>
                                         </td>
-                                    </tr> 
+                                    </tr>
                                     @endif
-                                    
+
                                     @endforeach
                                 </tbody>
 

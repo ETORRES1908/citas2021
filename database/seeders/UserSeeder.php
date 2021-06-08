@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
                 "user_id" => $user->id
             ]);
 
-            //Crear 10 Horarios usando al doctor recien creado
+            //Crear 10 Horarios usando al doctor recien creado--------------------------
             for ($i=0; $i < 10; $i++) {
                 $horarios = Schedule::factory()->create([
                     //Utiliza los las ID de los doctores ya creados para $horario->doctor_id

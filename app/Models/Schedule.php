@@ -19,9 +19,9 @@ class Schedule extends Model
     }
 
     //UN HORARIO PUEDE TENER MUCHAS CITAS REGISTRADAS A SU ID
-    public function meetings()
+    public function meeting()
     {
-        return $this->hasMany(Meeting::class);
+        return $this->hasOne(Meeting::class);
     }
 
 }
