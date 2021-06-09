@@ -20,9 +20,13 @@ class CreateMeetingsTable extends Migration
             $table->enum('estado',[0,1,2]);
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('schedule_id')->unique();
-            $table->timestamps();
+            $table->unsignedBigInteger('speciality_id');
+            
+            $table->timestamps();            
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('schedule_id')->references('id')->on('schedules')->onDelete('cascade');
+            $table->foreign('speciality_id')->references('id')->on('specialities')->onDelete('cascade');
+            
 
         });
 

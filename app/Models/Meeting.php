@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Schedule;
-
+use App\Models\Speciality;
 class Meeting extends Model
 {
     use HasFactory;
@@ -15,5 +15,11 @@ class Meeting extends Model
     public function schedule()
     {
         return $this->belongsTo(Schedule::class);
+    }
+
+    //UN CITA LE PERTECE A UNA SOLA ESPECIALIDAD
+    public function speciality()
+    {   
+        return $this->belongsTo(Speciality::class);
     }
 }

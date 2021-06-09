@@ -24,6 +24,7 @@ class SpecialityFactory extends Factory
         return [
             'nombre' => $this->faker->unique()->word(10),
             'descripcion' => $this->faker->text(50),
+            'color' => $this -> faker->randomElement(['red','blue','indigo','green','gray'])
         ];
     }
 }

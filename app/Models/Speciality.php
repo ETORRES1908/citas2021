@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Doctor;
+use App\Models\Meeting;
 
 class Speciality extends Model
 {
@@ -20,4 +21,13 @@ class Speciality extends Model
     {
         return $this->belongsToMany(Doctor::class);
     }
+
+    // Muchas especialdiades aparecen en los registros de las citas
+
+   public function meetings()
+   {
+       return $this->hasMany(Meeting::class);
+   }
+
+
 }

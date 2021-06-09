@@ -43,6 +43,7 @@ class UserSeeder extends Seeder
                 "user_id" => $user->id,
                 //Utiliza los las ID de los usuarios ya creados para $meet->schedule_id
                 "schedule_id" => $horarios->id
+                
             ]);
 
             //Sincroniza id_especialidad , id_doctor

@@ -26,7 +26,8 @@ class MeetingFactory extends Factory
         return [
             "descripcion"=>$this->faker->realText(100),
             "observacion_med"=>$this->faker->realText(100),
-            "estado"=>$this->faker->randomElement(["0","1","2"])
+            "estado"=>$this->faker->randomElement(["0","1","2"]),
+            "speciality_id" => $this->faker->randomElement([1,2,3,4,5,6,7,8,9,10]),
         ];
     }
 }
