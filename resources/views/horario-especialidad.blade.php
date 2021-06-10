@@ -125,7 +125,7 @@
         </div>
     </div>
 
-{{--     <script>
+    {{--     <script>
         $(document).ready(function () {
           $('#horarios').DataTable({
                 "responsive":true,
