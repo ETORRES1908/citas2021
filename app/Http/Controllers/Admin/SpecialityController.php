@@ -41,7 +41,8 @@ class SpecialityController extends Controller
 
         $request->validate([
             'nombre' => 'required|unique:specialities|max:50|min:10|string',
-            'descripcion' => 'required|max:500|min:10|string'
+            'descripcion' => 'required|max:500|min:10|string',
+
         ]);
 
         $speciality = Speciality::create($request->all());
@@ -69,6 +70,7 @@ class SpecialityController extends Controller
      */
     public function edit(Speciality $speciality)
     {
+        //dd($speciality);
         return view('admin.specialities.edit', compact('speciality'));
     }
 
