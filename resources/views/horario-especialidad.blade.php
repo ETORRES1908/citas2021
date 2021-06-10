@@ -1,4 +1,5 @@
 <x-app-layout>
+
     <!-- This example requires Tailwind CSS v2.0+ -->
     <div class="card-body" style="background: white">
         <div class="container py-8">
@@ -77,6 +78,7 @@
                                             </span>
                                             @endif
                                         </td>
+                                        {!! Form::hidden('especialidad', $especialidad->id) !!}
                                         <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                                             @if ($sc->estado==0)
                                             {{-- Recogemos el user_id del Auth::user() --}}

@@ -13,6 +13,7 @@
                             {!! Form::text('estado',$datos->estado, ['hidden','class' => 'form-control']) !!}
                             {!! Form::text('schedule_id',$id, ['hidden','class' => 'form-control']) !!}
                             {!! Form::text('user_id', Auth::user()->id, ['hidden','class' => 'form-control']) !!}
+                            {!! Form::hidden('especialidad', $datos->especialidad) !!}
                             <div>
                                 {!! Form::textarea('descripcion', null,['class'=>'form-control resize-none border
                                 rounded-md', 'placeholder'=>'Descripcion']) !!}

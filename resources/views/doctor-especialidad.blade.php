@@ -1,4 +1,5 @@
 <x-app-layout>
+
     <!-- This example requires Tailwind CSS v2.0+ -->
     <div class="card-body" style="background: white">
         <div class="container py-8">
@@ -59,12 +60,15 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             <div class="text-sm text-gray-900"> {{$dc->n_cmp}}</div>
                                         </td>
+
                                         <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                                            <a href="{{ route('cita.reserva.edit', $dc) }}"
+                                            <a href="{{ route('cita.reserva.edit', $dc->pivot->speciality_id . '-' . $dc->pivot->doctor_id) }}"
                                                 class="bg-white hover:bg-gray-100
                                                 text-indigo-600 font-semibold py-2 px-4 border border-gray-400 rounded
                                                 shadow">Elegir</a>
                                         </td>
+
+
                                     </tr>
                                     @endforeach
                                     <!-- More people... -->
