@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Speciality;
 use App\Models\Doctor;
+use App\Models\Doctor_speciality;
 use App\Models\Schedule;
 use App\Models\Profile;
 use App\Models\User;
