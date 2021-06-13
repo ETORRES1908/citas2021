@@ -22,7 +22,7 @@
 
                         <div class="col-span-6 sm:col-span-3">
                         <label for="especialidad" class="block text-sm font-medium text-gray-700">Especialidad</label>
-                        <input type="text" value="{{$detalle->schedule->doctor->specialities[0]->nombre}}" name="especialidad" id="especialidad" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" disabled>
+                        <input type="text" value="{{$detalle->speciality->nombre}}" name="especialidad" id="especialidad" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" disabled>
                         </div>
 
                         <div class="col-span-6 sm:col-span-4">
