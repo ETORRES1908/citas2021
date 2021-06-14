@@ -59,11 +59,11 @@
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            @foreach ($meeting->schedule->doctor->specialities as $esp)
+
                                             <div class="text-sm text-gray-900">
-                                                {{$esp->nombre}}
+                                                {{$meeting->speciality->nombre}}
                                             </div>
-                                            @endforeach
+
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">

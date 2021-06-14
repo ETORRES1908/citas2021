@@ -114,6 +114,7 @@ class SpecialityController extends Controller
         $speciality->delete();
 
         return redirect()->route('admin.specialities.index', $speciality)
-        ->with('mensaje','La Especialidad se elimino correctamente');
+        ->with('mensaje','ok');
+        //->with('mensaje','La Especialidad se elimino correctamente');
     }
 }

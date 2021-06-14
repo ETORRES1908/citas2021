@@ -10,11 +10,11 @@
 <div class="card">
 
     <div class="card-header">
-        @if (session('mensaje'))
+        {{-- @if (session('mensaje'))
         <div class="alert alert-danger">
             <strong>{{session('mensaje')}}</strong>
         </div>
-        @endif
+        @endif --}}
 
         <a href="{{ route('admin.specialities.create')}}" class="btn btn-primary"> Crear Especialidad</a>
 
@@ -43,10 +43,10 @@
                         {{-- Editar --}}
                         <a href="{{ route('admin.specialities.edit', $speciality) }}" class="btn btn-success">Editar</a>
                         {{-- Eliminar --}}
-                        <form action="{{ route('admin.specialities.destroy', $speciality) }}" method="post">
+                        <form action="{{ route('admin.specialities.destroy', $speciality) }}" method="post" class="formulario-eliminar">
                             @csrf
                             @method('DELETE')
-                            <input type="submit" value="Eliminar" class="btn btn-danger" style="margin: 0px 0px 0px 5px;">
+                            <input type="submit" id="delete" value="Eliminar" class="btn btn-danger" style="margin: 0px 0px 0px 5px;">
                         </form>
                     </td>
                 </tr>
@@ -58,7 +58,7 @@
 
 </div>
 @stop
-
+@extends('admin.doctors.partials.recursos')
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
@@ -71,6 +71,7 @@
 </script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $('#especialidades').DataTable(
         {
@@ -80,5 +81,35 @@
             "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
             }
         });
+
+    $('.formulario-eliminar').submit(function(e){
+        e.preventDefault();
+            Swal.fire({
+            title: '¿Estas seguro?',
+            text: "Se eliminaran todos los registros relacionados a esta información(citas, horarios, doctores, etc). Esta accion es irreversible.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, estoy de acuerdo!',
+            cancelButtonText: 'Cancelar'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                this.submit();
+            }
+            })
+    });
+
 </script>
+    @if (session("mensaje")=="ok")
+    <script>
+        Swal.fire(
+                 'Eliminado!',
+                 'Los registros se eliminaron correctamente.',
+                 'success'
+                 )
+    </script>
+
+
+    @endif
 @stop
