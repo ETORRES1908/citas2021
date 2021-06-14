@@ -17,9 +17,9 @@ class CreateSpecialitiesTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->text('descripcion');
-            $table->enum('color',['red','blue','indigo','green','gray']);
+            $table->text('color'); //enum('color',['#D8D8D8','#F7819F','#81DAF5','green','gray']);
             $table->timestamps();
-            
+
         });
     }
 

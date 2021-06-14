@@ -37,8 +37,10 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('color', 'Color') !!}
-                    {!!  Form::select('Color', ['red' => 'red', 'blue' => 'blue','indigo'=>'indigo','green' => 'green','gray'=>'gray'],['class' => 'form-control']); !!}
-                    'color',['red','blue','indigo','green','gray']
+                    <input type="color" name="color">
+
+                    {{-- {!!  Form::select('Color', ['red' => 'red', 'blue' => 'blue','indigo'=>'indigo','green' => 'green','gray'=>'gray'],['class' => 'form-control']); !!}
+                    'color',['red','blue','indigo','green','gray']--}}
                     {{-- {!! Form::select('color', null, ['class' => 'form-control']) !!} --}}
                 </div>
             </div>

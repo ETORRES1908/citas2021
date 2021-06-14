@@ -43,7 +43,7 @@
                         </div>
                         <div class="form-group">
                            {!! Form::label('color', 'Color') !!}
-                           {!! Form::select('color', ['red' => 'red', 'blue' => 'blue','indigo'=>'indigo','green' => 'green','gray'=>'gray']) !!}
+                           <input type="color" name="color" value="{{$speciality->color}}">
                         </div>
                 </div>
 

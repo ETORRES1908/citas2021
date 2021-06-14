@@ -38,7 +38,7 @@
                     <td>{{$speciality->id}}</td>
                     <td>{{$speciality->nombre}}</td>
                     <td>{{$speciality->descripcion}}</td>
-                    <td>{{$speciality->color}}</td>
+                    <td> <p style="background:{{$speciality->color}}; color:white; font-weight:bold; padding:15px;"></p></td>
                     <td  style="display: flex">
                         {{-- Editar --}}
                         <a href="{{ route('admin.specialities.edit', $speciality) }}" class="btn btn-success">Editar</a>

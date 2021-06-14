@@ -84,10 +84,10 @@ class SpecialityController extends Controller
     public function update(Request $request, Speciality $speciality)
     {
 
-        $leve = ['nombre' => 'required|max:50|min:10|string',
-            'descripcion' => 'required|max:500|min:10|string'];
+        $leve = ['nombre' => 'required|max:50|min:1|string',
+            'descripcion' => 'required|max:500|min:1|string'];
 
-        $estricta = ['nombre' => 'required|unique:specialities|max:50|min:10|string',
+        $estricta = ['nombre' => 'required|unique:specialities|max:250|min:2|string',
             'descripcion' => 'required|max:500|min:10|string'];
 
 
