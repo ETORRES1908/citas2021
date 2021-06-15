@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Schedule;
 use App\Models\Speciality;
+use App\Models\User;
+
 class Meeting extends Model
 {
     use HasFactory;
@@ -19,7 +21,12 @@ class Meeting extends Model
 
     //UN CITA LE PERTECE A UNA SOLA ESPECIALIDAD
     public function speciality()
-    {   
+    {
         return $this->belongsTo(Speciality::class);
+    }
+
+    //UNA CITA LE PERTENECE A UN SOLO USUARIO
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }

@@ -67,7 +67,7 @@
                                             <a href="{{ route('cita.reserva.edit', $dc->pivot->speciality_id . '-' . $dc->pivot->doctor_id) }}"
                                                 class="bg-white hover:bg-gray-100
                                                 text-indigo-600 font-semibold py-2 px-4 border border-gray-400 rounded
-                                                shadow">Elegir   {{$speciality->id}}</a>
+                                                shadow">Elegir</a>
                                         </td>
 
 

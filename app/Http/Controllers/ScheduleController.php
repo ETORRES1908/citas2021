@@ -50,14 +50,8 @@ class ScheduleController extends Controller
      */
     public function show($schedule)
     {
-        //llega el id del horario
-        //encuentra el modelo por el id
-        //despues llama a la relacion de uno a uno con el meeting
-        //y lo almacena en un modelo nuevo, se compacta y se envia a la vista
-
         $meeting =  Schedule::findOrFail($schedule)->meeting;
-        return view('schedules.show', compact('meeting'));
-
+        return view('schedules.edit', compact('meeting'));
     }
 
     /**
@@ -66,9 +60,17 @@ class ScheduleController extends Controller
      * @param  \App\Models\Schedule  $schedule
      * @return \Illuminate\Http\Response
      */
-    public function edit(Schedule $schedule)
+    public function edit($schedule)
     {
-        //
+        //llega el id del horario
+        //encuentra el modelo por el id
+        //despues llama a la relacion de uno a uno con el meeting
+        //y lo almacena en un modelo nuevo, se compacta y se envia a la vista
+
+        $meeting =  Schedule::findOrFail($schedule)->meeting;
+
+        return view('schedules.edit', compact('meeting'));
+
     }
 
     /**
@@ -78,9 +80,16 @@ class ScheduleController extends Controller
      * @param  \App\Models\Schedule  $schedule
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Schedule $schedule)
+    public function update(Request $request)
     {
-        //
+        $meeting = Meeting::findOrFail($request->meeting_id);
+        $meeting->update(["estado"=>"1", "observacion_med" => $request->observacion]);
+
+        $schedule = Schedule::findOrFail($request->schedule_id);
+        $schedule->update(["estado"=>"2"]);
+
+        return redirect()->route('horarios.index')->with('mensaje','La cita ha finalizado correctamente');
+
     }
 
     /**

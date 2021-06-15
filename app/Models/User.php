@@ -10,6 +10,8 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
+
+use App\Models\Meeting;
 use App\Models\Profile;
 use App\Models\Doctor;
 
@@ -64,14 +66,20 @@ class User extends Authenticatable
 
     //un usuario tiene un solo perfil
     public function profile()
-    {   
+    {
         return $this->hasOne(Profile::class);
     }
 
     //UN USUARIO PUEDE PERTENECER A UN SOLO DOCTOR
     public function doctor()
-    {   
+    {
         return $this->hasOne(Doctor::class);
+    }
+
+    //UN USUARIO PUEDE TENER MUCHAS CITAS
+
+    public function meetings(){
+        return $this->hasMany(Meeting::class);
     }
 
 

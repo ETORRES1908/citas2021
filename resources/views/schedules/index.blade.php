@@ -1,7 +1,14 @@
 <x-app-layout>
     <!-- This example requires Tailwind CSS v2.0+ -->
     <div class="card-body" style="background: white">
+
         <div class="container py-8">
+            @if (session('mensaje'))
+                <div class="alert alert-success">
+                    <strong>{{session('mensaje')}}</strong>
+                </div>
+            @endif
+
             <div style="padding-bottom: 30px">
                 <a class="bg-white hover:bg-gray-100
                 text-indigo-600 font-semibold py-2 px-4 border border-gray-400 rounded
@@ -118,10 +125,18 @@
 
                                             @elseif($schedule->estado==1)
 
+                                            <a href="{{ route('horarios.edit', $schedule->id) }}"
+                                                style="display: inline-block;"
+                                                class="bg-white hover:bg-gray-100
+                                                text-indigo-600 font-semibold py-2 px-4 border border-gray-400 rounded shadow"> Atender Cita
+                                            </a>
+
+                                            @elseif($schedule->estado==2)
+
                                             <a href="{{ route('horarios.show', $schedule->id) }}"
                                                 style="display: inline-block;"
                                                 class="bg-white hover:bg-gray-100
-                                                text-indigo-600 font-semibold py-2 px-4 border border-gray-400 rounded shadow"> Ver Cita
+                                                text-gray-600 font-semibold py-2 px-4 border border-gray-400 rounded shadow"> Ver Cita
                                             </a>
 
                                             @endif
