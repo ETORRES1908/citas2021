@@ -188,10 +188,13 @@
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
                 },
-                "order": [[0, "desc"]]
+                "order": [[0, "desc"]],
 
             });
         });
+
+
+
     </script>
 
 </x-app-layout>

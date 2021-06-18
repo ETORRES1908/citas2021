@@ -19,6 +19,8 @@
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
     <script src="{{ asset('js/app.js') }}"></script>
+
+
 </head>
 
 <body class="font-sans antialiased">
@@ -47,5 +49,14 @@
 
     @livewireScripts
 </body>
+
+<script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
+
+<script>
+    CKEDITOR.replace('observacion');
+    CKEDITOR.config.height = 500;
+
+
+</script>
 
 </html>

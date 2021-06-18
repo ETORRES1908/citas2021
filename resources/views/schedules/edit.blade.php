@@ -161,6 +161,5 @@
     {!! Form::hidden("schedule_id", $meeting->schedule->id) !!}
 
     {!! Form::close() !!}
-<script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
-<script> CKEDITOR.replace('observacion')</script>
+
 </x-app-layout>
