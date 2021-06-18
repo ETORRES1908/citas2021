@@ -41,7 +41,8 @@ class SpecialityController extends Controller
 
         $request->validate([
             'nombre' => 'required|unique:specialities|max:50|min:10|string',
-            'descripcion' => 'required|max:500|min:10|string'
+            'descripcion' => 'required|max:500|min:10|string',
+
         ]);
 
         $speciality = Speciality::create($request->all());
@@ -69,6 +70,7 @@ class SpecialityController extends Controller
      */
     public function edit(Speciality $speciality)
     {
+        //dd($speciality);
         return view('admin.specialities.edit', compact('speciality'));
     }
 
@@ -82,10 +84,10 @@ class SpecialityController extends Controller
     public function update(Request $request, Speciality $speciality)
     {
 
-        $leve = ['nombre' => 'required|max:50|min:10|string',
-            'descripcion' => 'required|max:500|min:10|string'];
+        $leve = ['nombre' => 'required|max:50|min:1|string',
+            'descripcion' => 'required|max:500|min:1|string'];
 
-        $estricta = ['nombre' => 'required|unique:specialities|max:50|min:10|string',
+        $estricta = ['nombre' => 'required|unique:specialities|max:250|min:2|string',
             'descripcion' => 'required|max:500|min:10|string'];
 
 
@@ -112,6 +114,7 @@ class SpecialityController extends Controller
         $speciality->delete();
 
         return redirect()->route('admin.specialities.index', $speciality)
-        ->with('mensaje','La Especialidad se elimino correctamente');
+        ->with('mensaje','ok');
+        //->with('mensaje','La Especialidad se elimino correctamente');
     }
 }

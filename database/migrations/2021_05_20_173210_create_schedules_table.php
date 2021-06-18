@@ -20,13 +20,12 @@ class CreateSchedulesTable extends Migration
             $table->date('fecha_atencion');
             $table->time('hora_inicio', $precision = 0);
             $table->time('hora_fin', $precision = 0);
-            $table->integer('intervalo');
             $table->enum('estado',[0,1,2])->default(0);
 
             //0 = disponible // es cuando el doctor crea por primera vez los horarios al dia
             //1 = ocupado  // es cuando un horario se ha llenado con una cita
             //2 = culminado // es cuando el horario queda inutilizable porque ya culmino su cita
-            
+
             $table->unsignedBigInteger('doctor_id');
 
             $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');

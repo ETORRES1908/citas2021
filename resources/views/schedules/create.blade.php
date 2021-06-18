@@ -37,7 +37,7 @@
                                     <label for="time" class="block text-sm font-medium text-gray-700">Hora
                                         inicio</label>
                                     <input type="time" step="1800" min="06:00" max="08:00" name="hora_inicio"
-                                        id="especialidad"
+                                        id="hora_inicio"
                                         class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                     <div class="text-sm text-gray-500 py-2">
                                         Los valores de horario permitidos son: 6:00  - 8:00 , con un intervalo de 30
@@ -48,9 +48,9 @@
 
                                 <div class="col-span-6 sm:col-span-2">
                                     <label for="time" class="block text-sm font-medium text-gray-700">Hora
-                                        inicio</label>
-                                    <input type="time" step="1800" min="17:00" max="18:00" name="hora_inicio"
-                                        id="especialidad"
+                                        Fin</label>
+                                    <input type="time" step="1800" min="17:00" max="18:00" name="hora_fin"
+                                        id="hora_fin"
                                         class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                     <div class="text-sm text-gray-500 py-2">
                                         Los valores de horario permitidos son: 17:00  - 18:00, con un intervalo de 30
@@ -61,9 +61,9 @@
                                 <div class="col-span-6 sm:col-span-6">
                                     <label for="intervalo" class="block text-sm font-medium text-gray-700">Intervalo</label>
                                     <select id="intervalo" name="intervalo" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                        <option value="00:30:00">30 min</option>
-                                        <option value="00:60:00">1 hora</option>
-                                        <option value="01:30:00">1 hora y media</option>
+                                        <option value="+30 minute">30 min</option>
+                                        <option value="+60 minute">1 hora</option>
+                                        <option value="+90 minute">1 hora y media</option>
                                     </select>
                                 </div>
                             </div>
@@ -77,7 +77,6 @@
                             </div>
 
                             {!! Form::close() !!}
-
 
                         </div>
 

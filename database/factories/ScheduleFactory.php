@@ -29,7 +29,6 @@ class ScheduleFactory extends Factory
             "fecha_atencion"=>$date,
             "hora_inicio"=>$this->faker->time(), // Horas
             "hora_fin"=>$this->faker->time(), // Horas,
-            "intervalo"=>$this->faker->randomNumber(2), // Intervalo,
             "estado"=> $this->faker->randomElement(["0","1"])
         ];
     }

@@ -12,19 +12,19 @@
 
             @if (count($errors) > 0)
             <div class="text-danger">
-                
+
                     @foreach ($errors->all() as $message)
                         <li>{{ $message }}</li>
                     @endforeach
-            
-            </div>  
+
+            </div>
             @endif
-            
+
         </div>
         <div class="card-body">
-            
+
             {!! Form::open(['method' => 'POST', 'route' => 'admin.specialities.store']) !!}
-            
+
             <div class="form-group">
                 <div class="form-group">
                     {!! Form::label('nombre', 'Nombre') !!}
@@ -35,10 +35,18 @@
                     {!! Form::label('descripcion', 'Descripcion') !!}
                     {!! Form::textarea('descripcion', null, ['class' => 'form-control']) !!}
                 </div>
+                <div class="form-group">
+                    {!! Form::label('color', 'Color') !!}
+                    <input type="color" name="color">
+
+                    {{-- {!!  Form::select('Color', ['red' => 'red', 'blue' => 'blue','indigo'=>'indigo','green' => 'green','gray'=>'gray'],['class' => 'form-control']); !!}
+                    'color',['red','blue','indigo','green','gray']--}}
+                    {{-- {!! Form::select('color', null, ['class' => 'form-control']) !!} --}}
+                </div>
             </div>
-            
+
             <div class="form-group">
-            
+
             {!! Form::submit('Crear', ['class' => 'btn btn-success']) !!}
             </div>
             {!! Form::close() !!}

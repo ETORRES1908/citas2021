@@ -1,6 +1,7 @@
 <x-app-layout>
 
     <!-- This example requires Tailwind CSS v2.0+ -->
+
     <div class="card-body" style="background: white">
         <div class="container py-8">
             <div style="padding-bottom: 30px">
@@ -14,6 +15,7 @@
                         <p class="text text-3xl" style="padding: 0px 10px 10px 75px">
                             Seleccionar doctor de la especialidad
                             <strong>{{$speciality->nombre}}</strong>
+
                         </p>
                         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                             <table id="doctores" class="table table-hover min-w-full divide-y divide-gray-200">

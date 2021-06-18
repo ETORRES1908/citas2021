@@ -4,6 +4,7 @@
 
 @section('content_header')
     <h1>Editar {{$speciality->nombre}}</h1>
+
 @stop
 
 @section('content')
@@ -18,18 +19,18 @@
 
             @if (count($errors) > 0)
             <div class="text-danger">
-                
+
                     @foreach ($errors->all() as $message)
                         <li>{{ $message }}</li>
                     @endforeach
-            
-            </div>  
+
+            </div>
             @endif
-            
+
         </div>
         <div class="card-body">
             {!! Form::model($speciality, ['route' => ['admin.specialities.update', $speciality], 'method' => 'PUT']) !!}
-            
+
                 <div class="form-group">
                         <div class="form-group">
                             {!! Form::label('nombre', 'Nombre') !!}
@@ -39,6 +40,10 @@
                         <div class="form-group">
                             {!! Form::label('descripcion', 'Descripcion') !!}
                             {!! Form::textarea('descripcion', null, ['class' => 'form-control']) !!}
+                        </div>
+                        <div class="form-group">
+                           {!! Form::label('color', 'Color') !!}
+                           <input type="color" name="color" value="{{$speciality->color}}">
                         </div>
                 </div>
 

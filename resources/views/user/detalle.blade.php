@@ -14,6 +14,12 @@
             <div class="mt-5 md:mt-0 md:col-span-2">
                 <div class="shadow overflow-hidden sm:rounded-md">
                     <div class="px-4 py-5 bg-white sm:p-6">
+
+                        <div class="col-span-6 sm:col-span-6">
+                            <label for="hora" class="block text-sm font-bold text-indigo-700">Detalles de la
+                                cita</label>
+                        </div>
+
                     <div class="grid grid-cols-6 gap-6">
                         <div class="col-span-6 sm:col-span-3">
                         <label for="doctor" class="block text-sm font-medium text-gray-700">Doctor</label>
@@ -22,7 +28,7 @@
 
                         <div class="col-span-6 sm:col-span-3">
                         <label for="especialidad" class="block text-sm font-medium text-gray-700">Especialidad</label>
-                        <input type="text" value="{{$detalle->schedule->doctor->specialities[0]->nombre}}" name="especialidad" id="especialidad" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" disabled>
+                        <input type="text" value="{{$detalle->speciality->nombre}}" name="especialidad" id="especialidad" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" disabled>
                         </div>
 
                         <div class="col-span-6 sm:col-span-4">
@@ -30,17 +36,81 @@
                         <input type="text" value="{{$detalle->schedule->hora_inicio . ' hasta ' . $detalle->schedule->hora_fin}}" name="hora" id="hora"  class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" disabled>
                         </div>
 
+
+
+
+
+
+
+                        <div class="col-span-6 sm:col-span-6 pt-8">
+                            <label for="hora" class="block text-sm font-bold text-indigo-700">Detalles del
+                                Paciente</label>
+                        </div>
+
                         <div class="col-span-6 sm:col-span-3">
+                            <label for="hora" class="block text-sm font-medium text-gray-700">Nombres y
+                                Apellidos</label>
+                            <input type="text"
+                                value="{{$detalle->user->profile->nombre ." ". $detalle->user->profile->nombre}}"
+                                name="hora" id="hora"
+                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                disabled>
+                        </div>
+
+                        <div class="col-span-6 sm:col-span-1">
+                            <label for="hora" class="block text-sm font-medium text-gray-700">Edad</label>
+                            <input type="text" value="{{$detalle->user->profile->edad}}" name="hora" id="hora"
+                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                disabled>
+                        </div>
+
+
+                        <div class="col-span-6 sm:col-span-2">
+                            <label for="hora" class="block text-sm font-medium text-gray-700">Sexo</label>
+                            <input type="text" value="{{$detalle->user->profile->sexo}}" name="hora" id="hora"
+                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                disabled>
+                        </div>
+
+                        <div class="col-span-6 sm:col-span-3">
+                            <label for="hora" class="block text-sm font-medium text-gray-700">Correo</label>
+                            <input type="text" value="{{$detalle->user->email}}" name="hora" id="hora"
+                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                disabled>
+                        </div>
+
+
+                        <div class="col-span-6 sm:col-span-3">
+                            <label for="hora" class="block text-sm font-medium text-gray-700">DNI</label>
+                            <input type="text" value="{{$detalle->user->profile->dni}}" name="hora" id="hora"
+                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                disabled>
+                        </div>
+
+
+
+
+
+
+
+                        <div class="col-span-6 sm:col-span-6 pt-8">
+                            <label for="hora" class="block text-sm font-bold text-indigo-700">Diagnóstico</label>
+                        </div>
+
+                        <div class="col-span-6 sm:col-span-6">
                             <label for="sintomas" class="block text-sm font-medium text-gray-700">Descripcion de sintomas</label>
 
                             <textarea type="text"  name="sintomas" id="sintomas"  class="resize-none mt-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" cols="10" rows="5" disabled>{{$detalle->descripcion}}</textarea>
                             </div>
 
-                        <div class="col-span-6 sm:col-span-3">
+                        <div class="col-span-6 sm:col-span-6">
                         <label for="observacion" class="block text-sm font-medium text-gray-700">Observacion del doctor</label>
 
-                        <textarea type="text"  name="observacion" id="observacion"  class="resize-none mt-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" cols="10" rows="5" disabled>{{$detalle->observacion_med}}</textarea>
-                        </div>
+
+
+                        <textarea type="text" name="observacion" id="observacion"
+                                        class="resize-none mt-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        cols="10" rows="20" disabled>{{$detalle->observacion_med}}</textarea>
 
                     </div>
                     </div>
@@ -55,4 +125,7 @@
             </div>
         </div>
     </div>
+<script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
+<script> CKEDITOR.replace('observacion')</script>
+
 </x-app-layout>
