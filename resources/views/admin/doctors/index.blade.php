@@ -36,7 +36,7 @@
                 <tbody>
                     @foreach ($doctors as $doctor)
                     <tr>
-                        <td>{{$doctor->id}}</td>
+                        <td>{{$doctor->user->id}}</td>
                         <td>{{$doctor->n_cmp}}</td>
                         <td>{{$doctor->user->profile->nombre}}</td>
                         <td>{{$doctor->user->profile->apellido}}</td>

@@ -8,6 +8,8 @@ use App\Models\Doctor;
 use App\Models\Profile;
 use App\Models\Schedule;
 use App\Models\Meeting;
+use DateTime;
+use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -18,6 +20,28 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+
+        $usuario_admin = User::create([
+            "name" => "Emmanuel",
+            "email" => "Emmanuel@gmail.com",
+            "password" => bcrypt("password")
+        ])->assignRole('admin');
+
+
+        $date = new DateTime("2001-01-18");
+
+        $usuario_admin->profile()->create(
+            [
+                "nombre" => "Emmanuel",
+                "apellido" => "Garayar",
+                "dni" => "74741985",
+                "fecha_nac" => $date,
+                "edad" => "20",
+                "sexo" => "M"
+            ]
+        );
+
+
         //Crear 8 usuarios asignados a la variable users
         $users = User::factory(8)->create();
 
@@ -29,26 +53,12 @@ class UserSeeder extends Seeder
                 "user_id" => $user->id
             ]);
 
-            //Crear 10 Horarios usando al doctor recien creado--------------------------
-            for ($i=0; $i < 10; $i++) {
-                $horarios = Schedule::factory()->create([
-                    //Utiliza los las ID de los doctores ya creados para $horario->doctor_id
-                    "doctor_id" => $doctor->id
-                ]);
-            }
-
-            //Crear reuniones----------------------------------------------------------
-            $meet = Meeting::factory()->create([
-                //Utiliza los las ID de los usuarios ya creados para $meet->user_id
-                "user_id" => $user->id,
-                //Utiliza los las ID de los usuarios ya creados para $meet->schedule_id
-                "schedule_id" => $horarios->id
-                
-            ]);
+            $doctor->user->assignRole('doctor');
 
             //Sincroniza id_especialidad , id_doctor
             $doctor->specialities()->sync(rand(1,10),$doctor->id);
         }
+
 
         //Crear 8 usuarios más-  NORMALES ---------------------------------------------------------
         User::factory(8)->create();
@@ -68,6 +78,5 @@ class UserSeeder extends Seeder
                 "user_id" => $user->id
             ]);
         }
-
     }
 }

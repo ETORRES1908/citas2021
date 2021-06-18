@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Meeting;
 use App\Models\Schedule;
-use DateTime;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,22 +41,24 @@ class ScheduleController extends Controller
     public function store(Request $request)
     {
 
+        $mytime = Carbon::now();
 
-        //return $request;
+        $request->validate([
+            'fecha_atencion'=>'required|date|after_or_equal:'.$mytime->toDateString("YY/mm/dd"),
+            'hora_inicio' => 'required|before_or_equal:08:00|after_or_equal:06:00',
+            'hora_fin' =>'required|before_or_equal:18:00|after_or_equal:17:00',
 
+        ]);
 
         $fecha = $request->fecha_atencion;
         $horaInicial = $request->hora_inicio;
         $horaFinal = $request->hora_fin;
         $intervalo = $request->intervalo;
 
-
-        //$miHora = new DateTime($horaInicial);
-        //$horaFinal = new DateTime($horaFinal);
-
         $this->sumarTiempo($horaInicial,$fecha,$horaFinal,$intervalo);
 
         return redirect()->route('horarios.index')->with('mensaje','Los horarios se han creado correctamente');
+
         // CODIGO DE ELIMINACION DE REGISTROS VACIOS
     }
 
@@ -73,7 +75,7 @@ class ScheduleController extends Controller
             $hora_nueva = strtotime($intervalo,strtotime($horaInicial)) ;
             $hora_nueva = date ('H:i' , $hora_nueva);
 
-            Schedule::where("hora_inicio","LIKE","%13%")->orWhere("hora_inicio","LIKE","%14%")->delete(); // REFRIGERIO
+            Schedule::where("hora_inicio","LIKE","%12%")->orWhere("hora_inicio","LIKE","%13%")->delete(); // REFRIGERIO
 
 
             if($hora_nueva > $horaFinal){
@@ -95,76 +97,6 @@ class ScheduleController extends Controller
         //ademas mientras $finalizar sea igual a 0 y este no cambie su valor (DEBE DE CUMPLIR)
 
     }
-
-
-/*
-    public function store(Request $request)
-    {
-
-        $fecha = $request->fecha_atencion;
-        $horaInicial = $request->hora_inicio;
-        $horaFinal = $request->hora_fin;
-        $intervalo = $request->intervalo;
-
-        $this->sumarTiempo(new DateTime($horaInicial), $fecha, $horaFinal, $intervalo);
-
-        return redirect()->route('horarios.index')->with('mensaje','Los horarios se han creado correctamente');
-
-    }
-
-
-    public function sumarTiempo(DateTime $miHora,$fecha,$horaFinal,$intervalo)
-    {
-
-            //esta es la llave que finaliza el bucle
-            $finalizar = 0;
-            $hora_nueva = $miHora->format('H:i'); //6:00 esta es la hora inicial, la cual marcara el inicio del bucle
-
-        do {
-            //crearemos un objeto de tipo horario y asignamos los datos repetitivos
-            $horario = new Schedule();
-
-            $horario->doctor_id = Auth::user()->id;
-            $horario->fecha_atencion = $fecha;            //asignamos la fecha
-
-
-            $horario->hora_inicio = $hora_nueva;            //7:00  //asignamos la hora inicial
-            $hora_nueva = $miHora->modify($intervalo);      //8:00
-
-            $horario->hora_fin = $hora_nueva;               //asignamos la hora modificada (+30min,+60min,+90min)
-            $horario->estado = "0";                         //estado
-
-            //convertimos a tipo date para poder hacer comparaciones
-            $hora1 = strtotime( $horario->hora_fin->format('H:i'));
-            $hora2 = strtotime( $horaFinal );
-
-            //si en caso, la hora de inicio supere a la hora final, se rompera el bucle de manera automatica
-            if($hora1>$hora2){
-                $finalizar = 1;
-            }
-
-            $horario->save(); // GUARDAMOS
-
-        } while ( $hora1 != $hora2 && $finalizar==0);
-        //el bucle se mantedra vigente siempre y cuando las horas de inicio y final NO sean iguales,
-        //ademas mientras $finalizar sea igual a 0 y este no cambie su valor (DEBE DE CUMPLIR AMBAS)
-
-
-    } */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     /**
      * Display the specified resource.
@@ -224,6 +156,6 @@ class ScheduleController extends Controller
      */
     public function destroy(Schedule $schedule)
     {
-        return "delete";
+        //return "delete";
     }
 }

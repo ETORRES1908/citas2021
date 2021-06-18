@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Profile;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();        
+        $users = User::all();
         return view('admin.users.index', compact('users'));
     }
 
@@ -61,14 +61,9 @@ class UserController extends Controller
     public function edit(User $user)
     {
 
+        $roles = Role::select()->where("name","<>","doctor")->get();
+        return view('admin.users.edit', compact('user','roles'));
 
-        return view('admin.users.edit', compact('user'));
-
-        //echo '<pre>' , var_export($user[0]["profile"]["nombre"],true) , '</pre>';
-        /*foreach ($user as $usu) {
-            echo $usu["profile"]->nombre;
-            echo $usu["email"];
-        }*/
     }
 
     /**
@@ -78,11 +73,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
+
     public function update(Request $request, User $user)
     {
 
         if ($request->email == $user->email) {
+
             $leve=['dni'=>'required|digits:8|integer',
                 'nombre'=>'required|string',
                 'email' =>'required|string|email|max:100',
@@ -97,7 +93,8 @@ class UserController extends Controller
                 'apellido'=>'required|string',
                 'edad'=>'required|digits:2|integer',
                 'fecha_nac'=>'required',
-                'sexo'=>'required|string'];    
+                'sexo'=>'required|string'];
+
         } else{
             $leve=['dni'=>'required|digits:8|integer',
                 'nombre'=>'required|string',
@@ -106,17 +103,17 @@ class UserController extends Controller
                 'edad'=>'required|digits:2|integer',
                 'fecha_nac'=>'required',
                 'sexo'=>'required|string'];
+
             $estricto=['dni'=>'required|digits:8|integer|unique:profiles',
                 'nombre'=>'required|string',
                 'email' =>'required|string|email|max:100|unique:users',
                 'apellido'=>'required|string',
                 'edad'=>'required|digits:2|integer',
                 'fecha_nac'=>'required',
-                'sexo'=>'required|string'];    
+                'sexo'=>'required|string'];
+
         }
 
-
-        
 
         if ($request->dni == $user->profile->dni ) {
             $request->validate($leve);
@@ -128,8 +125,9 @@ class UserController extends Controller
         $user->update(['name'=>$request->nombre,'email'=>$request->email]);
 
         //actualiza solo el modelo profile
-        //$user->profile->update($request->only("nombre","apellido","edad","sexo","fecha_nac","dni"));
-        $user->profile->update($request->all());
+        $user->profile->update($request->only("nombre","apellido","edad","sexo","fecha_nac","dni"));
+        $user->roles()->sync($request->roles);  //admin 1 - doctor 2
+
         return redirect()->route('admin.users.edit',$user)->with('msg','El usuario ha sido modificado correctamente');
 
     }
@@ -141,7 +139,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-    
+
         $user->delete();
         return redirect()->route('admin.users.index',$user)->with('msg','El usuario ha sido eliminado correctamente');
 

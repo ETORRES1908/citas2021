@@ -27,12 +27,12 @@
 
         </div>
         <div class="card-body">
-            
+
 
             {!! Form::model($user, ['route' => ['admin.users.update', $user], 'method' => 'PUT']) !!}
 
                 <div class="form-group">
-                        
+
                         <div class="form-group">
                             {!! Form::label('nombre', 'Nombre') !!}
                             {!! Form::text('nombre', $user->profile->nombre, ['class' => 'form-control']) !!}
@@ -63,6 +63,15 @@
                             {!! Form::select('sexo',array('m'=>'Masculino','f'=>'Femenino'), $user->profile->sexo, ['class' => 'form-control']) !!}
                         </div>
 
+                        <div class="form-group">
+                            {!! Form::label('roles', 'Roles') !!}
+                            <br>
+                            @foreach ($roles as $role)
+                                    <label>
+                                        {!! Form::checkbox('roles[]',$role->id,null,['class' => 'mr-1'])!!} {{$role->name}}
+                                    </label>
+                            @endforeach
+                        </div>
                 </div>
 
                 <div class="form-group">
