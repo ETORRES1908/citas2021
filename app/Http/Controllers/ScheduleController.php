@@ -55,8 +55,9 @@ class ScheduleController extends Controller
         //$horaFinal = new DateTime($horaFinal);
 
         $this->sumarTiempo($horaInicial,$fecha,$horaFinal,$intervalo);
-        return redirect()->route('horarios.index')->with('mensaje','Los horarios se han creado correctamente');
 
+        return redirect()->route('horarios.index')->with('mensaje','Los horarios se han creado correctamente');
+        // CODIGO DE ELIMINACION DE REGISTROS VACIOS
     }
 
     public function sumarTiempo($horaInicial,$fecha,$horaFinal,$intervalo)
@@ -70,9 +71,9 @@ class ScheduleController extends Controller
 
             $hora_inicio = $horaInicial;
             $hora_nueva = strtotime($intervalo,strtotime($horaInicial)) ;
-            $hora_nueva = date ( 'H:i' , $hora_nueva );
+            $hora_nueva = date ('H:i' , $hora_nueva);
 
-            Schedule::where("hora_inicio","LIKE","%13%")->orWhere("hora_inicio","LIKE","%14%")->delete();
+            Schedule::where("hora_inicio","LIKE","%13%")->orWhere("hora_inicio","LIKE","%14%")->delete(); // REFRIGERIO
 
 
             if($hora_nueva > $horaFinal){
