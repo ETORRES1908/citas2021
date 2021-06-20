@@ -12,6 +12,14 @@
                             <a href="{{ route('horarios.index')}}" class="bg-white hover:bg-gray-100
                     text-indigo-600 font-semibold py-2 px-4 border border-gray-400 rounded
                     shadow">Volver</a>
+
+                    <div class="px-4 py-10 bg-gray-50 text-left sm:px-6">
+                        @foreach ($errors->all() as $message)
+                            <li>{{ $message }}</li>
+                        @endforeach
+
+                    </div>
+
                         </div>
                     </div>
                 </div>

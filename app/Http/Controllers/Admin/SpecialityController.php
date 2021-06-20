@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 
 class SpecialityController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware('can:admin.specialities.index')->only('index');
+        $this->middleware('can:admin.specialities.create')->only('create','store');
+        $this->middleware('can:admin.specialities.edit')->only('update','edit');
+        $this->middleware('can:admin.specialities.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *

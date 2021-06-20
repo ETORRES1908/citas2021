@@ -9,9 +9,18 @@ use App\Models\Schedule;
 use App\Models\User;
 use App\Models\Speciality;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class DoctorController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware('can:admin.doctors.index')->only('index');
+        $this->middleware('can:admin.doctors.create')->only('create','store');
+        $this->middleware('can:admin.doctors.edit')->only('update','edit');
+        $this->middleware('can:admin.doctors.destroy')->only('destroy');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,15 +28,7 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        /* $doctors = Doctor::with('user','specialities')->where('id', '=', $doctors)->get(); */
 
-        /*  Select  con inners join  */
-        /*$doctors = Doctor::select('doctors.id','doctors.n_cmp','users.name','specialities.nombre')
-                ->join('users', 'users.id', '=', 'doctors.id')
-                ->join('doctor_speciality', 'doctor_speciality.doctor_id', '=', 'doctors.id')
-                ->join('specialities', 'doctor_speciality.speciality_id', '=', 'specialities.id')
-                ->get();
-        /*  echo '<pre>' , var_export($data,true) , '</pre>'; */
         $doctors = Doctor::all();
 
     return view('admin.doctors.index', compact('doctors'));
@@ -62,16 +63,18 @@ class DoctorController extends Controller
             'specialities'=>'required'
         ]);
 
+        $role_doctor = Role::select()->where("name","doctor")->first();
+
         //Buscamos el doctor segun el dni --------------------------------------------------------
         $perfil = Profile::where('dni',$request->dni)->first();
 
 
         //Evaluamos si el DNI ya ha sido usado por otro doctor  --------------------------------------------------------
         if(!is_null($perfil->user->doctor)){
-          
+
             return redirect()->route('admin.doctors.create')
-            ->with('mensaje','El dni de: '.$perfil->nombre.' ya fue asignado como doctor'); 
-            die();
+            ->with('mensaje','El dni de: '.$perfil->nombre.' ya fue asignado como doctor');
+
 
         } else { //En caso no se haya asignado el DNI -------------- creamos el doctor ------------------------------------------
             $doctor = Doctor::create(
@@ -81,10 +84,11 @@ class DoctorController extends Controller
 
         //Sincronzamos las especialidades con el doctor --------------------------------------------------------
             $doctor->specialities()->sync($request->specialities);
-        
+            $doctor->user->roles()->sync($role_doctor->id);
+
         return redirect()->route('admin.doctors.edit', $doctor)
-        ->with('mensaje','Se asignó el Rol de doctor al usuario correctamente'); 
-        } 
+        ->with('mensaje','Se asignó el Rol de doctor al usuario correctamente');
+        }
     }
 
     /**
@@ -144,7 +148,7 @@ class DoctorController extends Controller
 
         //Campo de especialidades
         $doctor->specialities()->sync($request->specialities);
-        
+
 
        //actualiza solo el modelo user
         return redirect()->route('admin.doctors.edit', $doctor)
@@ -159,6 +163,11 @@ class DoctorController extends Controller
      */
     public function destroy(Doctor $doctor)
     {
+
+        $role_doctor = Role::select()->where("name","doctor")->first();
+
+        $doctor->user->roles()->detach($role_doctor->id);
+
         $doctor->delete();
 
         return redirect()->route('admin.doctors.index', $doctor)

@@ -45,6 +45,7 @@ class CitaController extends Controller
      */
     public function store(Request $request,Schedule $horario)
     {
+
         //Validar
         $request->validate([
             'estado'=>'required',
@@ -60,7 +61,7 @@ class CitaController extends Controller
             $horario->estado = $request->estado;
             $horario->save();
         } else{
-            return redirect()->route('cita.ver.show', Auth::user()->id)->with('mensaje','No se puede reservar el horario en este momento');
+            return redirect()->route('cita.ver.index')->with('mensaje','No se puede reservar el horario en este momento');
         }
 
 
@@ -72,7 +73,7 @@ class CitaController extends Controller
             'schedule_id'=>$request->schedule_id,
             'speciality_id'=>$request->especialidad]);
 
-        return redirect()->route('cita.ver.show', Auth::user()->id)->with('mensaje','Se hizo la reservación correctamente');
+        return redirect()->route('cita.ver.index')->with('mensaje','Se hizo la reservación correctamente');
     }
 
     /**
@@ -97,14 +98,16 @@ class CitaController extends Controller
 
         // Recibimos los datos de la especialidad y el doctor y los separamos con la funcion explode
         $var = explode("-", $dc);
+
+
         //Asignamos nuevas variables para los valores por separado
         $esp = $var[0];
         $dr = $var[1];
 
-        $doctor = Doctor::find($dr);
         $especialidad = Speciality::find($esp);
-        /* echo '<pre>' , var_export($doctor,true) , '</pre>'; */
-        return view('horario-especialidad',compact('doctor'), compact('especialidad'));
+        $doctor = Doctor::find($dr);
+
+        return view('horario-especialidad',compact('doctor','especialidad'));
 
     }
 
@@ -119,7 +122,6 @@ class CitaController extends Controller
     {
         $request->validate([
             'estado'=>'required',
-            //'schedule_id' => 'required',
             'user_id' => 'required',
             'especialidad' =>'required',
 

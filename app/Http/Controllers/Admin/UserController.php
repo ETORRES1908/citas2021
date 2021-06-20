@@ -5,10 +5,18 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Profile;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware('can:admin.users.index')->only('index');
+        $this->middleware('can:admin.users.create')->only('create','store');
+        $this->middleware('can:admin.users.edit')->only('update','edit');
+        $this->middleware('can:admin.users.destroy')->only('destroy');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +24,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();        
+        $users = User::all();
         return view('admin.users.index', compact('users'));
     }
 
@@ -61,14 +69,9 @@ class UserController extends Controller
     public function edit(User $user)
     {
 
+        $roles = Role::select()->where("name","<>","doctor")->get();
+        return view('admin.users.edit', compact('user','roles'));
 
-        return view('admin.users.edit', compact('user'));
-
-        //echo '<pre>' , var_export($user[0]["profile"]["nombre"],true) , '</pre>';
-        /*foreach ($user as $usu) {
-            echo $usu["profile"]->nombre;
-            echo $usu["email"];
-        }*/
     }
 
     /**
@@ -78,11 +81,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
+
     public function update(Request $request, User $user)
     {
 
         if ($request->email == $user->email) {
+
             $leve=['dni'=>'required|digits:8|integer',
                 'nombre'=>'required|string',
                 'email' =>'required|string|email|max:100',
@@ -97,7 +101,8 @@ class UserController extends Controller
                 'apellido'=>'required|string',
                 'edad'=>'required|digits:2|integer',
                 'fecha_nac'=>'required',
-                'sexo'=>'required|string'];    
+                'sexo'=>'required|string'];
+
         } else{
             $leve=['dni'=>'required|digits:8|integer',
                 'nombre'=>'required|string',
@@ -106,17 +111,16 @@ class UserController extends Controller
                 'edad'=>'required|digits:2|integer',
                 'fecha_nac'=>'required',
                 'sexo'=>'required|string'];
+
             $estricto=['dni'=>'required|digits:8|integer|unique:profiles',
                 'nombre'=>'required|string',
                 'email' =>'required|string|email|max:100|unique:users',
                 'apellido'=>'required|string',
                 'edad'=>'required|digits:2|integer',
                 'fecha_nac'=>'required',
-                'sexo'=>'required|string'];    
+                'sexo'=>'required|string'];
+
         }
-
-
-        
 
         if ($request->dni == $user->profile->dni ) {
             $request->validate($leve);
@@ -124,13 +128,45 @@ class UserController extends Controller
             $request->validate($estricto);
         }
 
+
+
         //actualiza solo el modelo user
         $user->update(['name'=>$request->nombre,'email'=>$request->email]);
 
         //actualiza solo el modelo profile
-        //$user->profile->update($request->only("nombre","apellido","edad","sexo","fecha_nac","dni"));
-        $user->profile->update($request->all());
-        return redirect()->route('admin.users.edit',$user)->with('msg','El usuario ha sido modificado correctamente');
+        $user->profile->update($request->only("nombre","apellido","edad","sexo","fecha_nac","dni"));
+
+
+
+
+        //ACTUALIZACION DE LOS ROLES-------------------------------------------------------
+        if($user->doctor){
+            //"si es doctor";
+            $rol = Role::select()->where("name","doctor")->first(); // obtenemos el id del rol doctor
+
+            $array = array(strval($rol["id"]));      //convertimos a string
+
+
+
+            if($request->roles==null){              // si llegan datos vacios de roles, solo sincronizamos con el doctor
+                $user->roles()->sync($array);
+
+            } else{
+                $roles = array_merge($request->roles,$array);   //unificamos los datos con doctor y los nuevos roles
+                $user->roles()->sync($roles);
+            }
+        }
+
+
+        else{
+            //"si no es doctor"; hace el procedimiento normal de asignacion de roles de manera normal
+                $user->roles()->sync($request->roles);  //admin 1 - doctor 2
+        }
+
+
+
+
+       return redirect()->route('admin.users.edit',$user)->with('msg','El usuario ha sido modificado correctamente');
 
     }
     /**
@@ -141,7 +177,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-    
+
         $user->delete();
         return redirect()->route('admin.users.index',$user)->with('msg','El usuario ha sido eliminado correctamente');
 

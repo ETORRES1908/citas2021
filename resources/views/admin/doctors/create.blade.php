@@ -3,10 +3,11 @@
 @section('title', 'Blog 2021')
 
 @section('content_header')
-<h1>Añadir nuevo doctor</h1>
+    <h1>Añadir nuevo doctor</h1>
 @stop
 
 @section('content')
+
 <div class="card">
     <div class="card-header">
 

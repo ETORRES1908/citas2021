@@ -29,8 +29,10 @@ use App\Http\Controllers\User\UsuController;
         return view('dashboard');
     })->name('dashboard');
 
+
 Route::resource('reservar', CitaController::class)->names('cita.reserva'); //
 Route::resource('citas', VerCitaController::class)->names('cita.ver');
 Route::resource('perfil', UsuController::class)->names('usuario.perfil');
+
 Route::resource('horarios', ScheduleController::class)->names('horarios');
 
