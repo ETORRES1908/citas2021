@@ -4,12 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Meeting;
 use App\Models\Schedule;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ScheduleController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware('can:horarios.index')->only('index');
+        $this->middleware('can:horarios.create')->only('create','store');
+        $this->middleware('can:horarios.edit')->only('update','edit');
+        $this->middleware('can:horarios.destroy')->only('destroy');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,8 +28,10 @@ class ScheduleController extends Controller
     public function index()
     {
 
-        $schedules = Schedule::all()->where('doctor_id',Auth::user()->id);
-        return view('schedules.index', compact('schedules'));
+        $schedules = Schedule::all()->where('doctor_id',Auth::user()->doctor->id);
+        $specialities = Auth::user()->doctor->specialities;
+
+        return view('schedules.index', compact('schedules','specialities'));
     }
 
     /**
@@ -65,11 +77,7 @@ class ScheduleController extends Controller
     public function sumarTiempo($horaInicial,$fecha,$horaFinal,$intervalo)
     {
 
-            //esta es la llave que finaliza el bucle
-            $finalizar = 0;
-
         do {
-
 
             $hora_inicio = $horaInicial;
             $hora_nueva = strtotime($intervalo,strtotime($horaInicial)) ;
@@ -77,16 +85,17 @@ class ScheduleController extends Controller
 
             Schedule::where("hora_inicio","LIKE","%12%")->orWhere("hora_inicio","LIKE","%13%")->delete(); // REFRIGERIO
 
-
             if($hora_nueva > $horaFinal){
                 return redirect()->route('horarios.index')->with('mensaje','Los horarios se han creado correctamente');
             }
 
                 Schedule::create([
-                    "doctor_id"=> Auth::user()->id,
+                    "doctor_id"=> Auth::user()->doctor->id,
                     "fecha_atencion"=> $fecha,
                     "hora_inicio"=> $hora_inicio,
                     "hora_fin"=> $hora_nueva,
+                    "estado"=>"0"
+
                 ]);
 
             $horaInicial = $hora_nueva;
@@ -123,9 +132,16 @@ class ScheduleController extends Controller
         //despues llama a la relacion de uno a uno con el meeting
         //y lo almacena en un modelo nuevo, se compacta y se envia a la vista
 
-        $meeting =  Schedule::findOrFail($schedule)->meeting;
 
-        return view('schedules.edit', compact('meeting'));
+
+            $meeting =  Schedule::findOrFail($schedule)->meeting;
+
+            if ($meeting==null) {
+                return redirect()->route('horarios.index');
+            } else{
+                return view('schedules.edit', compact('meeting'));
+            }
+
 
     }
 
@@ -138,10 +154,13 @@ class ScheduleController extends Controller
      */
     public function update(Request $request)
     {
-        $meeting = Meeting::findOrFail($request->meeting_id);
-        $meeting->update(["estado"=>"1", "observacion_med" => $request->observacion]);
 
+        $meeting = Meeting::findOrFail($request->meeting_id);
         $schedule = Schedule::findOrFail($request->schedule_id);
+
+        //$this->authorize('AtenderCita', $schedule);
+
+        $meeting->update(["estado"=>"1", "observacion_med" => $request->observacion]);
         $schedule->update(["estado"=>"2"]);
 
         return redirect()->route('horarios.index')->with('mensaje','La cita ha finalizado correctamente');
@@ -154,8 +173,11 @@ class ScheduleController extends Controller
      * @param  \App\Models\Schedule  $schedule
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Schedule $schedule)
+    public function destroy($id)
     {
-        //return "delete";
+        $mytime = Carbon::now();
+        Schedule::select()->where("fecha_atencion","<",$mytime->format("Y-m-d"))->where("estado","0")->delete();
+        return redirect()->route('horarios.index')->with('mensaje','Las citas pasadas se han ha eliminado correctamente');
+
     }
 }

@@ -1,4 +1,3 @@
-
 @section('css')
 <link rel="stylesheet" href="{{asset('/css/admin_custom.css')}}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
@@ -16,7 +15,7 @@ console.log('Hola!');
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-$('#doctores').DataTable(
+$('#roles').DataTable(
     {
         "responsive":true,
         "auto-with":false,

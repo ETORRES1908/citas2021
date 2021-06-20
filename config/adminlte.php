@@ -245,34 +245,38 @@ return [
             'text' => 'Usuarios',
             'route'  => 'admin.users.index',
             'icon' => 'fas fa-hospital-user',
+            'can' => 'admin.users.index'
         ],
         [
             'text' => 'Especialidades',
             'route'  => 'admin.specialities.index',
             'icon' => 'fas fa-stethoscope',
+            'can' => 'admin.specialities.index'
+
         ],
         [
             'text' => 'Doctores',
             'route'  => 'admin.doctors.index',
             'icon' => 'fas fa-user-md',
+            'can' => 'admin.doctors.index'
+
         ],
 
-        ['header' => 'PERMISOS'],
+        ['header' => 'AUTORIZACIONES'],
         [
-            'text'       => 'Asignar Permisos',
-            'icon' => 'fas fa-fw fa-lock',
-            'url'        => '#',
+            'text'       => 'Roles y Permisos',
+            'icon' =>       'fas fa-fw fa-lock',
+            'route'        => 'admin.roles.index',
+            'can'        => 'admin.roles.index'
+
         ],
         [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-            'url'        => '#',
+            'text'       => 'Crear un Rol',
+            'icon_color' => 'green',
+            'route'        => 'admin.roles.create',
+            'can'        => 'admin.roles.create'
         ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'cyan',
-            'url'        => '#',
-        ],
+
     ],
 
     /*

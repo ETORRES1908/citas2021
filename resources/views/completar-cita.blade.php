@@ -10,9 +10,10 @@
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                             {!! Form::open(['method' => 'POST', 'route' => 'cita.reserva.store']) !!}
-                            {!! Form::text('estado',$datos->estado, ['hidden','class' => 'form-control']) !!}
-                            {!! Form::text('schedule_id',$id, ['hidden','class' => 'form-control']) !!}
-                            {!! Form::text('user_id', Auth::user()->id, ['hidden','class' => 'form-control']) !!}
+
+                                {!! Form::text('estado',$datos->estado, ['hidden','class' => 'form-control']) !!}
+                                {!! Form::text('schedule_id',$id, ['hidden','class' => 'form-control']) !!}
+                                {!! Form::text('user_id', Auth::user()->id, ['hidden','class' => 'form-control']) !!}
                             {!! Form::hidden('especialidad', $datos->especialidad) !!}
                             <div>
                                 {!! Form::textarea('descripcion', null,['class'=>'form-control resize-none border

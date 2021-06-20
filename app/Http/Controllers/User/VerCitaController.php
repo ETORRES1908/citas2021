@@ -21,7 +21,8 @@ class VerCitaController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        $citas = Meeting::all()->where('user_id',Auth::user()->id);
+        return view('user.vercitas', compact('citas'));
     }
 
     /**
@@ -57,10 +58,7 @@ class VerCitaController extends Controller
      */
     public function show($id)
     {
-        //en esta enviando un id de usuario y me esta devolviendo una coleccion de citas (no es un modelo)
-        $citas = Meeting::all()->where('user_id',$id);
 
-        return view('user.vercitas', compact('citas'));
     }
 
     /**
@@ -111,7 +109,7 @@ class VerCitaController extends Controller
             //BORRAMOS LA CITA CREADA
             $meeting->delete();
 
-            return redirect()->route('cita.ver.show', Auth::user()->id)
+            return redirect()->route('cita.ver.index')
             ->with('mensaje','Se canceló la cita correctamente',);
         }
 }

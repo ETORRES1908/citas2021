@@ -9,17 +9,14 @@
 @section('content')
     <div class="card">
 
-        <div class="card-header">
-            @if (session('msg'))
-                <div class="alert alert-danger">
-                    <strong>{{session('msg')}}</strong>
-                </div>
-            @endif
 
-            {{-- <a href="{{ route('admin.doctors.create')}}" class="btn btn-primary"> Añadir Doctor</a> --}}
-
-        </div>
-
+    @if (session('msg'))
+            <div class="card-header">
+                    <div class="alert alert-danger">
+                        <strong>{{session('msg')}}</strong>
+                    </div>
+            </div>
+    @endif
         <div class="card-body">
             <table id="usuarios" class="table table-striped table-bordered" style="width:100%">
 
@@ -30,7 +27,7 @@
                         <th>Apellido</th>
                         <th>DNI</th>
                         <th>Email</th>
-                        
+
                         <th style="width:2px;text-align:center">Acciones</th>
                     </tr>
                 </thead>
@@ -42,21 +39,26 @@
                         <td>{{$user->profile->apellido}}</td>
                         <td>{{$user->profile->dni}}</td>
                         <td>{{$user->email}}</td>
-                        
+
                         <td style="display:flex ">
-                            <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-success">Editar</a>
-                    
-                            <form action="{{ route('admin.users.destroy', $user) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <input type="submit" value="Eliminar" class="btn btn-danger" style="margin: 0px 0px 0px 5px;">
-                            </form>
+                            @can('admin.users.edit')
+                                <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-success">Editar</a>
+                            @endcan
+
+                            @can('admin.users.destroy')
+                                <form action="{{ route('admin.users.destroy', $user) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="submit" value="Eliminar" class="btn btn-danger" style="margin: 0px 0px 0px 5px;">
+                                </form>
+                            @endcan
+
                         </td>
                     </tr>
                     @endforeach
 
                 </tbody>
-                
+
             </table>
         </div>
     </div>

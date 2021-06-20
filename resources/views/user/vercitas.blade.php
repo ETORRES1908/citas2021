@@ -43,9 +43,6 @@
                                             Hora Fin</th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Especialidad</th>
-                                        <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Doctor</th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -77,13 +74,7 @@
                                                 {{$meeting->schedule->hora_fin}}
                                             </div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            @foreach ($meeting->schedule->doctor->specialities as $esp)
-                                            <div class="text-sm text-gray-900">
-                                                {{$esp->nombre}}
-                                            </div>
-                                            @endforeach
-                                        </td>
+
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">
                                                 {{$meeting->schedule->doctor->user->name}}

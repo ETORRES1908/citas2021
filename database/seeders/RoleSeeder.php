@@ -26,56 +26,77 @@ class RoleSeeder extends Seeder
 
         //ESPECIALIDADES
         Permission::create(["name"=>"admin.specialities.index",
-                            "description"=>"Ver Especilidades"])->syncRoles([$role1,$role2]);
-
-        Permission::create(["name"=>"admin.specialities.edit",
-        "description"=>"Editar Especilidades"])->syncRoles([$role1]);
+                            "description"=>"Ver especialidades"])->syncRoles([$role1,$role2]);
 
         Permission::create(["name"=>"admin.specialities.create",
-        "description"=>"Crear Especilidades"])->syncRoles([$role1]);
+            "description"=>"Crear especialidades"])->syncRoles([$role1]);
+
+        Permission::create(["name"=>"admin.specialities.edit",
+        "description"=>"Editar especialidades"])->syncRoles([$role1]);
 
         Permission::create(["name"=>"admin.specialities.destroy",
-        "description"=>"Eliminar Especilidades"])->syncRoles([$role1]);
+        "description"=>"Eliminar especialidades"])->syncRoles([$role1]);
+
 
         //USUARIOS
         Permission::create(["name"=>"admin.users.index",
-        "description"=>"Ver Usuarios"])->syncRoles([$role1,$role2]);
+        "description"=>"Ver usuarios"])->syncRoles([$role1,$role2]);
 
         Permission::create(["name"=>"admin.users.edit",
-        "description"=>"Editar Usuarios"])->syncRoles([$role1]);
+        "description"=>"Editar usuarios"])->syncRoles([$role1]);
 
         Permission::create(["name"=>"admin.users.destroy",
-        "description"=>"Eliminar Usuarios"])->syncRoles([$role1]);
+        "description"=>"Eliminar usuarios"])->syncRoles([$role1]);
 
 
         //DOCTORES
         Permission::create(["name"=>"admin.doctors.index",
-        "description"=>"Ver Doctores"])->syncRoles([$role1]);
+        "description"=>"Ver doctores"])->syncRoles([$role1]);
 
-        Permission::create(["name"=>"admin.doctors.edit",
-        "description"=>"Editar Doctores"])->syncRoles([$role1]);
+        Permission::create(["name"=>"admin.doctors.create",
+        "description"=>"Crear doctores"])->syncRoles([$role1]);
 
         Permission::create(["name"=>"admin.doctors.show",
-        "description"=>"Ver Horarios de Doctores"])->syncRoles([$role1]);
+        "description"=>"Ver horarios de doctores"])->syncRoles([$role1]);
+
+        Permission::create(["name"=>"admin.doctors.edit",
+        "description"=>"Editar doctores"])->syncRoles([$role1]);
 
         Permission::create(["name"=>"admin.doctors.destroy",
-        "description"=>"Eliminar Doctores"])->syncRoles([$role1]);
+        "description"=>"Eliminar doctores"])->syncRoles([$role1]);
 
 
-        //HORARIOS
+        //horarios
         Permission::create(["name"=>"horarios.index",
-        "description"=>"Ver sus Horarios (Doctor)"])->syncRoles([$role1,$role2]);
-
-        Permission::create(["name"=>"horarios.edit",
-        "description"=>"Atender Citas (Doctor)"])->syncRoles([$role1,$role2]);
+        "description"=>"Ver sus horarios (Doctor)"])->syncRoles([$role2]);
 
         Permission::create(["name"=>"horarios.create",
-        "description"=>"Crear sus Horarios (Doctor)"])->syncRoles([$role1,$role2]);
+        "description"=>"Crear sus horarios (Doctor)"])->syncRoles([$role2]);
+
+
+        Permission::create(["name"=>"horarios.edit",
+        "description"=>"Atender Citas (Doctor)"])->syncRoles([$role2]);
+
 
         Permission::create(["name"=>"horarios.show",
-        "description"=>"Ver sus Citas (Doctor)"])->syncRoles([$role1,$role2]);
+        "description"=>"Ver sus Citas (Doctor)"])->syncRoles([$role2]);
+
+        Permission::create(["name"=>"horarios.destroy",
+        "description"=>"Borrar sus Horarios vacios (Doctor)"])->syncRoles([$role2]);
 
 
+        //ROLES Y PERMISOS
+        Permission::create(["name"=>"admin.roles.index",
+        "description"=>"Ver roles"])->syncRoles([$role1,$role2]);
+
+        Permission::create(["name"=>"admin.roles.create",
+        "description"=>"Crear roles"])->syncRoles([$role1]);
+
+        Permission::create(["name"=>"admin.roles.edit",
+        "description"=>"Editar roles"])->syncRoles([$role1]);
+
+        Permission::create(["name"=>"admin.roles.destroy",
+        "description"=>"Eliminar roles"])->syncRoles([$role1]);
 
     }
 }

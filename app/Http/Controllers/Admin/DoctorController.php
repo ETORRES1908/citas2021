@@ -13,6 +13,14 @@ use Spatie\Permission\Models\Role;
 
 class DoctorController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware('can:admin.doctors.index')->only('index');
+        $this->middleware('can:admin.doctors.create')->only('create','store');
+        $this->middleware('can:admin.doctors.edit')->only('update','edit');
+        $this->middleware('can:admin.doctors.destroy')->only('destroy');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,15 +28,7 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        /* $doctors = Doctor::with('user','specialities')->where('id', '=', $doctors)->get(); */
 
-        /*  Select  con inners join  */
-        /*$doctors = Doctor::select('doctors.id','doctors.n_cmp','users.name','specialities.nombre')
-                ->join('users', 'users.id', '=', 'doctors.id')
-                ->join('doctor_speciality', 'doctor_speciality.doctor_id', '=', 'doctors.id')
-                ->join('specialities', 'doctor_speciality.speciality_id', '=', 'specialities.id')
-                ->get();
-        /*  echo '<pre>' , var_export($data,true) , '</pre>'; */
         $doctors = Doctor::all();
 
     return view('admin.doctors.index', compact('doctors'));
