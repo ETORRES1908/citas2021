@@ -122,21 +122,51 @@ class UserController extends Controller
 
         }
 
-
         if ($request->dni == $user->profile->dni ) {
             $request->validate($leve);
         } else {
             $request->validate($estricto);
         }
 
+
+
         //actualiza solo el modelo user
         $user->update(['name'=>$request->nombre,'email'=>$request->email]);
 
         //actualiza solo el modelo profile
         $user->profile->update($request->only("nombre","apellido","edad","sexo","fecha_nac","dni"));
-        $user->roles()->sync($request->roles);  //admin 1 - doctor 2
 
-        return redirect()->route('admin.users.edit',$user)->with('msg','El usuario ha sido modificado correctamente');
+
+
+
+        //ACTUALIZACION DE LOS ROLES-------------------------------------------------------
+        if($user->doctor){
+            //"si es doctor";
+            $rol = Role::select()->where("name","doctor")->first(); // obtenemos el id del rol doctor
+
+            $array = array(strval($rol["id"]));      //convertimos a string
+
+
+
+            if($request->roles==null){              // si llegan datos vacios de roles, solo sincronizamos con el doctor
+                $user->roles()->sync($array);
+
+            } else{
+                $roles = array_merge($request->roles,$array);   //unificamos los datos con doctor y los nuevos roles
+                $user->roles()->sync($roles);
+            }
+        }
+
+
+        else{
+            //"si no es doctor"; hace el procedimiento normal de asignacion de roles de manera normal
+                $user->roles()->sync($request->roles);  //admin 1 - doctor 2
+        }
+
+
+
+
+       return redirect()->route('admin.users.edit',$user)->with('msg','El usuario ha sido modificado correctamente');
 
     }
     /**

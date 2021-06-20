@@ -41,6 +41,7 @@ class RoleController extends Controller
         ->where('name','<>','horarios.create')
         ->where('name','<>','horarios.show')
         ->where('name','<>','horarios.edit')
+        ->where('name','<>','horarios.destroy')
         ->get();
 
         return view('admin.roles.create', compact('permissions'));
@@ -94,6 +95,7 @@ class RoleController extends Controller
         ->where('name','<>','horarios.create')
         ->where('name','<>','horarios.show')
         ->where('name','<>','horarios.edit')
+        ->where('name','<>','horarios.destroy')
         ->get();
 
         return view('admin.roles.edit',compact('role','permissions'));
