@@ -86,7 +86,7 @@
         e.preventDefault();
             Swal.fire({
             title: '¿Estas seguro?',
-            text: "Se eliminaran todos los registros relacionados a esta información(citas, horarios, doctores, etc). Esta accion es irreversible.",
+            text: "Se eliminaran todos los registros relacionados a esta información(citas, horarios, doctores, etc). Esta acción es irreversible.",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

@@ -176,8 +176,19 @@ class ScheduleController extends Controller
     public function destroy($id)
     {
         $mytime = Carbon::now();
-        Schedule::select()->where("fecha_atencion","<",$mytime->format("Y-m-d"))->where("estado","0")->delete();
-        return redirect()->route('horarios.index')->with('mensaje','Las citas pasadas se han ha eliminado correctamente');
+
+        $result = Schedule::select()->where("fecha_atencion","<",$mytime->format("Y-m-d"))->where("estado","0")->delete();
+        if($result==0){
+
+            return redirect()->route('horarios.index')->with('mensaje','no');
+
+        }else{
+
+            return redirect()->route('horarios.index')->with('mensaje','ok');
+
+        }
+
+
 
     }
 }

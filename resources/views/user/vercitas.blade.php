@@ -1,5 +1,5 @@
 <x-app-layout>
-    @if (session('mensaje'))
+    {{-- @if (session('mensaje'))
     <script>
         $('#alert').fadeIn();
         setTimeout(function() {
@@ -9,7 +9,7 @@
     <div id="alert" class="alert alert-success" style="width: 100%">
         <strong>{{session('mensaje')}}</strong>
     </div>
-    @endif
+    @endif --}}
 
     <!-- This example requires Tailwind CSS v2.0+ -->
     <div class="card-body" style="background: white">
@@ -85,7 +85,7 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
                                             {{-- Eliminar Cita --}}
-                                            <form action="{{ route('cita.ver.destroy', $meeting) }}"
+                                            <form action="{{ route('cita.ver.destroy', $meeting) }}" class="formulario-eliminar"
                                                 method="post">
                                                 @csrf
                                                 @method('DELETE')
@@ -116,7 +116,7 @@
 
 
 
-
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function () {
           $('#tcitas').DataTable({
@@ -127,5 +127,33 @@
                 }
             });
         });
+
+        $('.formulario-eliminar').submit(function(e){
+                    e.preventDefault();
+                        Swal.fire({
+                        title: '¿Estas seguro?',
+                        text: "Vas a eliminar tu reservación en el horario establecido. Esta acción es irreversible.",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Si, estoy de acuerdo!',
+                        cancelButtonText: 'Cancelar'
+                        }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.submit();
+                        }
+                        })
+                });
     </script>
+    @if (session("mensaje")=="ok")
+    <script>
+        Swal.fire(
+                 'Eliminado!',
+                 'Los registros se eliminaron correctamente.',
+                 'success'
+                 )
+    </script>
+    @endif
+
 </x-app-layout>

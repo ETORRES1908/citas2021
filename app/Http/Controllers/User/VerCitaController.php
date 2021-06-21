@@ -110,6 +110,6 @@ class VerCitaController extends Controller
             $meeting->delete();
 
             return redirect()->route('cita.ver.index')
-            ->with('mensaje','Se canceló la cita correctamente',);
+            ->with('mensaje','ok',);
         }
 }
