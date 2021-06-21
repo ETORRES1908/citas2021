@@ -94,4 +94,13 @@
             });
         });
     </script>
+    @if (session("mensaje")=="ok")
+    <script>
+        Swal.fire(
+                 'Eliminado!',
+                 'Los registros se eliminaron correctamente.',
+                 'success'
+                 )
+    </script>
+    @endif
 </x-app-layout>

@@ -3,11 +3,7 @@
     <div class="card-body" style="background: white">
 
         <div class="container py-8">
-            @if (session('mensaje'))
-                <div class="alert alert-success">
-                    <strong>{{session('mensaje')}}</strong>
-                </div>
-            @endif
+
 
             <div style="padding-bottom: 30px">
                 <a class="bg-white hover:bg-gray-100
@@ -182,7 +178,7 @@
                     </div>
                 </div>
                 <br>
-                <form style="text-align: center" action="{{ route('horarios.destroy', Auth::user()->doctor->id)}}" method="post">
+                <form class="formulario-eliminar" style="text-align: center" action="{{ route('horarios.destroy', Auth::user()->doctor->id)}}" method="post">
                     @csrf
                     @method("DELETE")
 
@@ -197,6 +193,8 @@
             </div>
         </div>
     </div>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
 
@@ -214,10 +212,53 @@
                 "order": [[0, "desc"]],
 
             });
+
         });
+
+        $('.formulario-eliminar').submit(function(e){
+                    e.preventDefault();
+                        Swal.fire({
+                        title: '¿Estas seguro?',
+                        text: "Vas a eliminar los horarios no utilizados anteriormente. Esta acción es irreversible.",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Si, estoy de acuerdo!',
+                        cancelButtonText: 'Cancelar'
+                        }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.submit();
+                        }
+                        })
+                });
+
 
 
 
     </script>
+    @switch(session("mensaje"))
+        @case("ok")
+            <script>
+                Swal.fire(
+                        'Eliminado!',
+                        'Los registros se eliminaron correctamente.',
+                        'success'
+                        )
+            </script>
+            @break
+        @case("no")
+            <script>
+                Swal.fire(
+                        'Vaya...',
+                        'No hay registros por eliminar.',
+                        'info'
+                        )
+            </script>
+            @break
+        @default
+
+    @endswitch
+
 
 </x-app-layout>
