@@ -48,7 +48,8 @@
 
                         <div class="form-group">
                             {!! Form::label('dni', 'DNI') !!}
-                            {!! Form::text('dni', $user->profile->dni, ['class' => 'form-control']) !!}
+                            {!! Form::text('dni', $user->profile->dni, ['class' => 'form-control','disabled']) !!}
+
                         </div>
                         <div class="form-group">
                             {!! Form::label('fecha_nac', 'Fecha de Nacimiento') !!}

@@ -75,9 +75,9 @@ class UsuController extends Controller
     {
         $usuario = User::findOrFail($id);
 
-        if ($request->email == $usuario->email) {
 
-            $leve=['dni'=>'required|digits:8|integer',
+
+            $leve=[
                     'nombre'=>'required|string',
                     'email' => ['required', 'string', 'email', 'max:100'],
                     'apellido'=>'required|string',
@@ -85,16 +85,7 @@ class UsuController extends Controller
                     'fecha_nac'=>'required',
                     'sexo'=>'required|string'];
 
-            $estricto=['dni'=>'required|digits:8|integer|unique:profiles',
-                'nombre'=>'required|string',
-                'email' => ['required', 'string', 'email', 'max:100'],
-                'apellido'=>'required|string',
-                'edad'=>'required|digits:2|integer',
-                'fecha_nac'=>'required',
-                'sexo'=>'required|string'];
-        } else{
-
-            $leve=['dni'=>'required|digits:8|integer',
+            $estricto=[
                 'nombre'=>'required|string',
                 'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
                 'apellido'=>'required|string',
@@ -102,17 +93,9 @@ class UsuController extends Controller
                 'fecha_nac'=>'required',
                 'sexo'=>'required|string'];
 
-            $estricto=['dni'=>'required|digits:8|integer|unique:profiles',
-                'nombre'=>'required|string',
-                'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
-                'apellido'=>'required|string',
-                'edad'=>'required|digits:2|integer',
-                'fecha_nac'=>'required',
-                'sexo'=>'required|string'];
-        }
 
 
-            if ($request->dni == $usuario->profile->dni ) {
+            if ($request->email == $usuario->email) {
                 $request->validate($leve);
             } else {
                 $request->validate($estricto);
@@ -124,7 +107,7 @@ class UsuController extends Controller
             $usuario->save();
 
             //actualiza solo el modelo profile
-            $usuario->profile->update($request->only("nombre","apellido","edad","sexo","fecha_nac","dni"));
+            $usuario->profile->update($request->only("nombre","apellido","edad","sexo","fecha_nac"));
 
         return redirect()->route('usuario.perfil.edit',$usuario->id)->with('msg','El usuario ha sido modificado correctamente');
     }
