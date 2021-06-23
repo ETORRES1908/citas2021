@@ -151,7 +151,9 @@ return [
         'permissions' => 'permisos',
         'n_cmp' => 'N° CMP',
         'dni' => 'DNI',
-        'specialities' =>'Especialidad'
+        'specialities' =>'Especialidad',
+        'fecha_nac' =>'Fecha de nacimiento'
+
 
     ],
 

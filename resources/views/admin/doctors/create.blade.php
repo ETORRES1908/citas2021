@@ -38,7 +38,7 @@
 
         {!! Form::open(['method' => 'POST', 'route' => 'admin.doctors.store']) !!}
 
-        <div class="form-group">
+
 
             {{-- Añadir N_CMP --}}
             <div class="form-group">
@@ -49,9 +49,9 @@
 
             {{-- Seleccionar Usuario --}}
 
-            <div class="form-group">
+
                 {!! Form::label('dni', 'DNI del usuario') !!}<br>
-                <div class="container">
+                <div  style="margin: 15px 20px" class="form-group">
                     <div class="row">
                     <!-- Multiple Item Picker -->
 
@@ -71,7 +71,6 @@
 
                     </div><!--.row-->
                 </div><!--.container-->
-            </div>
 
 
 
@@ -90,6 +89,8 @@
                 @endforeach
             </div>
         </div>
+
+
         <div class="form-group">
 
                 {!! Form::submit('Crear', ['class' => ' btn btn-success']) !!}
