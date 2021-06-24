@@ -3,20 +3,20 @@
         <x-slot name="logo">
             <x-jet-authentication-card-logo />
         </x-slot>
-
         <x-jet-validation-errors class="mb-4" />
-
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
             <div>
-                <x-jet-label for="name" value="{{ __('Nombre') }}" />
-                <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                <x-jet-label for="name1" value="{{ __('Nombre') }}" />
+                <x-jet-input disabled id="name1" class="block mt-1 w-full" type="text" name="name1" :value="old('name')" required autofocus autocomplete="name" placeholder="Llenado al validar"/>
+                <input type="hidden" name="name" id="name" value="">
             </div>
 
             <div class="mt-4">
-                <x-jet-label for="apellido" value="{{ __('Apellido') }}" />
-                <x-jet-input id="apellido" class="block mt-1 w-full" type="text"   name="apellido" :value="old('apellido')" required />
+                <x-jet-label for="apellido1" value="{{ __('Apellido') }}" />
+                <x-jet-input disabled id="apellido1" class="block mt-1 w-full" type="text"   name="apellido1" :value="old('apellido')" required placeholder="Llenado al validar"/>
+                <input type="hidden" name="apellido" id="apellido" value="">
             </div>
 
             <div class="mt-4">
@@ -35,8 +35,12 @@
             </div>
 
             <div class="mt-4">
-                <x-jet-label for="dni" value="{{ __('DNI') }}" />
-                <x-jet-input id="dni" class="block mt-1 w-full" type="text" :value="old('dni')" name="dni" required />
+                <x-jet-label for="dni1" value="{{ __('DNI') }}" />
+                <x-jet-input id="dni1" class="mt-1 w-100" type="text" :value="old('dni')" name="dni1" required />
+                <input type="hidden" name="dni" id="dni" value="">
+                <input type="button" class="bg-white hover:bg-gray-100
+                text-indigo-600 font-semibold py-2 px-4 border border-gray-400 rounded
+                shadow" onclick="consultar()" value="Validar">
             </div>
 
             <div class="mt-4">
@@ -90,3 +94,4 @@
         </form>
     </x-jet-authentication-card>
 </x-guest-layout>
+<script src="{{ asset('vendor/js/api_dni.js') }}"></script>

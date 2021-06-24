@@ -43,8 +43,9 @@ class DoctorController extends Controller
     public function create()
     {
 
+        $profiles = Profile::all();
         $specialities = Speciality::all();
-        return view('admin.doctors.create', compact('specialities'));
+        return view('admin.doctors.create', compact('specialities','profiles'));
     }
 
     /**
@@ -58,8 +59,8 @@ class DoctorController extends Controller
         //Validaciones --------------------------------------------------------
 
         $request->validate([
-            'n_cmp' => 'required|unique:doctors|digits:6',
-            'dni' => 'required|digits:8|integer',
+            'n_cmp' => 'required|unique:doctors|digits:6|integer',
+            'dni' => 'required|digits:8',
             'specialities'=>'required'
         ]);
 

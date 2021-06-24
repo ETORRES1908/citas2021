@@ -148,7 +148,13 @@ return [
 
     'attributes' => [
         'name' => 'nombre',
-        'permissions' => 'permisos'
+        'permissions' => 'permisos',
+        'n_cmp' => 'N° CMP',
+        'dni' => 'DNI',
+        'specialities' =>'Especialidad',
+        'fecha_nac' =>'Fecha de nacimiento'
+
+
     ],
 
 ];

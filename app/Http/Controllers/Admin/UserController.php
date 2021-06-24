@@ -85,9 +85,8 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
 
-        if ($request->email == $user->email) {
 
-            $leve=['dni'=>'required|digits:8|integer',
+            $leve=[
                 'nombre'=>'required|string',
                 'email' =>'required|string|email|max:100',
                 'apellido'=>'required|string',
@@ -95,16 +94,7 @@ class UserController extends Controller
                 'fecha_nac'=>'required',
                 'sexo'=>'required|string'];
 
-            $estricto=['dni'=>'required|digits:8|integer|unique:profiles',
-                'nombre'=>'required|string',
-                'email' => 'required|string|email|max:100',
-                'apellido'=>'required|string',
-                'edad'=>'required|digits:2|integer',
-                'fecha_nac'=>'required',
-                'sexo'=>'required|string'];
-
-        } else{
-            $leve=['dni'=>'required|digits:8|integer',
+            $estricto=[
                 'nombre'=>'required|string',
                 'email' =>'required|string|email|max:100|unique:users',
                 'apellido'=>'required|string',
@@ -112,17 +102,9 @@ class UserController extends Controller
                 'fecha_nac'=>'required',
                 'sexo'=>'required|string'];
 
-            $estricto=['dni'=>'required|digits:8|integer|unique:profiles',
-                'nombre'=>'required|string',
-                'email' =>'required|string|email|max:100|unique:users',
-                'apellido'=>'required|string',
-                'edad'=>'required|digits:2|integer',
-                'fecha_nac'=>'required',
-                'sexo'=>'required|string'];
 
-        }
 
-        if ($request->dni == $user->profile->dni ) {
+        if ($request->email == $user->email) {
             $request->validate($leve);
         } else {
             $request->validate($estricto);
@@ -134,7 +116,7 @@ class UserController extends Controller
         $user->update(['name'=>$request->nombre,'email'=>$request->email]);
 
         //actualiza solo el modelo profile
-        $user->profile->update($request->only("nombre","apellido","edad","sexo","fecha_nac","dni"));
+        $user->profile->update($request->only("nombre","apellido","edad","sexo","fecha_nac"));
 
 
 

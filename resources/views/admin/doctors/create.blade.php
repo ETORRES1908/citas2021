@@ -7,6 +7,12 @@
 @stop
 
 @section('content')
+<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css'>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 
 <div class="card">
     <div class="card-header">
@@ -32,7 +38,7 @@
 
         {!! Form::open(['method' => 'POST', 'route' => 'admin.doctors.store']) !!}
 
-        <div class="form-group">
+
 
             {{-- Añadir N_CMP --}}
             <div class="form-group">
@@ -42,15 +48,40 @@
 
 
             {{-- Seleccionar Usuario --}}
-            <div class="form-group">
+
+
                 {!! Form::label('dni', 'DNI del usuario') !!}<br>
-                {!! Form::text('dni', null, ['class' => 'form-control','placeholder'=>'DNI usuario']) !!}
-            </div>
+                <div  style="margin: 15px 20px" class="form-group">
+                    <div class="row">
+                    <!-- Multiple Item Picker -->
+
+                    <div class="card">
+
+                    <select name="dni" id="dni" class="selectpicker show-menu-arrow"
+                            data-style="form-control"
+                            data-live-search="true"
+                            multiple data-max-options="1"
+                            title="Buscar Usuario">
+                        @foreach ($profiles as $profile)
+                            <option value="{{$profile->dni}}" data-tokens="{{" " . $profile->apellido. " " . $profile->nombre. " " . $profile->dni . " "}}">{{$profile->apellido. " " . $profile->nombre. ", DNI:" . $profile->dni}}</option>
+                        @endforeach
+
+                    </select>
+                    </div>
+
+                    </div><!--.row-->
+                </div><!--.container-->
+
+
+
+
+
 
             {{-- Seleccionar Especialidades--}}
             <div class=" form-group">
                 {!! Form::label('specialities', 'Especialidades') !!}<br>
                 @foreach ($specialities as $speciality)
+
                 <label for="especialidad">
                     {!! Form::checkbox('specialities[]', $speciality->id, null, ['class' => 'mr-1']) !!}
                     {{$speciality->nombre}}
@@ -59,12 +90,14 @@
             </div>
         </div>
 
+
+        <div class="form-group">
+
+                {!! Form::submit('Crear', ['class' => ' btn btn-success']) !!}
+        </div>
     </div>
 
-    <div class="form-group">
 
-        {!! Form::submit('Crear', ['class' => 'btn btn-success']) !!}
-    </div>
     {!! Form::close() !!}
 
 </div>
