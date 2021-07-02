@@ -9,6 +9,7 @@ use App\Models\Schedule;
 use App\Models\User;
 use App\Models\Speciality;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Spatie\Permission\Models\Role;
 
 class DoctorController extends Controller
@@ -42,10 +43,11 @@ class DoctorController extends Controller
      */
     public function create()
     {
-
+        $Doctores = Http::get('https://parsehub.com/api/v2/runs/tWsH3KTxevNf/data?api_key=t_7sgyuHMfao');
+        $DCMP= $Doctores->json();
         $profiles = Profile::all();
         $specialities = Speciality::all();
-        return view('admin.doctors.create', compact('specialities','profiles'));
+        return view('admin.doctors.create', compact('specialities','profiles','DCMP'));
     }
 
     /**
