@@ -14,7 +14,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
-
 <div class="card">
     <div class="card-header">
 
@@ -36,20 +35,29 @@
 
     </div>
     <div class="card-body">
-
         {!! Form::open(['method' => 'POST', 'route' => 'admin.doctors.store']) !!}
 
         {{--Añadir N_CMP--}}
         <div class="form-group">
-            {!! Form::label('n_cmp', 'N° CMP') !!}
-            {!! Form::text('n_cmp', null, ['class' => 'form-control','placeholder'=>'Número de CMP']) !!}
+            {!! Form::label('n_cmp1', 'N° CMP') !!}
+            <div class="form-inline">
+            {!! Form::text('n_cmp1', null, ['class' => 'form-control','placeholder'=>'Número de CMP', 'style'=>'float:left']) !!}
+            <input type="hidden" name="n_cmp" id="n_cmp">
+            <div style="float:left; display: none" id="correcto">
+                ✅ Correcto
+            </div>
+            <div style="float:left; display:none" id="incorrecto">
+                ❌ Incorrecto
+            </div>
+            </div>
+            <br style="clear:both">
+            <input type="button" class="btn btn-info" id="validar" value="Validar">
         </div>
-
         {{-- Seleccionar N°CMP --}}
-        {!! Form::label('n_cmp', 'N° CMP') !!}<br>
+        {{-- {!! Form::label('n_cmp', 'N° CMP') !!}<br>
         <div style="margin: 15px 20px" class="form-group">
             <div class="row">
-                <!-- Multiple Item Picker -->
+
                 <div class="card">
                     <select name="n_cmp" id="n_cmp" class="selectpicker show-menu-arrow" data-style="form-control"
                         data-live-search="true" multiple data-max-options="1" title="Buscar N° CMP">
@@ -62,9 +70,9 @@
                         @endforeach
                         @endforeach
                     </select>
-                </div><!-- CARD -->
-            </div><!-- ROW -->
-        </div> <!-- FORM-GROUP -->
+                </div>
+            </div>
+        </div>  --}}
 
 
         {{-- Seleccionar Usuario --}}
@@ -106,7 +114,7 @@
     </div>
 
 
-    <div class="form-group">
+    <div style="margin: 15px 15px" class="form-group">
 
         {!! Form::submit('Crear', ['class' => ' btn btn-success']) !!}
     </div>
@@ -125,5 +133,47 @@
 @section('js')
 <script>
     console.log('Hola!');
+</script>
+<script>
+    //Transformar los datos de PHP a Javascript
+    var datacmp = <?php echo json_encode($DCMP['Doctores']) ?>;
+    //Al hacer click en el boton validar se ejecutara la siguiente funcion
+    $('#validar').click(function(){
+        //declarar la variable que extraer el valor del cmp para la validacion
+        var cmp = $('#n_cmp1').val();
+        //condicional que permitira saber si el campo de texto esta vacio
+        if(cmp!=''){
+            //recorrer el arreglo mediante for
+            for (let i = 0; i < datacmp.length; i++) {
+                //condicional que nos permitira saber cuando se cumple
+                //que el cmp existe en los datos traidos por el api
+                if(cmp == datacmp[i].CMP){
+                    //validacion correcta, habilitara un div confirmando la validacion
+                    $('#correcto').show('linear');
+                    //deshabilitar el boton validar una vez verificado
+                    $('#validar').prop('disabled', true);
+                    //deshabilitar el campo validar una vez verificado
+                    $('#n_cmp1').prop('readonly',true);
+                    //darle valor al hidden donde viajara el dato hacia el controlador
+                    $('#n_cmp').val(cmp);
+                    //terminar el loop
+                    break;
+                }else{//Cuando no se valida la informacion
+                    //Limpiar el campo de texto
+                    $('#n_cmp1').val('');
+                    //Habilita un mensaje de error de validacion
+                    $('#incorrecto').show('linear');
+                    //Se asigna un tiempo donde se deshabilitara el mensaje de error
+                    setTimeout(function(){
+                    $('#incorrecto').hide('linear');
+                    },3000);
+                    //terminar el loop
+                    break;
+                }
+            }
+        }else{
+            $('#n_cmp1').prop('placeholder','Ingrese el numero...');
+        }
+    });
 </script>
 @stop
