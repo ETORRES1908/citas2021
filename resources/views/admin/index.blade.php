@@ -8,7 +8,7 @@
 
 @section('content')
 <p>Bienvenido al panel de administracion.</p>
-<table class="table table-hover">
+{{-- <table class="table table-hover">
     <thead>
         <tr>
             <th>CMP</th>
@@ -28,7 +28,7 @@
             @endforeach
         @endforeach
     </tbody>
-</table>
+</table> --}}
 @stop
 
 @section('js')

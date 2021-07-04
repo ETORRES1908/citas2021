@@ -43,7 +43,7 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        $Doctores = Http::get('https://parsehub.com/api/v2/runs/tWsH3KTxevNf/data?api_key=t_7sgyuHMfao');
+        $Doctores = Http::get('https://parsehub.com/api/v2/runs/taM1s_mPKVtA/data?api_key=t_7sgyuHMfao');
         $DCMP= $Doctores->json();
         $profiles = Profile::all();
         $specialities = Speciality::all();

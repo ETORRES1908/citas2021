@@ -43,9 +43,11 @@
             <div class="form-inline">
             {!! Form::text('n_cmp1', null, ['class' => 'form-control','placeholder'=>'Número de CMP', 'style'=>'float:left']) !!}
             <input type="hidden" name="n_cmp" id="n_cmp">
+            &nbsp
             <div style="float:left; display: none" id="correcto">
                 ✅ Correcto
             </div>
+            &nbsp
             <div style="float:left; display:none" id="incorrecto">
                 ❌ Incorrecto
             </div>
@@ -136,10 +138,13 @@
 </script>
 <script>
     //Transformar los datos de PHP a Javascript
-    var datacmp = <?php echo json_encode($DCMP['Doctores']) ?>;
+    var datacmp = <?php echo json_encode($DCMP['CMP']) ?>;
     //Al hacer click en el boton validar se ejecutara la siguiente funcion
     $('#validar').click(function(){
-        //declarar la variable que extraer el valor del cmp para la validacion
+        //inicilizando la variable donde se almacenara los datos de validacion, nulo por defecto
+        var valido = null;
+        //console.log(datacmp);
+        //declarar la variable que extraera el valor del cmp para la validacion
         var cmp = $('#n_cmp1').val();
         //condicional que permitira saber si el campo de texto esta vacio
         if(cmp!=''){
@@ -147,33 +152,62 @@
             for (let i = 0; i < datacmp.length; i++) {
                 //condicional que nos permitira saber cuando se cumple
                 //que el cmp existe en los datos traidos por el api
-                if(cmp == datacmp[i].CMP){
-                    //validacion correcta, habilitara un div confirmando la validacion
-                    $('#correcto').show('linear');
-                    //deshabilitar el boton validar una vez verificado
-                    $('#validar').prop('disabled', true);
-                    //deshabilitar el campo validar una vez verificado
-                    $('#n_cmp1').prop('readonly',true);
-                    //darle valor al hidden donde viajara el dato hacia el controlador
-                    $('#n_cmp').val(cmp);
-                    //terminar el loop
-                    break;
-                }else{//Cuando no se valida la informacion
-                    //Limpiar el campo de texto
+                if(datacmp[i].name == cmp){
+                    //almacenando el dato que cumpla la condicion en una variable
+                    valido = datacmp[i];
+                }
+            }
+                    //Condicional que nos permitira saber si la variable
+                    //de validacion cambio de nulo a otro valor
+                    if(valido!=null){
+                        //Condicional para verificar la actividad del doctor
+                        if(valido.ESTADO == "ACTIVO"){
+                            //validacion correcta, habilitara un div confirmando la validacion
+                            $('#correcto').show('linear');
+                            //deshabilitar el boton validar una vez verificado
+                            $('#validar').prop('disabled', true);
+                            //deshabilitar el campo validar una vez verificado
+                            $('#n_cmp1').prop('readonly',true);
+                            //darle valor al hidden donde viajara el dato hacia el controlador
+                            $('#n_cmp').val(valido.name);
+                        }else{
+                            //Caso contrario
+                            $('#n_cmp1').val('');
+                            //Habilita un mensaje de error de validacion
+                            $('#incorrecto').show('linear');
+                            //Se asigna un tiempo donde se deshabilitara el mensaje de error
+                            setTimeout(function(){
+                            $('#incorrecto').hide('linear');
+                            },1500);
+                            $('#n_cmp1').prop('placeholder','Intente nuevamente...');
+                            $('#n_cmp1').focus();
+                        }
+                }else{
+                    //Variable de validacion sigue nulo, es decir no hay un cmp valido
                     $('#n_cmp1').val('');
                     //Habilita un mensaje de error de validacion
                     $('#incorrecto').show('linear');
                     //Se asigna un tiempo donde se deshabilitara el mensaje de error
                     setTimeout(function(){
                     $('#incorrecto').hide('linear');
-                    },3000);
-                    //terminar el loop
-                    break;
+                    },1500);
+                    $('#n_cmp1').prop('placeholder','Intente nuevamente...');
+                    $('#n_cmp1').focus();
                 }
-            }
+
         }else{
+            //Cuando es un campo vacio...
             $('#n_cmp1').prop('placeholder','Ingrese el numero...');
+            //Habilita un mensaje de error de validacion
+            $('#incorrecto').show('linear');
+            //Se asigna un tiempo donde se deshabilitara el mensaje de error
+            setTimeout(function(){
+            $('#incorrecto').hide('linear');
+            },1500);
+            $('#n_cmp1').focus();
         }
     });
+
 </script>
 @stop
+
