@@ -46,11 +46,13 @@
                             @endcan
 
                             @can('admin.users.destroy')
+                                @if (Auth::id() != $user->id)
                                 <form action="{{ route('admin.users.destroy', $user) }}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <input type="submit" value="Eliminar" class="btn btn-danger" style="margin: 0px 0px 0px 5px;">
                                 </form>
+                                @endif
                             @endcan
 
                         </td>
