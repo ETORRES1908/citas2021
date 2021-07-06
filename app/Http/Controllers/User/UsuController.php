@@ -59,6 +59,7 @@ class UsuController extends Controller
      */
     public function edit($id)
     {
+
         $user = User::findOrFail($id);
         return view('profile.edit-profile', compact('user'));
     }
@@ -74,14 +75,20 @@ class UsuController extends Controller
     {
         $usuario = User::findOrFail($id);
 
+
+
             $leve=[
+                    'nombre'=>'required|string',
                     'email' => ['required', 'string', 'email', 'max:100'],
+                    'apellido'=>'required|string',
                     'edad'=>'required|digits:2|integer',
                     'fecha_nac'=>'required',
                     'sexo'=>'required|string'];
 
             $estricto=[
+                'nombre'=>'required|string',
                 'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
+                'apellido'=>'required|string',
                 'edad'=>'required|digits:2|integer',
                 'fecha_nac'=>'required',
                 'sexo'=>'required|string'];
@@ -93,13 +100,14 @@ class UsuController extends Controller
             } else {
                 $request->validate($estricto);
             }
-
             //actualiza solo el modelo user
+
+            $usuario->name=$request->nombre;
             $usuario->email=$request->email;
             $usuario->save();
 
             //actualiza solo el modelo profile
-            $usuario->profile->update($request->only("edad","sexo","fecha_nac"));
+            $usuario->profile->update($request->only("nombre","apellido","edad","sexo","fecha_nac"));
 
         return redirect()->route('usuario.perfil.edit',$usuario->id)->with('msg','El usuario ha sido modificado correctamente');
     }
