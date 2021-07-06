@@ -8,10 +8,11 @@
 
 @section('content')
 <div class="card">
+
     @can('admin.specialities.create')
-        <div class="card-header">
-            <a href="{{ route('admin.specialities.create')}}" class="btn btn-primary"> Crear Especialidad</a>
-        </div>
+    <div class="card-header">
+        <a href="{{ route('admin.specialities.create')}}" class="btn btn-primary"> Crear Especialidad</a>
+    </div>
     @endcan
 
     <div class="card-body">
@@ -31,20 +32,24 @@
                     <td>{{$speciality->id}}</td>
                     <td>{{$speciality->nombre}}</td>
                     <td>{{$speciality->descripcion}}</td>
-                    <td> <p style="background:{{$speciality->color}}; color:white; font-weight:bold; padding:15px;"></p></td>
-                    <td  style="display: flex">
+                    <td>
+                        <p style="background:{{$speciality->color}}; color:white; font-weight:bold; padding:15px;"></p>
+                    </td>
+                    <td style="display: flex">
                         @can('admin.specialities.edit')
-                          {{-- Editar --}}
-                            <a href="{{ route('admin.specialities.edit', $speciality) }}" class="btn btn-success">Editar</a>
+                        {{-- Editar --}}
+                        <a href="{{ route('admin.specialities.edit', $speciality) }}" class="btn btn-success">Editar</a>
                         @endcan
 
 
                         {{-- Eliminar --}}
                         @can('admin.specialities.destroy',)
-                          <form action="{{ route('admin.specialities.destroy', $speciality) }}" method="post" class="formulario-eliminar">
+                        <form action="{{ route('admin.specialities.destroy', $speciality) }}" method="post"
+                            class="formulario-eliminar">
                             @csrf
                             @method('DELETE')
-                            <input type="submit" id="delete" value="Eliminar" class="btn btn-danger" style="margin: 0px 0px 0px 5px;">
+                            <input type="submit" id="delete" value="Eliminar" class="btn btn-danger"
+                                style="margin: 0px 0px 0px 5px;">
                         </form>
                         @endcan
 
@@ -58,7 +63,7 @@
 
 </div>
 @stop
-@extends('admin.doctors.partials.recursos')
+
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
@@ -73,6 +78,7 @@
 <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    /* DATATABLE */
     $('#especialidades').DataTable(
         {
             "responsive":true,
@@ -81,7 +87,7 @@
             "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
             }
         });
-
+    /* FORMULARIO ELIMINAR ESPECIALIDAD */
     $('.formulario-eliminar').submit(function(e){
         e.preventDefault();
             Swal.fire({
@@ -99,17 +105,15 @@
             }
             })
     });
-
 </script>
-    @if (session("mensaje")=="ok")
-    <script>
-        Swal.fire(
+{{-- MENSAJE DESPUES DE ELIMINAR --}}
+@if (session("mensaje")=="ok")
+<script>
+    Swal.fire(
                  'Eliminado!',
                  'Los registros se eliminaron correctamente.',
                  'success'
                  )
-    </script>
-
-
-    @endif
+</script>
+@endif
 @stop

@@ -10,17 +10,11 @@
 <div class="card">
 
     @can('admin.doctors.create')
-        <div class="card-header">
-        @if (session('mensaje'))
-        <div class="alert alert-danger">
-            <strong>{{session('mensaje')}}</strong>
-        </div>
-        @endif
-
+    <div class="card-header">
         <a href="{{ route('admin.doctors.create')}}" class="btn btn-primary"> Añadir Doctor</a>
-     </div>
-
+    </div>
     @endcan
+
     <div class="card-body">
         <table id="doctores" class="table table-striped table-bordered" style="width:100%">
             <thead>
@@ -53,19 +47,18 @@
                         @endcan
 
                         @can('admin.doctors.destroy')
-                        <form action="{{ route('admin.doctors.destroy', $doctor) }}" method="post">
+                        <form action="{{ route('admin.doctors.destroy', $doctor) }}" method="post"
+                            class="formulario-eliminar">
                             @csrf
                             @method('DELETE')
-                            <input type="submit" value="Eliminar" class="btn btn-danger"
+                            <input type="submit" id="delete" value="Eliminar" class="btn btn-danger"
                                 style="margin: 0px 0px 0px 5px;">
                         </form>
                         @endcan
-
-
+                        
                     </td>
                 </tr>
                 @endforeach
-
             </tbody>
         </table>
     </div>

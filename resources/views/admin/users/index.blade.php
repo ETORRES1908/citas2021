@@ -3,67 +3,60 @@
 @section('title', 'Blog 2021')
 
 @section('content_header')
-    <h1>Menu  de Usuarios </h1>
+<h1>Menu de Usuarios </h1>
 @stop
 
 @section('content')
-    <div class="card">
+<div class="card">
+    <div class="card-body">
+        <table id="usuarios" class="table table-striped table-bordered" style="width:100%">
 
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>DNI</th>
+                    <th>Email</th>
 
-    @if (session('msg'))
-            <div class="card-header">
-                    <div class="alert alert-danger">
-                        <strong>{{session('msg')}}</strong>
-                    </div>
-            </div>
-    @endif
-        <div class="card-body">
-            <table id="usuarios" class="table table-striped table-bordered" style="width:100%">
+                    <th style="width:2px;text-align:center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($users as $user)
+                <tr>
+                    <td>{{$user->id}}</td>
+                    <td>{{$user->profile->nombre}}</td>
+                    <td>{{$user->profile->apellido}}</td>
+                    <td>{{$user->profile->dni}}</td>
+                    <td>{{$user->email}}</td>
 
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>DNI</th>
-                        <th>Email</th>
+                    <td style="display:flex ">
+                        @can('admin.users.edit')
+                        <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-success">Editar</a>
+                        @endcan
 
-                        <th style="width:2px;text-align:center">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($users as $user)
-                    <tr>
-                        <td>{{$user->id}}</td>
-                        <td>{{$user->profile->nombre}}</td>
-                        <td>{{$user->profile->apellido}}</td>
-                        <td>{{$user->profile->dni}}</td>
-                        <td>{{$user->email}}</td>
+                        @can('admin.users.destroy')
+                        @if (Auth::id() != $user->id)
+                        <form action="{{ route('admin.users.destroy', $user) }}" method="post"
+                            class="formulario-eliminar">
+                            @csrf
+                            @method('DELETE')
+                            <input type="submit" id="delete" value="Eliminar" class="btn btn-danger"
+                                style="margin: 0px 0px 0px 5px;">
+                        </form>
+                        @endif
+                        @endcan
 
-                        <td style="display:flex ">
-                            @can('admin.users.edit')
-                                <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-success">Editar</a>
-                            @endcan
+                    </td>
+                </tr>
+                @endforeach
 
-                            @can('admin.users.destroy')
-                                @if (Auth::id() != $user->id)
-                                <form action="{{ route('admin.users.destroy', $user) }}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <input type="submit" value="Eliminar" class="btn btn-danger" style="margin: 0px 0px 0px 5px;">
-                                </form>
-                                @endif
-                            @endcan
+            </tbody>
 
-                        </td>
-                    </tr>
-                    @endforeach
-
-                </tbody>
-
-            </table>
-        </div>
+        </table>
     </div>
+</div>
 @stop
 
 @section('css')
@@ -73,11 +66,10 @@
 @stop
 
 @section('js')
-<script>
-    console.log('Hola!');
-</script>
+
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $('#usuarios').DataTable(
         {
@@ -87,5 +79,35 @@
             "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
             }
         });
+
+    /* FORMULARIO ELIMINAR USUARIO */
+    $('.formulario-eliminar').submit(function(e){
+        e.preventDefault();
+            Swal.fire({
+            title: '¿Estas seguro?',
+            text: "Se eliminaran todos los registros relacionados a esta información(perfil, doctor, citas, etc). Esta acción es irreversible.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, estoy de acuerdo!',
+            cancelButtonText: 'Cancelar'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                this.submit();
+            }
+            })
+    });
 </script>
+{{-- MENSAJE DESPUES DE ELIMINAR --}}
+@if (session("mensaje")=="ok")
+<script>
+    Swal.fire(
+                 'Eliminado!',
+                 'El usuario se ha eliminado correctamente.',
+                 'success'
+                 )
+</script>
+@endif
+
 @stop

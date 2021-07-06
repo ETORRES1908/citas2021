@@ -174,6 +174,6 @@ class DoctorController extends Controller
         $doctor->delete();
 
         return redirect()->route('admin.doctors.index', $doctor)
-        ->with('mensaje','Se elimino Doctor(a) correctamente');
+        ->with('mensaje','ok');
     }
 }
